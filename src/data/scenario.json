@@ -1,0 +1,3100 @@
+{
+  "start": "intro_0",
+  "nodes": {
+    "mother_6": {
+      "speaker": "",
+      "text": "入学時、かなり良いバッシュを買ってもらったのに\n履き潰すこともなく、履くことができなくなって",
+      "chapter": "売ったバッシュで寿司を食う",
+      "chapter_index": 1,
+      "place": "自宅_リビング",
+      "next": "mother_7",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片２",
+        "row": 6
+      }
+    },
+    "mother_7": {
+      "speaker": "",
+      "text": "ぼくがそのことについて母に謝ると、\n彼女は「いーよ別に」と笑いながら\nバッシュをメルカリで売りに出してしまった",
+      "chapter": "売ったバッシュで寿司を食う",
+      "chapter_index": 1,
+      "place": "自宅_リビング",
+      "next": "mother_8",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片２",
+        "row": 7
+      }
+    },
+    "mother_8": {
+      "speaker": "りあ",
+      "text": "いいけどじゃあ次の母の日、ご飯ご馳走して？\nバッシュ売ったお金でお寿司とか食べいこうよ",
+      "chapter": "売ったバッシュで寿司を食う",
+      "chapter_index": 1,
+      "place": "自宅_リビング",
+      "next": "mother_9",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片２",
+        "row": 8
+      }
+    },
+    "mother_9": {
+      "speaker": "よだか",
+      "text": "母さんが買って\n母さんが売るのにご馳走って",
+      "chapter": "売ったバッシュで寿司を食う",
+      "chapter_index": 1,
+      "place": "自宅_リビング",
+      "next": "mother_10",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片２",
+        "row": 9
+      }
+    },
+    "mother_10": {
+      "speaker": "りあ",
+      "text": "靴を選んだのはよだかで、綺麗に使ったのもよだかだよ\nえらい！　えらい！　えらい！　えらいだ……",
+      "chapter": "売ったバッシュで寿司を食う",
+      "chapter_index": 1,
+      "place": "自宅_リビング",
+      "next": "mother_11",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片２",
+        "row": 10
+      },
+      "word": "praise"
+    },
+    "mother_11": {
+      "speaker": "",
+      "text": "後日、母は楽しげに笑ってメルカリの画面を見せる。\n宮崎県に送るらしい",
+      "chapter": "売ったバッシュで寿司を食う",
+      "chapter_index": 1,
+      "place": "自宅_リビング",
+      "next": "mother_12",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片２",
+        "row": 11
+      }
+    },
+    "mother_12": {
+      "speaker": "",
+      "text": "ぼくがシューズを履いてバスケをしていた時間は\n結果「使用感アリ　値引き」になって、\n最終的に回転寿司になった",
+      "chapter": "売ったバッシュで寿司を食う",
+      "chapter_index": 1,
+      "place": "自宅_リビング",
+      "next": "mother_13",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片２",
+        "row": 12
+      }
+    },
+    "mother_13": {
+      "speaker": "",
+      "text": "どこかの誰かに発送し、ぐるぐる回る寿司を食べ笑う。\n会計が済む。瞬く間にぜんぶ終わる。\nぜんぶこのくらいのスピードで過ぎていってくれれば",
+      "chapter": "売ったバッシュで寿司を食う",
+      "chapter_index": 1,
+      "place": "自宅_リビング",
+      "next": "main1_5",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片２",
+        "row": 13
+      }
+    },
+    "main1_5": {
+      "speaker": "",
+      "text": "バスケを辞めてからずっと、時間を持て余している",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "街",
+      "next": "main1_6",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 5
+      }
+    },
+    "main1_6": {
+      "speaker": "",
+      "text": "とりあえずバイトを入れて夕方と夜を埋めた。\nけれど、法月よだかの朝はいまだに空っぽのままだ",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "街",
+      "next": "main1_7",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 6
+      }
+    },
+    "main1_7": {
+      "speaker": "",
+      "text": "目的もなく早めに家を出てしまい、結局学校に向かう。\n朝練の連中よりもさらに早い時間を狙って。\n朝7時過ぎの学校には用務員以外にほぼ誰もいなかった",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "街",
+      "next": "main1_8",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 7
+      }
+    },
+    "main1_8": {
+      "speaker": "？？？",
+      "text": "……",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "街",
+      "next": "main1_9",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 8
+      }
+    },
+    "main1_9": {
+      "speaker": "",
+      "text": "足音に気づく。歩く音ではなくステップだった。\nキュッ、キュッっと鳴って少しうるさい。\nきっと体育用シューズ。質が良くなく良く鳴るのだ",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "廊下",
+      "next": "main1_10",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 9
+      }
+    },
+    "main1_10": {
+      "speaker": "",
+      "text": "階段を登る途中から何かのメロディが聞こえ、\n登りきったところで踊っている誰かの姿が見える",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "廊下",
+      "next": "main1_11",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 10
+      }
+    },
+    "main1_11": {
+      "speaker": "",
+      "text": "知っている顔だった。たしか名前は——えっと、そう",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "廊下",
+      "next": "main1_12",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 11
+      }
+    },
+    "main1_12": {
+      "speaker": "よだか",
+      "text": "由梨あしかさん",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "廊下",
+      "next": "main1_13",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 12
+      }
+    },
+    "main1_13": {
+      "speaker": "あしか",
+      "text": "……",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "廊下",
+      "next": "main1_14",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 13
+      }
+    },
+    "main1_14": {
+      "speaker": "",
+      "text": "ダンスに集中していて僕の声は聞こえてないようだ。\n正直あまり話すこともないし、それでいい。\nとりあえず礼儀として、挨拶くらいはしておこうか",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "廊下",
+      "next": "main1_15",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 14
+      }
+    },
+    "main1_15": {
+      "speaker": "よだか",
+      "text": "おはよう。朝練？　おつかれ。\n……なんていうか、いいね。うん、いいな",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "廊下",
+      "next": "main1_16",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 15
+      }
+    },
+    "main1_16": {
+      "speaker": "",
+      "text": "果たして「いいね」が適切な褒め言葉なのかは\nわからないけれど、ぱっと浮かんだのはそれだった",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "廊下",
+      "next": "main1_17",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 16
+      }
+    },
+    "main1_17": {
+      "speaker": "",
+      "text": "朝早くから打ち込める何かがあることを、やっぱり\n僕は「いいね」と、羨ましく思っているのだろうか",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "廊下",
+      "next": "main1_18",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 17
+      }
+    },
+    "main1_18": {
+      "speaker": "あしか",
+      "text": "……はぇ",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "廊下",
+      "next": "main1_19",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 18
+      }
+    },
+    "main1_19": {
+      "speaker": "あしか",
+      "text": "……え。え！？",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "廊下",
+      "next": "main1_21",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 19
+      }
+    },
+    "main1_21": {
+      "speaker": "",
+      "text": "解放感と喧騒に包まれる放課後の教室、の片隅。",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_22",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 21
+      }
+    },
+    "main1_22": {
+      "speaker": "あしか",
+      "text": "あ、あの！？　え！　うわ",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_23",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 22
+      }
+    },
+    "main1_23": {
+      "speaker": "",
+      "text": "自分から声をかけたくせして声をかけたことに自分で\n驚いているような声を上げている由梨さんを見ている",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_24",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 23
+      }
+    },
+    "main1_24": {
+      "speaker": "よだか",
+      "text": "由梨さん",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_25",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 24
+      }
+    },
+    "main1_25": {
+      "speaker": "あしか",
+      "text": "あの、先日「いいね」をいただいたあしかです！",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_26",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 25
+      }
+    },
+    "main1_26": {
+      "speaker": "",
+      "text": "恩返しにきた鶴？",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_27",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 26
+      }
+    },
+    "main1_27": {
+      "speaker": "あしか",
+      "text": "その節は温かな「いいね」をどうも……\nではなくて、ですね！！　法月よだかさん！！",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_28",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 27
+      }
+    },
+    "main1_28": {
+      "speaker": "あしか",
+      "text": "よければ私と一緒に、王、いえ女王になりませんか？\nTiktokで！\nいや、正直アプリはなんでもいいですけど！",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_29",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 28
+      },
+      "word": "queen"
+    },
+    "main1_29": {
+      "speaker": "あしか",
+      "text": "私たちふたりでバズり散らかしてみはしませんか！？",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_30",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 29
+      }
+    },
+    "main1_30": {
+      "speaker": "",
+      "text": "tiktokはいつから君主制になったのか。\n歌舞伎町みたいなものか。いや違うか。\nとりあえず可否は一度置いておいて、僕は言う",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_31",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 30
+      }
+    },
+    "main1_31": {
+      "speaker": "よだか",
+      "text": "いや、",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_32",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 31
+      }
+    },
+    "main1_32": {
+      "speaker": "あしか",
+      "text": "嫌は嫌です……",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_33",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 32
+      }
+    },
+    "main1_33": {
+      "speaker": "",
+      "text": "そんなこと言われても",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_34",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 33
+      }
+    },
+    "main1_34": {
+      "speaker": "よだか",
+      "text": "そうじゃなくて、なんで僕に？",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_35",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 34
+      }
+    },
+    "main1_35": {
+      "speaker": "あしか",
+      "text": "えっと……。\n一番は……はじめて「いいね」くれたから、です。",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_36",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 35
+      }
+    },
+    "main1_36": {
+      "speaker": "あしか",
+      "text": "あと……時間を持て余してそうだから。私みたいに。\n友達も少なそうですし、私みたいに",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_37",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 36
+      }
+    },
+    "main1_37": {
+      "speaker": "あしか",
+      "text": "私の席からだと、よく見えるんです。法月さんの顔",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_38",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 37
+      }
+    },
+    "main1_38": {
+      "speaker": "",
+      "text": "もしかして朝の彼女のダンスも\n僕には違うものに見えていたけれど\n僕のバイトと同じようなものなのだろうか、と思う",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_39",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 38
+      }
+    },
+    "main1_39": {
+      "speaker": "よだか",
+      "text": "……たしかに時間を持て余してるのは、そう",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_40",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 39
+      }
+    },
+    "main1_40": {
+      "speaker": "あしか",
+      "text": "やっぱり",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_41",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 40
+      }
+    },
+    "main1_41": {
+      "speaker": "よだか",
+      "text": "でもバイトはじめて",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_42",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 41
+      }
+    },
+    "main1_42": {
+      "speaker": "あしか",
+      "text": "え？",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_43",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 42
+      }
+    },
+    "main1_43": {
+      "speaker": "よだか",
+      "text": "これからも忙しくなるかも、だから——",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_44",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 43
+      }
+    },
+    "main1_44": {
+      "speaker": "あしか",
+      "text": "休みの日とか今日みたいな朝でも！\n副業OK、女性活躍中、シフト自由、働きやすい……？",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_45",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 44
+      }
+    },
+    "main1_45": {
+      "speaker": "",
+      "text": "必死にちょっとずれたアピールを繰り返す彼女を見る",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_46",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 45
+      }
+    },
+    "main1_46": {
+      "speaker": "",
+      "text": "バズることに興味はない。付き合う理由もない。\n結局はなんとなく誤魔化して帰路についた。けれど",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main1_47",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 46
+      }
+    },
+    "main1_47": {
+      "speaker": "",
+      "text": "けれど、まだ残っていた。\n僕に自分を重ねたと語る、由梨あしかの空虚な表情が",
+      "chapter": "tiktokの女王",
+      "chapter_index": 2,
+      "place": "教室",
+      "next": "main2_5",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン01v3",
+        "row": 47
+      }
+    },
+    "main2_5": {
+      "speaker": "",
+      "text": "由梨あしかに声をかけられ、わけもわからないまま\n一旦連絡先だけ交換した翌日、放課後、ファミレス",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_6",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 5
+      }
+    },
+    "main2_6": {
+      "speaker": "あしか",
+      "text": "こころ・こころ・こころ〜♪\nジュースっておいしいですね",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_7",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 6
+      }
+    },
+    "main2_7": {
+      "speaker": "よだか",
+      "text": "それはよかった",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_8",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 7
+      }
+    },
+    "main2_8": {
+      "speaker": "あしか",
+      "text": "あ……希死念慮。\n今がこれからの人生のピークな気がして、\nあぁ中身薄い走馬灯見えちゃってます。いま",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_9",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 8
+      }
+    },
+    "main2_9": {
+      "speaker": "よだか",
+      "text": "何が見えるの？",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_10",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 9
+      }
+    },
+    "main2_10": {
+      "speaker": "あしか",
+      "text": "白ブドウとノンアルワイン混ぜて遊んでる私。\nお姫様だった頃の私",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_11",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 10
+      }
+    },
+    "main2_11": {
+      "speaker": "あしか",
+      "text": "……バレエやってたんです。習い事じゃなく本気で\n意外ですか？\nこれでも東村山のオーロラ姫、なんて呼ばれてました",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_12",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 11
+      }
+    },
+    "main2_12": {
+      "speaker": "",
+      "text": "凄さがいまいち伝わってこない",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_13",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 12
+      }
+    },
+    "main2_13": {
+      "speaker": "あしか",
+      "text": "……去年までは。\n今は、所沢から都内の学校に通う普通の高校生です",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_14",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 13
+      }
+    },
+    "main2_14": {
+      "speaker": "あしか",
+      "text": "今まで教室の友達くらいだった人間関係、\n人と話せる話題の大半はなくなりました。リセット",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_15",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 14
+      }
+    },
+    "main2_15": {
+      "speaker": "あしか",
+      "text": "留学から帰ってきて、\n教室辞めてバレエ垢止めて……\nそれだけで、私、なんにもなくなっちゃいました",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_16",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 15
+      }
+    },
+    "main2_16": {
+      "speaker": "あしか",
+      "text": "——というのが、この冬。\n私推薦で進学して、面接では全然バレエの話してて。\nでも入学した頃にはもうやることなくて、じゃあ何？",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_17",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 16
+      }
+    },
+    "main2_17": {
+      "speaker": "あしか",
+      "text": "クイズ。\nいったい何に許されて、私はここにいるのでしょう？",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_18",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 17
+      }
+    },
+    "main2_18": {
+      "speaker": "あしか",
+      "text": "アンサー",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_19",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 18
+      }
+    },
+    "main2_19": {
+      "speaker": "",
+      "text": "沈黙が訪れる。\n彼女の問いには答えが用意されていなかった",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_20",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 19
+      }
+    },
+    "main2_20": {
+      "speaker": "",
+      "text": "考える。\n僕はTSという理不尽に「奪われた」けれど、\nそれを辞める理由にする、してしまうことができた",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_21",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 20
+      }
+    },
+    "main2_21": {
+      "speaker": "",
+      "text": "人のせいにできない、でも逃げないと自分を守れない。\nそういう挫折がある。\n理不尽を呪える挫折とどちらがマシと言えるだろうか",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_22",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 21
+      }
+    },
+    "main2_22": {
+      "speaker": "よだか",
+      "text": "アンサー……はないけど共感はできるよ。\nたぶんゴリラとチンパンジーみたいな距離感で",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_23",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 22
+      }
+    },
+    "main2_23": {
+      "speaker": "",
+      "text": "共感を示し、バスケを辞めた話をかいつまんですると、\n由梨さんの表情はぱぁっと明るくなった",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_24",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 23
+      }
+    },
+    "main2_24": {
+      "speaker": "",
+      "text": "喜ぶ彼女を見ながら僕は少し虚しさを感じた。\n人は惨めさにも「お揃い」を見つけると共感してしまう",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_25",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 24
+      }
+    },
+    "main2_25": {
+      "speaker": "あしか",
+      "text": "だから私たち、新しい自分を手にしなきゃです！\n早急に！　\nそこでtiktok！　ど、どうでしょう！",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_26",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 25
+      },
+      "word": "new_self"
+    },
+    "main2_26": {
+      "speaker": "よだか",
+      "text": "どうって……なんでtiktokなの？\n聞く限り新しいものなら何でもいい気がするけど",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_27",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 26
+      }
+    },
+    "main2_27": {
+      "speaker": "",
+      "text": "それこそ僕のように別にバイトだっていい。\n今の僕には考えづらいことだけど、\n彼女には恋人をつくる選択肢だって現実的に思えた",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_28",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 27
+      }
+    },
+    "main2_28": {
+      "speaker": "あしか",
+      "text": "SNS見るたびに、昔の自分にまつわるものが出てくる\nのが嫌だから、全然違う世界の情報で埋めたいんです",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_29",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 28
+      }
+    },
+    "main2_29": {
+      "speaker": "よだか",
+      "text": "なるほど",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_30",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 29
+      }
+    },
+    "main2_30": {
+      "speaker": "",
+      "text": "僕もそれくらい思いきって自分の男らしさを断捨離して\n女の子らしさで埋めたら、悩みから解放されるだろうか",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_31",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 30
+      }
+    },
+    "main2_31": {
+      "speaker": "",
+      "text": "この気持ちを、どう受け止めよう。",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_33",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 31
+      },
+      "choices": [
+        {
+          "text": "考えてみる",
+          "next": "main2_33"
+        },
+        {
+          "text": "考えない",
+          "next": "main2_40"
+        }
+      ]
+    },
+    "main2_33": {
+      "speaker": "",
+      "text": "身体にあっていない靴や洋服は全部捨てる。\n学校ではない別の場所で、過去を隠して女の子をする。\n女性らしい格好で、誰かにエスコートされ、身を委ねる",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_34",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 33
+      }
+    },
+    "main2_34": {
+      "speaker": "",
+      "text": "そこまですれば、\nこれまでの自分へのこだわりは単なるサンクコストで\n切った方が幸せになれると現実に理解できるだろうか",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_35",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 34
+      }
+    },
+    "main2_35": {
+      "speaker": "",
+      "text": "自分の過去を投資の損失のように割り切れるのか。\n自分の性がどうあるかを\n仕方ない、効率がいいって理由で切り捨てていいのか？",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_36",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 35
+      }
+    },
+    "main2_36": {
+      "speaker": "",
+      "text": "こういう悩みをいちいち全部乗り越えないと、\n僕は女の子になったことを認められないのか？",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_37",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 36
+      }
+    },
+    "main2_37": {
+      "speaker": "",
+      "text": "全部乗り越えた僕は、どんな表情で笑っているんだろう",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_38",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 37
+      }
+    },
+    "main2_38": {
+      "speaker": "",
+      "text": "この気持ちを、どう受け止めよう。",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_40",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 38
+      },
+      "choices": [
+        {
+          "text": "想像してみた",
+          "next": "main2_44"
+        },
+        {
+          "text": "想像できなかった",
+          "next": "main2_44"
+        }
+      ]
+    },
+    "main2_40": {
+      "speaker": "",
+      "text": "そうやって形から入ったところで結局形に追いつくため\n努力を求められる。\n身の丈に合わない服を着たら苦労する。当たり前だろう",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_41",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 40
+      }
+    },
+    "main2_41": {
+      "speaker": "",
+      "text": "悩みはスライドするだけで解決はしない。\nたぶん永遠にそうだ",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_42",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 41
+      }
+    },
+    "main2_42": {
+      "speaker": "",
+      "text": "性の話ではなく、単に後遺症だと捉えた方が気が楽だ。\n考えないで、痛みは「そういうものだ」と割り切る方が",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_44",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 42
+      }
+    },
+    "main2_44": {
+      "speaker": "あしか",
+      "text": "それにヘッタクソなダンスでもタイミング次第で数字が\n回っちゃうような世界みたいだし、私くらい踊れるなら\nぜんぜんバズれるのでわ……！！　って思ったんです！",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_45",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 44
+      }
+    },
+    "main2_45": {
+      "speaker": "よだか",
+      "text": "なるほど？",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_46",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 45
+      }
+    },
+    "main2_46": {
+      "speaker": "",
+      "text": "猿でもわかりそうな浅知恵と皮算用だった",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_47",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 46
+      }
+    },
+    "main2_47": {
+      "speaker": "あしか",
+      "text": "あとは……無駄じゃなかったって思いたかったのかも",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_48",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 47
+      },
+      "word": "not_wasted"
+    },
+    "main2_48": {
+      "speaker": "あしか",
+      "text": "これまでやってきたことを生かして、\nこれまで以上に成果出せたら、ざまみろじゃないですか",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_49",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 48
+      }
+    },
+    "main2_49": {
+      "speaker": "",
+      "text": "そう言って彼女はいたずらっぽく笑う",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_50",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 49
+      }
+    },
+    "main2_50": {
+      "speaker": "よだか",
+      "text": "……そうだね。頑張れ、応援してる",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_51",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 50
+      }
+    },
+    "main2_51": {
+      "speaker": "",
+      "text": "どういう強がりであっても、\n立ちあがろうとするその姿勢は認めてあげたいと思った",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_52",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 51
+      }
+    },
+    "main2_52": {
+      "speaker": "あしか",
+      "text": "えーーー。\n一緒にざまあしましょうよ〜！",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_53",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 52
+      }
+    },
+    "main2_53": {
+      "speaker": "",
+      "text": "一緒に頑張りたいかどうかはまた別の話だった",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_54",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 53
+      }
+    },
+    "main2_54": {
+      "speaker": "あしか",
+      "text": "法月さんは……ざまあしたい人いないんですか？\nTS症でバスケやめて、留年までしてるのに",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_55",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 54
+      }
+    },
+    "main2_55": {
+      "speaker": "よだか",
+      "text": "実は彼女にも振られてる",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_56",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 55
+      }
+    },
+    "main2_56": {
+      "speaker": "あしか",
+      "text": "絶対しましょうよ〜〜〜！！\n〜復縁してって言われてももう遅い。Tiktokで\n無双する俺は好きなことで生きていく〜　ですよ！",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_57",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 56
+      }
+    },
+    "main2_57": {
+      "speaker": "よだか",
+      "text": "それYoutubeじゃなかった？",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_58",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 57
+      }
+    },
+    "main2_58": {
+      "speaker": "あしか",
+      "text": "うな〜〜〜〜〜〜〜！",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "main2_59",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 58
+      }
+    },
+    "main2_59": {
+      "speaker": "",
+      "text": "不機嫌な猫のようなうめき声を上げて、あしかは\nドリンクを取りに席を立つ。声の割に表情は明るかった",
+      "chapter": "バズ・ウィー・ダンス？",
+      "chapter_index": 3,
+      "place": "ファミレス",
+      "next": "sumika_6",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン02v3",
+        "row": 59
+      }
+    },
+    "sumika_6": {
+      "speaker": "すみか",
+      "text": "われわれには頭の中で嫌いな人を不幸にする自由がある",
+      "chapter": "自由と権利",
+      "chapter_index": 4,
+      "place": "ファミレス(昼)",
+      "next": "sumika_7",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片４",
+        "row": 6
+      }
+    },
+    "sumika_7": {
+      "speaker": "",
+      "text": "ぼくが身の上話をしていたところ\n突然、先輩の夢小説講釈がはじまってしまった",
+      "chapter": "自由と権利",
+      "chapter_index": 4,
+      "place": "ファミレス(昼)",
+      "next": "sumika_8",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片４",
+        "row": 7
+      }
+    },
+    "sumika_8": {
+      "speaker": "すみか",
+      "text": "いやなんだい。\n君の人生があまりに愛され系の導入みたいで",
+      "chapter": "自由と権利",
+      "chapter_index": 4,
+      "place": "ファミレス(昼)",
+      "next": "sumika_9",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片４",
+        "row": 8
+      }
+    },
+    "sumika_9": {
+      "speaker": "すみか",
+      "text": "これから人気アイドルグループ全員から\n思いを寄せられる予定でもあるのかい？　と思ったのさ",
+      "chapter": "自由と権利",
+      "chapter_index": 4,
+      "place": "ファミレス(昼)",
+      "next": "sumika_10",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片４",
+        "row": 9
+      }
+    },
+    "sumika_10": {
+      "speaker": "すみか",
+      "text": "いいかい、人生とはモテ&デストロイの連続だ。\n君も嫌いなアイツを滅して無責任に幸せになろう。\nわれわれには頭の中で不幸な私を幸せにする権利がある",
+      "chapter": "自由と権利",
+      "chapter_index": 4,
+      "place": "ファミレス(昼)",
+      "next": "sumika_11",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片４",
+        "row": 10
+      },
+      "word": "happiness"
+    },
+    "sumika_11": {
+      "speaker": "よだか",
+      "text": "あー……はい。学び、学びです",
+      "chapter": "自由と権利",
+      "chapter_index": 4,
+      "place": "ファミレス(昼)",
+      "next": "sumika_12",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片４",
+        "row": 11
+      }
+    },
+    "sumika_12": {
+      "speaker": "",
+      "text": "頭の中にしかない自由と権利を大仰に主張する先輩は\nきっといつも自分のために使っている理屈を\n頭の外にいるぼくのために詳らかにしてくれたのだろう",
+      "chapter": "自由と権利",
+      "chapter_index": 4,
+      "place": "ファミレス(昼)",
+      "next": "sumika_13",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片４",
+        "row": 12
+      }
+    },
+    "sumika_13": {
+      "speaker": "",
+      "text": "先輩が送ってくれた夢小説？　の検索エンジン？　を\n使うことはこれからもないだろうけど、\nその言葉は留めておこう。頭の中とか、記憶の片隅に",
+      "chapter": "自由と権利",
+      "chapter_index": 4,
+      "place": "ファミレス(昼)",
+      "next": "main3_5",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片４",
+        "row": 13
+      }
+    },
+    "main3_5": {
+      "speaker": "",
+      "text": "結局、動画撮影を手伝ったりはしていないけれど、今日\nのように時間を持て余した朝は、少し早く登校して踊る\n由梨さんのこと見にいったりしている",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_6",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 5
+      }
+    },
+    "main3_6": {
+      "speaker": "",
+      "text": "今日もバズの待機列の最後尾で、軽薄な曲についたなん\nてことない振り付けを、無駄な妥協のなさで必死に練習\nしているのだろうか",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_7",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 6
+      }
+    },
+    "main3_7": {
+      "speaker": "",
+      "text": "考えながら階段を登り終えると、由梨さんがいて",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_8",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 7
+      }
+    },
+    "main3_8": {
+      "speaker": "",
+      "text": "一定のテンポで足をクロスさせて、跳ねて、\nつま先立ちになって、ピンと立って、これは……何だ？",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_9",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 8
+      }
+    },
+    "main3_9": {
+      "speaker": "よだか",
+      "text": "由梨さん、おはよう",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_10",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 9
+      }
+    },
+    "main3_10": {
+      "speaker": "あしか",
+      "text": "びぁ！　はようございます！",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_11",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 10
+      }
+    },
+    "main3_11": {
+      "speaker": "",
+      "text": "跳ねたタイミングで声をかけると、\n由梨さんはつま先立ちで静止する。器用だ",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_12",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 11
+      }
+    },
+    "main3_12": {
+      "speaker": "あしか",
+      "text": "びっくりした……。来るなら教えてほしいです",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_13",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 12
+      }
+    },
+    "main3_13": {
+      "speaker": "",
+      "text": "体勢を戻した彼女は僕のもとに近づいてくる。流れでそ\nのまま敷設されたベンチに座ると、彼女は声を低くして",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_14",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 13
+      }
+    },
+    "main3_14": {
+      "speaker": "あしか",
+      "text": "……見てしまいましたね",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_15",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 14
+      }
+    },
+    "main3_15": {
+      "speaker": "よだか",
+      "text": "恩返しに来た鶴？",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_16",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 15
+      }
+    },
+    "main3_16": {
+      "speaker": "あしか",
+      "text": "どちらかというと……白鳥でしょうか",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_17",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 16
+      }
+    },
+    "main3_17": {
+      "speaker": "よだか",
+      "text": "バレエ",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_18",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 17
+      }
+    },
+    "main3_18": {
+      "speaker": "あしか",
+      "text": "本気で踊ろうと思ってたわけじゃなく、\nルーチンワークみたいなもので……そう呼べるものでは",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_19",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 18
+      }
+    },
+    "main3_19": {
+      "speaker": "",
+      "text": "話し方こそ腰は低いが、彼女はこういう言い方をする。\n自分の要求ラインを超えないものは無とする。\nそういうストイックで残酷な水準を設けているのだろう",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_20",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 19
+      }
+    },
+    "main3_20": {
+      "speaker": "",
+      "text": "何かを超えない限り、何者でもない。とでもいうような",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_21",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 20
+      }
+    },
+    "main3_21": {
+      "speaker": "",
+      "text": "今の僕にはそれが",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_22",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 21
+      }
+    },
+    "main3_22": {
+      "speaker": "",
+      "text": "この気持ちを、どう受け止めよう。",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_23",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 22
+      },
+      "choices": [
+        {
+          "text": "当たり前に思えた",
+          "next": "main3_23"
+        },
+        {
+          "text": "違和感だった",
+          "next": "main3_23b"
+        }
+      ]
+    },
+    "main3_23": {
+      "speaker": "よだか",
+      "text": "そっか。でも見てみたいけどね。\n由梨さんがバレエ踊ってるところ",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_24",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 23
+      }
+    },
+    "main3_24": {
+      "speaker": "あしか",
+      "text": "そうですか。……じゃあ、もう少しだけ。\nバレエと呼べるようなものかは、わかりませんけど",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_26",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 24
+      }
+    },
+    "main3_26": {
+      "speaker": "",
+      "text": "燻っている薪に火を焚べるようなつもりだった",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_27",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 26
+      }
+    },
+    "main3_27": {
+      "speaker": "",
+      "text": "彼女のため……でもあるけど、何より僕自身のために\n前に進む人を見て、自分も進めるのだと信じたかった",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_34",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 27
+      }
+    },
+    "main3_29": {
+      "speaker": "",
+      "text": "彼女にとって正しくないものでも、僕は構わなかった",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_30",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 29
+      }
+    },
+    "main3_30": {
+      "speaker": "",
+      "text": "大事なのは彼女がやっているということだ。\n何も超えられず彼女以外の何者でもなくても、別にいい",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_31",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 30
+      }
+    },
+    "main3_31": {
+      "speaker": "",
+      "text": "そういう言葉を口にすることが、\nそう信じられる世界が、彼女にも僕にも必要だと思った",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_34",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 31
+      }
+    },
+    "main3_34": {
+      "speaker": "",
+      "text": "レッスン用と思しき黒のバレエシューズに履き替えた由\n梨さんが立って一礼する。鏡ではなく眼前の僕に向けて",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_35",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 34
+      }
+    },
+    "main3_35": {
+      "speaker": "あしか",
+      "text": "それじゃあ……『眠れる森の美女』から少しだけ",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_36",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 35
+      }
+    },
+    "main3_36": {
+      "speaker": "",
+      "text": "踊り始める。\n当然僕が観たことはないけれど、何も言われなくても\n今、彼女はお姫様を演じているのだろう。とわかった",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_37",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 36
+      }
+    },
+    "main3_37": {
+      "speaker": "",
+      "text": "バレエとして形式的な動きでありつつもお姫様の好奇心\nや華がしっかりと伝わってくるのは、彼女の動きのキレ\nの良さと手足の長さが際立つシルエットが理由だろうか",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_38",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 37
+      }
+    },
+    "main3_38": {
+      "speaker": "",
+      "text": "たしかに、姫を自称するに相応しい踊りのように見えた",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_39",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 38
+      }
+    },
+    "main3_39": {
+      "speaker": "",
+      "text": "けれど",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_40",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 39
+      }
+    },
+    "main3_40": {
+      "speaker": "あしか",
+      "text": "……",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_41",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 40
+      }
+    },
+    "main3_41": {
+      "speaker": "",
+      "text": "表情はずっと止まっていた。\nいつものテンションが乱高下する由梨さんはいなかった",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_42",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 41
+      }
+    },
+    "main3_42": {
+      "speaker": "",
+      "text": "大きく片足を挙げるアクトで、\n軸足のバランスを少し崩して頭がブレる。\nそこで表情がはじめて変わる——何かに耐えるような顔",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_43",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 42
+      }
+    },
+    "main3_43": {
+      "speaker": "あしか",
+      "text": "……痛、……っ",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_44",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 43
+      }
+    },
+    "main3_44": {
+      "speaker": "",
+      "text": "踊りが止まる。すべてが止まっていく",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_45",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 44
+      }
+    },
+    "main3_45": {
+      "speaker": "",
+      "text": "表情が止まり、動作が止まり、音楽が止まり\n——最後には時間さえ止まったような錯覚を覚える",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_46",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 45
+      }
+    },
+    "main3_46": {
+      "speaker": "あしか",
+      "text": "……バレエと呼べるものではありませんね\nこんなんじゃないんですよ。『眠れる森の美女』って",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_47",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 46
+      }
+    },
+    "main3_47": {
+      "speaker": "",
+      "text": "長い沈黙を挟んだのち、自嘲を据えてあしかが言う。\nそれもまた、何かに耐えるような声で",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_48",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 47
+      }
+    },
+    "main3_48": {
+      "speaker": "よだか",
+      "text": "由梨さん",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_49",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 48
+      }
+    },
+    "main3_49": {
+      "speaker": "あしか",
+      "text": "もうすぐ8時です。\nああ、早く『眠ってるふりのぼっち』に戻らなきゃ",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_50",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 49
+      }
+    },
+    "main3_50": {
+      "speaker": "",
+      "text": "由梨さんは僕から逃げるように女子更衣室へ駆けていく",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_51",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 50
+      }
+    },
+    "main3_51": {
+      "speaker": "",
+      "text": "追いかけることはできなかった。\n人がいる女子更衣室に、僕は入ることができないから",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_52",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 51
+      }
+    },
+    "main3_52": {
+      "speaker": "",
+      "text": "伝えたいことも抱いていた期待も、何も形にならない",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_53",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 52
+      }
+    },
+    "main3_53": {
+      "speaker": "",
+      "text": "いつもの味だ",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_54",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 53
+      }
+    },
+    "main3_54": {
+      "speaker": "",
+      "text": "信じた先に道がある。望むものが叶えられる。\nそういう世界じゃないという現実を、僕は噛み締める",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main4_5",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 54
+      }
+    },
+    "main4_5": {
+      "speaker": "",
+      "text": "翌日の放課後。\nストローでソフトドリンクに息を吹きこんで泡を\n作っているあしかを、僕はしばらく見つめていた",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_6",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 5
+      }
+    },
+    "main4_6": {
+      "speaker": "",
+      "text": "家庭用の水槽でも眺めているみたいだ。\n水槽の中でほとんど動かないあしか。泡、泡、泡",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_7",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 6
+      }
+    },
+    "main4_7": {
+      "speaker": "よだか",
+      "text": "反抗期？",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_8",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 7
+      }
+    },
+    "main4_8": {
+      "speaker": "あしか",
+      "text": "一方的に来いっていうなら話くらい振ってください！",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_9",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 8
+      }
+    },
+    "main4_9": {
+      "speaker": "あしか",
+      "text": "気まずい！",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_10",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 9
+      }
+    },
+    "main4_10": {
+      "speaker": "よだか",
+      "text": "気まずくても来てくれたんだ",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_11",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 10
+      }
+    },
+    "main4_11": {
+      "speaker": "あしか",
+      "text": "嫌いなんです、無視。\nでも強引な男……お、人も嫌いになる可能性があります",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_12",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 11
+      }
+    },
+    "main4_12": {
+      "speaker": "",
+      "text": "お気遣いどうも",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_13",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 12
+      }
+    },
+    "main4_13": {
+      "speaker": "よだか",
+      "text": "この前はごめん。\n踊るとこ見たかったのは嘘じゃないけど、\n由梨さんに無理を言った自覚はあるから、ごめん",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_14",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 13
+      }
+    },
+    "main4_14": {
+      "speaker": "あしか",
+      "text": "いえ、学校にバレエシューズを持ち込んでひとりで\nコソ練するくらい未練たらたらな私も悪いので……",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_15",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 14
+      }
+    },
+    "main4_15": {
+      "speaker": "あしか",
+      "text": "それに私の病気は、法月さんのせいじゃないですから",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_16",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 15
+      },
+      "word": "not_fault"
+    },
+    "main4_16": {
+      "speaker": "よだか",
+      "text": "病気",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_17",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 16
+      }
+    },
+    "main4_17": {
+      "speaker": "あしか",
+      "text": "……そんなに珍しいものじゃないですよ。\nバレエをするんだって思うと、身体が痛むんです\nどこも痛んでいないのに、痛む演技を身体がするんです",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_18",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 17
+      }
+    },
+    "main4_18": {
+      "speaker": "",
+      "text": "曰く「線維筋痛症」という病気で、原因は不明だがスト\nレスなどにより脳の痛みの信号を感じる部分に障害が生\nじ、何もしていないのに痛みやこわばりを感じるらしい",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_19",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 18
+      }
+    },
+    "main4_19": {
+      "speaker": "あしか",
+      "text": "……以前、留学の話したじゃないですか。\n三ヶ月間フランスに行ったんです。ひとりで。\n日本で大会に入賞して、スカラシップをいただいて",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_20",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 19
+      }
+    },
+    "main4_20": {
+      "speaker": "あしか",
+      "text": "人を蹴落として、海を渡って、孤立して、\n私より下手な子が楽しそうにSNS更新してるの見て\n見下すことでなんとか立って……立てなくなりました",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_21",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 20
+      }
+    },
+    "main4_21": {
+      "speaker": "あしか",
+      "text": "何事だ、って。わざわざ日本人スタッフのいる病院に\n連れて行ってもらいました。でも、身体に異常はなく\n精神的なものだと言われて、周囲の目が変わりました",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_22",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 21
+      }
+    },
+    "main4_22": {
+      "speaker": "あしか",
+      "text": "先生は寝ていていいよ。と言います。\n私はレッスンに参加したい、と言います。\nうん、寝ていていいよ。ともう一度だけ言われました",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_23",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 22
+      }
+    },
+    "main4_23": {
+      "speaker": "あしか",
+      "text": "寝ていていいよ、としか言われなかったので、\n眠っているふりをしました。……眠くもないのに。\nまさしく「眠っているふりのぼっち」というやつです",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_24",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 23
+      }
+    },
+    "main4_24": {
+      "speaker": "あしか",
+      "text": "……起こしに来てくれる人はいませんでした。",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_25",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 24
+      }
+    },
+    "main4_25": {
+      "speaker": "あしか",
+      "text": "お姫様じゃなかったんです。わたし。\nお姫様でいられるって勘違いしていました……15年も",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_26",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 25
+      }
+    },
+    "main4_26": {
+      "speaker": "あしか",
+      "text": "こうして井の中のあしかは\n海の向こうで溺れ死にましたとさ。\n溺れる海のあしか——おしまい。ぶくぶく",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_27",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 26
+      }
+    },
+    "main4_27": {
+      "speaker": "",
+      "text": "返す言葉に迷い、ただ頷くこともできず黙り込む。\n何を言っても正しく届かない感じがした",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_28",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 27
+      }
+    },
+    "main4_28": {
+      "speaker": "よだか",
+      "text": "お姫様でいたかったんだ",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_29",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 28
+      }
+    },
+    "main4_29": {
+      "speaker": "あしか",
+      "text": "ほんとはぜんぜん今だってお姫様ですよ？\nキラキラしたいです。学校やこうしてる私って嘘で\n授けられるべきティアラがあるべきなんです、絶対",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_30",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 29
+      },
+      "word": "sparkle"
+    },
+    "main4_30": {
+      "speaker": "あしか",
+      "text": "私、おかしいですか？",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_31",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 30
+      }
+    },
+    "main4_31": {
+      "speaker": "",
+      "text": "この気持ちを、どう受け止めよう。",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_33",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 31
+      },
+      "choices": [
+        {
+          "text": "おかしくない",
+          "next": "main4_33"
+        },
+        {
+          "text": "お姫様じゃなくてもいい",
+          "next": "main4_38"
+        }
+      ]
+    },
+    "main4_33": {
+      "speaker": "よだか",
+      "text": "よく僕も似たようなことを思うよ\n王子様……でいたかったわけではないけど",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_34",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 33
+      }
+    },
+    "main4_34": {
+      "speaker": "よだか",
+      "text": "あんまり考えてなかったんだ。\nバスケが人よりできるとか、自分が男性だとか",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_35",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 34
+      }
+    },
+    "main4_35": {
+      "speaker": "よだか",
+      "text": "でもそうじゃなくなって、そうなるだけで、\n自分も人からの目もこんな変わるとは思わなかった",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_36",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 35
+      }
+    },
+    "main4_36": {
+      "speaker": "よだか",
+      "text": "自分のことを疑わずに済んで、ここにいていい、\n正しい自分だと証明してくれる王冠、僕だってほしいよ",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_48",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 36
+      }
+    },
+    "main4_38": {
+      "speaker": "よだか",
+      "text": "できない形で無理をして、克服しようとして\n結局もっとできなくなることもあるよ。自分の話だけど",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_39",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 38
+      }
+    },
+    "main4_39": {
+      "speaker": "あしか",
+      "text": "だから諦めたんですか？",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_40",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 39
+      }
+    },
+    "main4_40": {
+      "speaker": "あしか",
+      "text": "そういう理由で、できなくなったから\n法月さんは諦めて、女の子として生きてるんですか？",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_41",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 40
+      }
+    },
+    "main4_41": {
+      "speaker": "",
+      "text": "そう言って彼女は僕に圧をかける",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_42",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 41
+      }
+    },
+    "main4_42": {
+      "speaker": "",
+      "text": "由梨さんはそういう人なんだろう。\n賢しらな「正しい」を受け入れられない。\n自認は姫だけど、どちらかというと義賊みたいな人だ",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_43",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 42
+      }
+    },
+    "main4_43": {
+      "speaker": "",
+      "text": "ある意味で男らしいというか、まあそうだ。\nそういう女の子だっているよな",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_44",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 43
+      }
+    },
+    "main4_44": {
+      "speaker": "",
+      "text": "じゃあ、僕らしい女の子がいてもいいのかもしれない。\nなんて思ってみるのは簡単だけれど",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_45",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 44
+      }
+    },
+    "main4_45": {
+      "speaker": "よだか",
+      "text": "まあ……それができたら苦労しないよ。\nありのままの自分を受け入れるなんて。これも自分の話",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_46",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 45
+      }
+    },
+    "main4_46": {
+      "speaker": "あしか",
+      "text": "……そう、ですか。ですよね",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_48",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 46
+      }
+    },
+    "main4_48": {
+      "speaker": "あしか",
+      "text": "……何にもうまくいかないな、って思います",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_49",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 48
+      }
+    },
+    "main4_49": {
+      "speaker": "よだか",
+      "text": "わかる",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_50",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 49
+      }
+    },
+    "main4_50": {
+      "speaker": "",
+      "text": "間にピロリン♪と間の抜けた通知音。\nお前も共感してるの？\nとか思っていると、由梨さんがカメラを構えていた",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_51",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 50
+      }
+    },
+    "main4_51": {
+      "speaker": "あしか",
+      "text": "急にBeRealがきたので",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_52",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 51
+      }
+    },
+    "main4_52": {
+      "speaker": "よだか",
+      "text": "やってるんだ",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_53",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 52
+      }
+    },
+    "main4_53": {
+      "speaker": "あしか",
+      "text": "どのSNSで伸びるかはわかんないので、\nとりあえずやってるんです。\nあしかは必死に泳いでるんです。ネットの海を",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_54",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 53
+      }
+    },
+    "main4_54": {
+      "speaker": "よだか",
+      "text": "そっか。じゃあまだ死んでないね。\nまあ溺れてはいるんだろうけど",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_55",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 54
+      }
+    },
+    "main4_55": {
+      "speaker": "あしか",
+      "text": "……そうかもです",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_56",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 55
+      }
+    },
+    "main4_56": {
+      "speaker": "",
+      "text": "撮影音。インカメラとアウトカメラには\n制服を着た女子がひとりずつ写っているはずだ",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_57",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 56
+      }
+    },
+    "main4_57": {
+      "speaker": "",
+      "text": "僕らは他からどう見えるんだろう。\n普通に友達か、可哀想な人たちか、また別の何かか。",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_58",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 57
+      }
+    },
+    "main4_58": {
+      "speaker": "あしか",
+      "text": "投稿しちゃいますよ。\n他に人が写ってるの投稿するの、はじめてです……！",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_59",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 58
+      }
+    },
+    "main4_59": {
+      "speaker": "あしか",
+      "text": "……あの、えっと。\n友達になってくれたら……写真が見れますよ",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_60",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 59
+      }
+    },
+    "main4_60": {
+      "speaker": "",
+      "text": "僕は自分のアカウントを教える。\n男だった頃に作って、\nもう使っていないやつだけど、彼女ならいいかと思う",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_61",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 60
+      }
+    },
+    "main4_61": {
+      "speaker": "",
+      "text": "友達の登録を終え、写真が見られるようになる",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_62",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 61
+      }
+    },
+    "main4_62": {
+      "speaker": "あしか",
+      "text": "公開は「親しい友達」限定にしました",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_63",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 62
+      },
+      "word": "friends"
+    },
+    "main4_63": {
+      "speaker": "よだか",
+      "text": "うん",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_64",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 63
+      }
+    },
+    "main4_64": {
+      "speaker": "あしか",
+      "text": "しましたから",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_65",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 64
+      }
+    },
+    "main4_65": {
+      "speaker": "",
+      "text": "辛気臭い顔の女性がふたり写っている。\nお姫様らしくもないし、男らしさも感じられない。",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "main4_66",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 65
+      }
+    },
+    "main4_66": {
+      "speaker": "",
+      "text": "何もうまくいかない。空白は埋まらない。\nでもどうやらこれが、今の僕らの「リアル」らしかった",
+      "chapter": "溺れる海のあしか",
+      "chapter_index": 6,
+      "place": "ファミレス",
+      "next": "counseling",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン04v3",
+        "row": 66
+      }
+    },
+    "main3_23b": {
+      "speaker": "よだか",
+      "text": "そっか。でも見てみたいけどね。\n由梨さんがバレエ踊ってるところ",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_24b",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 23
+      }
+    },
+    "main3_24b": {
+      "speaker": "あしか",
+      "text": "そうですか。……じゃあ、もう少しだけ。\nバレエと呼べるようなものかは、わかりませんけど",
+      "chapter": "眠ってるふりのぼっち",
+      "chapter_index": 5,
+      "place": "廊下",
+      "next": "main3_29",
+      "source": {
+        "file": "よだかプロト版メイン v3_26.07.17.xlsx",
+        "sheet": "メイン03v3",
+        "row": 24
+      }
+    },
+    "intro_0": {
+      "speaker": "医師",
+      "text": "よだかさん。身体が変わってから、いろいろなことがありましたね。\n今日は、答えを急がずにお話ししましょう。",
+      "chapter": "答えを急がない日",
+      "chapter_index": 0,
+      "place": "診察室",
+      "next": "intro_1"
+    },
+    "intro_1": {
+      "speaker": "よだか",
+      "text": "TSして、バスケを辞めて。\n自分のことなのに、まだうまく考えられません。",
+      "chapter": "答えを急がない日",
+      "chapter_index": 0,
+      "place": "診察室",
+      "next": "intro_2"
+    },
+    "intro_2": {
+      "speaker": "医師",
+      "text": "変化を受け入れるか、受け入れないか。\n今すぐ決める必要はありません。迷ったままでも大丈夫です。",
+      "chapter": "答えを急がない日",
+      "chapter_index": 0,
+      "place": "診察室",
+      "next": "intro_3"
+    },
+    "intro_3": {
+      "speaker": "医師",
+      "text": "いろいろな人と話してみてください。\n心に残る言葉があったら、少しだけ持って帰ってきましょう。",
+      "chapter": "答えを急がない日",
+      "chapter_index": 0,
+      "place": "診察室",
+      "next": "intro_4"
+    },
+    "intro_4": {
+      "speaker": "医師",
+      "text": "嬉しかった言葉も、引っかかった言葉も。\n誰かの言葉を、そのまま自分の答えにしなくてもいいんです。",
+      "chapter": "答えを急がない日",
+      "chapter_index": 0,
+      "place": "診察室",
+      "next": "intro_5"
+    },
+    "intro_5": {
+      "speaker": "医師",
+      "text": "ここでは、心に残った言葉を花や石のかたちで集めます。\n帰ってきたら、ひとつずつ、どう感じたか一緒に考えましょう。",
+      "chapter": "答えを急がない日",
+      "chapter_index": 0,
+      "place": "診察室",
+      "next": "intro_6"
+    },
+    "intro_6": {
+      "speaker": "よだか",
+      "text": "……はい。\nまだ空っぽのままだけど、少し、話してみます。",
+      "chapter": "答えを急がない日",
+      "chapter_index": 0,
+      "place": "診察室",
+      "next": "mother_6"
+    }
+  },
+  "chapters": [
+    {
+      "id": "mother",
+      "title": "売ったバッシュで寿司を食う",
+      "start": "mother_6"
+    },
+    {
+      "id": "main1",
+      "title": "tiktokの女王",
+      "start": "main1_5"
+    },
+    {
+      "id": "main2",
+      "title": "バズ・ウィー・ダンス？",
+      "start": "main2_5"
+    },
+    {
+      "id": "sumika",
+      "title": "自由と権利",
+      "start": "sumika_6"
+    },
+    {
+      "id": "main3",
+      "title": "眠ってるふりのぼっち",
+      "start": "main3_5"
+    },
+    {
+      "id": "main4",
+      "title": "溺れる海のあしか",
+      "start": "main4_5"
+    }
+  ],
+  "words": [
+    {
+      "id": "praise",
+      "node": "mother_10",
+      "word": "えらい",
+      "model": "flower",
+      "color": "e7b9ab",
+      "focus": [
+        -1,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "quote": "靴を選んだのはよだかで、綺麗に使ったのもよだかだよ\nえらい！　えらい！　えらい！　えらいだ……",
+      "speaker": "りあ"
+    },
+    {
+      "id": "queen",
+      "node": "main1_28",
+      "word": "女王",
+      "model": "rock",
+      "color": "b7c9e8",
+      "focus": [
+        1,
+        1,
+        0,
+        0,
+        1,
+        -1
+      ],
+      "quote": "よければ私と一緒に、王、いえ女王になりませんか？\nTiktokで！\nいや、正直アプリはなんでもいいですけど！",
+      "speaker": "あしか"
+    },
+    {
+      "id": "new_self",
+      "node": "main2_25",
+      "word": "新しい自分",
+      "model": "flower",
+      "color": "c2d7b1",
+      "focus": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        -1
+      ],
+      "quote": "だから私たち、新しい自分を手にしなきゃです！\n早急に！　\nそこでtiktok！　ど、どうでしょう！",
+      "speaker": "あしか"
+    },
+    {
+      "id": "not_wasted",
+      "node": "main2_47",
+      "word": "無駄じゃなかった",
+      "model": "rock",
+      "color": "d8c9a7",
+      "focus": [
+        -1,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "quote": "あとは……無駄じゃなかったって思いたかったのかも",
+      "speaker": "あしか"
+    },
+    {
+      "id": "happiness",
+      "node": "sumika_10",
+      "word": "幸せにする権利",
+      "model": "flower",
+      "color": "b7cfdd",
+      "focus": [
+        -1,
+        0,
+        1,
+        0,
+        1,
+        1
+      ],
+      "quote": "いいかい、人生とはモテ&デストロイの連続だ。\n君も嫌いなアイツを滅して無責任に幸せになろう。\nわれわれには頭の中で不幸な私を幸せにする権利がある",
+      "speaker": "すみか"
+    },
+    {
+      "id": "not_fault",
+      "node": "main4_15",
+      "word": "法月さんのせいじゃない",
+      "model": "rock",
+      "color": "c8b8db",
+      "focus": [
+        -1,
+        0,
+        1,
+        1,
+        0,
+        1
+      ],
+      "quote": "それに私の病気は、法月さんのせいじゃないですから",
+      "speaker": "あしか"
+    },
+    {
+      "id": "sparkle",
+      "node": "main4_29",
+      "word": "キラキラ",
+      "model": "flower",
+      "color": "e9c793",
+      "focus": [
+        1,
+        1,
+        0,
+        0,
+        1,
+        0
+      ],
+      "quote": "ほんとはぜんぜん今だってお姫様ですよ？\nキラキラしたいです。学校やこうしてる私って嘘で\n授けられるべきティアラがあるべきなんです、絶対",
+      "speaker": "あしか"
+    },
+    {
+      "id": "friends",
+      "node": "main4_62",
+      "word": "親しい友達",
+      "model": "flower",
+      "color": "c0dcbf",
+      "focus": [
+        -1,
+        1,
+        0,
+        1,
+        1,
+        1
+      ],
+      "quote": "公開は「親しい友達」限定にしました",
+      "speaker": "あしか"
+    }
+  ]
+}

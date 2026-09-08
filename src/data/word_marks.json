@@ -1,0 +1,10 @@
+[
+ {"id":"praise","node":"mother_10","word":"えらい","model":"flower","color":"e7b9ab","focus":[-1,1,0,1,0,1]},
+ {"id":"queen","node":"main1_28","word":"女王","model":"rock","color":"b7c9e8","focus":[1,1,0,0,1,-1]},
+ {"id":"new_self","node":"main2_25","word":"新しい自分","model":"flower","color":"c2d7b1","focus":[1,1,1,0,0,-1]},
+ {"id":"not_wasted","node":"main2_47","word":"無駄じゃなかった","model":"rock","color":"d8c9a7","focus":[-1,1,0,1,0,1]},
+ {"id":"happiness","node":"sumika_10","word":"幸せにする権利","model":"flower","color":"b7cfdd","focus":[-1,0,1,0,1,1]},
+ {"id":"not_fault","node":"main4_15","word":"法月さんのせいじゃない","model":"rock","color":"c8b8db","focus":[-1,0,1,1,0,1]},
+ {"id":"sparkle","node":"main4_29","word":"キラキラ","model":"flower","color":"e9c793","focus":[1,1,0,0,1,0]},
+ {"id":"friends","node":"main4_62","word":"親しい友達","model":"flower","color":"c0dcbf","focus":[-1,1,0,1,1,1]}
+]

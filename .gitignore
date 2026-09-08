@@ -1,0 +1,14 @@
+.godot/
+.DS_Store
+build/
+__pycache__/
+.pytest_cache/
+.coverage
+.venv/
+node_modules/
+
+# Original workbooks and design references stay local.
+*.xlsx
+slide_*.png
+slide_*.png.import
+src/data/source_archive.json
