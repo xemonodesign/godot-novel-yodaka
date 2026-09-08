@@ -1,5 +1,23 @@
 # 検証結果
 
+## 2026-09-09 演出・会話の更新
+
+- `make lint` 成功。`make test` はpytest 2件・カバレッジ98.85%、Godot 1,938チェック成功。
+- 24種類の解釈で変動が最大2項目に収まること、予告と適用が一致することを確認。
+- 章・場所の暗転、取得演出のクリック必須、AUTO停止、Space/Escapeで飛ばないことを確認。
+- 話者の明暗、よだかを右の会話枠の手前へ表示する順序を検証。
+- 元の全台詞・追加の回想と返答256件が、中央揃えの本文領域に収まることを検証。
+- 旧セーブ形式v1の読み込みと、取得演出・よだかの返答の途中から再開する保存形式v2を検証。
+- Chromeで通しプレイし、8個の言葉、8回の回答、エンディング、再読み込みからの再開を確認。
+- `tests/browser_smoke.cjs` で実際のIndexedDB保存内容も検証。JavaScript / Godot実行時エラー0件。
+
+![取得演出](screenshots/received-word.png)
+
+![変動予告](screenshots/choice-preview.png)
+
+## 2026-09-08 初版
+
+
 2026-09-08、Godot 4.6.2 / macOS / Chrome（Playwrightによる実ブラウザ操作）で確認。
 
 - `make lint`: RuffとGodotの読み込みが成功。

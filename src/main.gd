@@ -2,6 +2,7 @@ extends Control
 
 const State = preload("res://src/story_state.gd")
 const Specimen = preload("res://src/specimen.gd")
+const WordEffect = preload("res://src/word_effect.gd")
 const INK = Color("252c2a")
 const MUTED = Color("778078")
 const PAPER = Color("fcfbf6")
@@ -28,6 +29,13 @@ var auto_mode: bool = false
 var auto_timer: float = 0.0
 var feedback: bool = false
 var screen_epoch: int = 0
+var overlay_kind: String = ""
+var interlude_ready: bool = false
+var interlude_tween: Tween
+var active_scene_key: String = ""
+var current_dialogue: Dictionary = {}
+var portraits: Dictionary = {}
+var preview_labels: Array = []
 
 func _ready() -> void:
     mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -121,10 +129,11 @@ func _base() -> void:
     screen_epoch += 1
     _clear(stage)
     overlay = null
+    overlay_kind = ""
     _image(stage, "res://bg.png", Rect2(0, 0, 1280, 800))
     _panel(stage, Rect2(0, 0, 1280, 800), Color(0.10, 0.15, 0.14, 0.45))
     _label(stage, "Y O D A K A   /   ことばの標本", Rect2(44, 20, 500, 30), 18, PAPER)
-    status = _label(stage, "WEB PROTOTYPE  /  01", Rect2(927, 25, 310, 26), 13, Color("dce5d9"))
+    status = _label(stage, "WEB PROTOTYPE  /  02", Rect2(927, 25, 310, 26), 13, Color("dce5d9"))
     status.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
     content = Control.new()
     content.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -142,7 +151,7 @@ func _show_title() -> void:
     _panel(content, Rect2(44, 76, 1192, 516), PAPER)
     _image(content, "res://bg_near.png", Rect2(702, 76, 534, 516))
     _panel(content, Rect2(702, 76, 534, 516), Color(0.1, 0.17, 0.15, 0.15))
-    _image(content, "res://girl.png", Rect2(788, 114, 335, 440))
+    _portrait(content, "よだか", Rect2(788, 104, 335, 450), true)
     _label(content, "誰かにもらった言葉を、わたしの中に。", Rect2(91, 110, 580, 35), 20, MUTED)
     _label(content, "よだか", Rect2(81, 154, 570, 130), 92)
     _label(content, "こ と ば の 標 本", Rect2(93, 295, 500, 45), 28)
@@ -224,6 +233,20 @@ func _draw_bottom() -> void:
             _label(bottom, "·", Rect2(x + 49, 675, 20, 30), 28, Color("465344"))
             _label(bottom, "まだない言葉", Rect2(x + 16, 730, 95, 20), 10, Color("637460"))
 
+func _portrait(parent: Node, who: String, rect: Rect2, speaking: bool) -> TextureRect:
+    var paths := {"よだか": "yodaka.png", "あしか": "asika.png", "医師": "doctor.png"}
+    var picture := _image(parent, "res://images/character/" + paths[who], rect)
+    picture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+    picture.modulate = Color.WHITE if speaking else Color(0.43, 0.46, 0.46, 1.0)
+    portraits[who] = picture
+    return picture
+
+func _center_label(parent: Node, text: String, rect: Rect2, font_size: int = 18, color: Color = INK) -> Label:
+    var label := _label(parent, text, rect, font_size, color)
+    label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+    label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+    return label
+
 func _show_story() -> void:
     if state.current == "result":
         _show_result()
@@ -232,85 +255,188 @@ func _show_story() -> void:
         _show_counseling()
         return
     mode = "story"
+    _render_dialogue(state.data.nodes[state.current])
+    _check_interlude()
+
+func _render_dialogue(node: Dictionary) -> void:
     completed = false
     elapsed = 0
     auto_timer = 0
+    current_dialogue = node
+    portraits.clear()
+    preview_labels.clear()
     _base()
-    var node: Dictionary = state.data.nodes[state.current]
     _panel(content, Rect2(44, 76, 1192, 516), PAPER)
     _label(content, "%02d  /  %s" % [node.chapter_index, node.chapter], Rect2(76, 92, 840, 34), 17, MUTED)
     _label(content, node.place, Rect2(1040, 96, 160, 30), 14, MUTED).horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
     var room: bool = node.place == "診察室"
     _image(content, "res://src/assets/counseling.png" if room else "res://bg_near.png", Rect2(76, 143, 1128, 168))
-    if not room:
-        _image(content, "res://girl.png", Rect2(869, 137, 253, 333))
-        _label(content, "法月 よだか", Rect2(1080, 314, 120, 24), 12, MUTED)
-    _panel(content, Rect2(76, 329, 1128, 199), Color(0.99, 0.986, 0.965, 0.97), Color("c2c9bb"), 8)
-    _panel(content, Rect2(94, 311, 190, 36), INK, Color.TRANSPARENT, 3)
-    _label(content, node.speaker if node.speaker != "" else "よだか  /  心の声", Rect2(110, 314, 173, 30), 17, PAPER)
+    var partner: String = "医師" if room else ""
+    if str(node.get("source", {}).get("sheet", "")).begins_with("メイン"):
+        if node.chapter_index != 2 or int(node.source.row) >= 8:
+            partner = "あしか"
+    if partner != "":
+        _portrait(content, partner, Rect2(107, 126, 270, 365), node.speaker == partner or node.speaker == "？？？")
+    _panel(content, Rect2(76, 329, 1128, 199), Color(0.99, 0.986, 0.965, 0.98), Color("c2c9bb"), 8)
+    _panel(content, Rect2(438, 311, 250, 36), INK, Color.TRANSPARENT, 3)
+    _center_label(content, node.speaker if node.speaker != "" else "よだか  /  心の声", Rect2(448, 314, 230, 30), 17, PAPER)
     body = RichTextLabel.new()
-    body.position = Vector2(106, 357)
-    body.size = Vector2(1050, 143)
+    body.position = Vector2(165, 355)
+    body.size = Vector2(770, 150)
+    body.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+    if node.has("choices") or (mode == "counseling" and state.counsel_step == "choice"):
+        body.size.y = 50
     body.bbcode_enabled = true
     body.add_theme_color_override("default_color", INK)
-    body.add_theme_font_size_override("normal_font_size", 25)
-    body.add_theme_font_size_override("bold_font_size", 25)
+    body.add_theme_font_size_override("normal_font_size", 24)
+    body.add_theme_font_size_override("bold_font_size", 24)
     body.add_theme_constant_override("line_separation", 8)
     body.mouse_filter = Control.MOUSE_FILTER_IGNORE
     body.scroll_active = false
+    body.visible_characters_behavior = TextServer.VC_CHARS_AFTER_SHAPING
     var text: String = node.text
     if node.has("word"):
         var word: Dictionary = state.word_by_id(node.word)
         text = text.replace(word.word, "[color=#507549][b][u]" + word.word + "[/u][/b][/color]")
-    body.text = text
+    body.text = "[center]" + text + "[/center]"
     body.visible_characters = 0
     content.add_child(body)
+    # This portrait is intentionally drawn AFTER the message window and its text.
+    _portrait(content, "よだか", Rect2(947, 119, 276, 411), node.speaker in ["よだか", ""])
     choice_box = Control.new()
     choice_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
     content.add_child(choice_box)
     next_button = _button(content, "全文を表示  ▷", Rect2(985, 541, 219, 36), _advance, true)
     hint = _label(content, "CLICK / SPACE", Rect2(79, 549, 180, 24), 12, MUTED)
     _button(content, "読み返す", Rect2(283, 541, 135, 36), _show_history)
-    _button(content, "AUTO " + ("ON" if auto_mode else "OFF"), Rect2(428, 541, 136, 36), _toggle_auto)
+    if mode == "story":
+        _button(content, "AUTO " + ("ON" if auto_mode else "OFF"), Rect2(428, 541, 136, 36), _toggle_auto)
     _button(content, "文字速度", Rect2(574, 541, 135, 36), _show_settings)
     _button(content, "タイトル", Rect2(719, 541, 135, 36), _show_title)
     status.text = "自動保存  /  " + ("診察室" if room else "言葉を集める日")
+    active_scene_key = "%d|%s|%s" % [int(node.chapter_index), node.chapter, node.place]
+
+func _check_interlude() -> void:
+    if state.scene_key != active_scene_key:
+        _show_interlude("scene")
+    elif state.pending_word != "" and mode == "story":
+        _show_interlude("word")
+
+func _show_interlude(kind: String) -> void:
+    overlay_kind = kind
+    interlude_ready = false
+    overlay = Control.new()
+    overlay.size = Vector2(1280, 800)
+    overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+    overlay.gui_input.connect(_interlude_input)
+    stage.add_child(overlay)
+    _panel(overlay, Rect2(0, 0, 1280, 800), Color("0b100e"))
+    if kind == "scene":
+        content.visible = false
+        bottom.visible = false
+        _center_label(overlay, "CHAPTER  %02d" % current_dialogue.chapter_index, Rect2(90, 273, 1100, 40), 15, MINT)
+        _center_label(overlay, current_dialogue.chapter, Rect2(90, 336, 1100, 74), 38, PAPER)
+        _panel(overlay, Rect2(603, 436, 74, 1), Color("708373"))
+        _center_label(overlay, current_dialogue.place.replace("_", " ・ "), Rect2(90, 461, 1100, 40), 20, Color("b5c1b5"))
+    else:
+        var word: Dictionary = state.word_by_id(state.pending_word)
+        _center_label(overlay, "言葉を、ひとつもらった。", Rect2(90, 138, 1100, 42), 18, MINT)
+        var effect = WordEffect.new()
+        effect.position = Vector2(440, 185)
+        effect.size = Vector2(400, 350)
+        effect.tint = Color(word.color)
+        overlay.add_child(effect)
+        var specimen = Specimen.new()
+        specimen.position = Vector2(505, 227)
+        specimen.size = Vector2(270, 255)
+        overlay.add_child(specimen)
+        specimen.setup(word.model, Color(word.color))
+        _center_label(overlay, "「%s」" % word.word, Rect2(90, 525, 1100, 66), 35, PAPER)
+        _center_label(overlay, word.speaker + " から、よだかへ", Rect2(90, 599, 1100, 32), 17, Color("a8b7a8"))
+    _center_label(overlay, "クリックして、つづける", Rect2(90, 710, 1100, 32), 15, Color("8d9c8d"))
+    overlay.modulate.a = 0
+    interlude_tween = create_tween()
+    interlude_tween.tween_property(overlay, "modulate:a", 1.0, 0.45)
+    interlude_tween.tween_callback(func(): interlude_ready = true)
+    # Buttons underneath must not retain keyboard focus during an interlude.
+    var focused := get_viewport().gui_get_focus_owner()
+    if focused != null:
+        focused.release_focus()
+
+func _interlude_input(event: InputEvent) -> void:
+    if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+        overlay.accept_event()
+        _dismiss_interlude()
+
+func _dismiss_interlude() -> void:
+    if not interlude_ready or overlay_kind not in ["scene", "word"]:
+        return
+    interlude_ready = false
+    var kind := overlay_kind
+    content.visible = true
+    bottom.visible = true
+    interlude_tween = create_tween()
+    interlude_tween.tween_property(overlay, "modulate:a", 0.0, 0.3)
+    interlude_tween.tween_callback(func():
+        if kind == "scene":
+            state.scene_key = active_scene_key
+        else:
+            state.pending_word = ""
+        state.save_game()
+        overlay_kind = "modal"
+        _close_overlay()
+        auto_timer = 0
+        _check_interlude())
 
 func _finish_line() -> void:
-    if completed:
+    if completed or is_instance_valid(overlay):
         return
     completed = true
     body.visible_characters = -1
-    if state.finish_line():
+    var added := false
+    if mode == "story":
+        added = state.finish_line()
+    else:
+        var id: String = "counsel_%s_%d" % [state.counsel_step, state.answers.size()]
+        if state.history.is_empty() or state.history.back().id != id:
+            state.history.append({"id": id, "speaker": current_dialogue.speaker, "text": current_dialogue.text})
+        state.save_game()
+    if added:
         _draw_bottom()
-        var word: Dictionary = state.word_by_id(state.data.nodes[state.current].word)
         hint.text = "＋ 言葉をもらった"
-        status.text = "「%s」を標本にしました" % word.word
     else:
         count_label.text = "%02d / 08    ·    読んだ言葉 %03d" % [state.collected.size(), state.read_count]
     if state.last_error != "":
         status.text = state.last_error
-    var node: Dictionary = state.data.nodes[state.current]
     next_button.text = "つづきを読む  →"
-    if node.has("choices"):
+    if mode == "counseling" and state.counsel_step == "choice":
+        _counsel_choices()
+    elif current_dialogue.has("choices"):
         next_button.visible = false
-        _panel(choice_box, Rect2(93, 414, 1090, 99), PAPER)
-        for i in range(node.choices.size()):
-            var width: float = 1050.0 / node.choices.size()
-            _button(choice_box, node.choices[i].text, Rect2(108 + i * width, 443, width - 14, 52), _story_choice.bind(i), true)
+        _panel(choice_box, Rect2(93, 414, 845, 99), PAPER)
+        for i in range(current_dialogue.choices.size()):
+            var width: float = 815.0 / current_dialogue.choices.size()
+            _button(choice_box, current_dialogue.choices[i].text, Rect2(108 + i * width, 443, width - 14, 52), _story_choice.bind(i), true)
+    if added:
+        _show_interlude("word")
 
 func _advance() -> void:
-    if mode != "story" or is_instance_valid(overlay):
+    if mode not in ["story", "counseling"] or is_instance_valid(overlay):
         return
     if not completed:
         _finish_line()
         return
-    if state.data.nodes[state.current].has("choices"):
+    if mode == "counseling":
+        _advance_counseling()
+        return
+    if current_dialogue.has("choices"):
         return
     state.choose(0)
     _show_story()
 
 func _story_choice(index: int) -> void:
+    if is_instance_valid(overlay) or mode != "story":
+        return
     state.choose(index)
     _show_story()
 
@@ -323,14 +449,14 @@ func _toggle_auto() -> void:
     auto_timer = 0
 
 func _process(delta: float) -> void:
-    if mode != "story" or is_instance_valid(overlay) or not is_instance_valid(body):
+    if mode not in ["story", "counseling"] or is_instance_valid(overlay) or not is_instance_valid(body):
         return
     if not completed:
         elapsed += delta * state.speed
         body.visible_characters = int(elapsed)
         if body.visible_characters >= body.get_total_character_count():
             _finish_line()
-    elif auto_mode and not state.data.nodes[state.current].has("choices"):
+    elif mode == "story" and auto_mode and not current_dialogue.has("choices"):
         auto_timer += delta
         if auto_timer > 2.2 + body.get_total_character_count() * 0.025:
             _advance()
@@ -348,59 +474,101 @@ func _unhandled_input(event: InputEvent) -> void:
         if Rect2(44, 76, 1192, 450).has_point(stage.get_local_mouse_position()):
             _advance()
 
+func _counsel_word() -> Dictionary:
+    var index: int = state.answers.size()
+    if state.counsel_step in ["reply", "response"]:
+        index -= 1
+    return state.word_by_id(state.collected[index])
+
 func _show_counseling() -> void:
     mode = "counseling"
     auto_mode = false
-    body = null
     feedback = false
-    if state.answers.size() >= state.collected.size():
+    if state.answers.size() >= state.collected.size() and state.counsel_step not in ["reply", "response"]:
         state.current = "result"
         state.save_game()
         _show_result()
         return
-    _base()
-    _panel(content, Rect2(44, 76, 1192, 516), PAPER)
-    _image(content, "res://src/assets/counseling.png", Rect2(44, 76, 365, 516))
-    _panel(content, Rect2(44, 76, 365, 516), Color(0.12, 0.18, 0.14, 0.27))
-    _label(content, "帰ってきた言葉", Rect2(73, 111, 310, 40), 28, PAPER)
-    _label(content, "COUNSELING\n%02d / %02d" % [state.answers.size() + 1, state.collected.size()], Rect2(76, 165, 290, 66), 17, PAPER)
-    var word: Dictionary = state.word_by_id(state.collected[state.answers.size()])
-    var specimen = Specimen.new()
-    specimen.position = Vector2(92, 235)
-    specimen.size = Vector2(265, 246)
-    content.add_child(specimen)
-    specimen.setup(word.model, Color(word.color))
-    _label(content, word.speaker + " からもらった言葉", Rect2(75, 531, 310, 26), 17, PAPER)
-    _label(content, "医師  /  今日の振り返り", Rect2(447, 106, 720, 30), 16, MUTED)
-    _label(content, "「%s」" % word.word, Rect2(443, 159, 746, 54), 32)
-    var quote := _label(content, word.quote, Rect2(451, 235, 721, 117), 19, MUTED)
-    quote.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-    _label(content, "これをもらった時、どう思いましたか？", Rect2(450, 374, 730, 42), 24)
+    var step: String = state.counsel_step
+    var speaker := "医師"
+    var text := ""
+    match step:
+        "opening_doctor":
+            text = "よだかさん、おかえりなさい。\n今週はどうでしたか？"
+        "opening_yodaka":
+            speaker = "よだか"
+            text = "母さんや先輩、それから由梨さんと話しました。\nいろんなことがあって。\nまだ、うまく整理できていないんですけど。"
+        "recall":
+            speaker = "よだか"
+            text = _counsel_word().memory
+        "question":
+            text = "「%s」……。\nよだかさんは、その時どう感じましたか？" % _counsel_word().word
+        "choice":
+            speaker = "よだか"
+            text = "あの時、僕は……。"
+        "reply":
+            speaker = "よだか"
+            text = _counsel_word().interpretations[int(state.answers.back().choice)].reply
+        "response":
+            var responses := ["よだかさんには、そんなふうに届いたんですね。\nその嬉しさを、覚えておいてもいいと思います。",
+                "しっくりこないと感じたことも、\nよだかさん自身を知る、大切な手がかりですね。",
+                "今、うまく言葉にできなくても大丈夫です。\nよだかさんの中で、ゆっくり考えていきましょう。"]
+            text = responses[int(state.answers.back().choice)]
+    _render_dialogue({"speaker": speaker, "text": text, "chapter": "今週、僕に残った言葉",
+        "chapter_index": 7, "place": "診察室"})
+    status.text = "カウンセリング  /  よだかとドクター"
+    if step == "reply":
+        _center_label(content, _delta_text(state.answers.back().delta), Rect2(143, 498, 770, 24), 15, Color("597c51"))
+    _check_interlude()
+
+func _advance_counseling() -> void:
+    var next_steps := {"opening_doctor": "opening_yodaka", "opening_yodaka": "recall",
+        "recall": "question", "question": "choice", "reply": "response", "response": "recall"}
+    if not next_steps.has(state.counsel_step):
+        return
+    state.counsel_step = next_steps[state.counsel_step]
+    state.save_game()
+    _show_counseling()
+
+func _delta_text(delta: Array) -> String:
+    var parts: PackedStringArray = []
+    for i in range(6):
+        if delta[i] != 0:
+            parts.append("%s %s%d" % [State.STAT_NAMES[i], "+" if delta[i] > 0 else "", delta[i]])
+    return "   /   ".join(parts) if not parts.is_empty() else "変化なし（上限・下限に達しています）"
+
+func _counsel_choices() -> void:
+    next_button.visible = false
+    var word := _counsel_word()
     for i in range(3):
-        _button(content, ANSWERS[i], Rect2(450 + i * 248, 438, 235, 63), _interpret.bind(i), i == 0)
-    _label(content, "正解はありません。今の気持ちで選んでください。", Rect2(451, 518, 730, 29), 15, MUTED)
-    _button(content, "タイトル", Rect2(1050, 106, 140, 30), _show_title)
-    status.text = "自認 ＝ 自分の捉え方への納得度"
+        var interpretation: Dictionary = word.interpretations[i]
+        var delta: Array = state.preview_effects(i)
+        var lines: PackedStringArray = [interpretation.label, ""]
+        for stat in interpretation.effects:
+            var k: int = State.STAT_NAMES.find(stat)
+            var suffix := ""
+            if delta[k] == 0:
+                suffix = "（上限）" if int(interpretation.effects[stat]) > 0 else "（下限）"
+            lines.append("%s %s%d%s" % [stat, "+" if delta[k] > 0 else "", delta[k], suffix])
+        var button := _button(choice_box, "\n".join(lines), Rect2(108 + i * 273, 414, 260, 105), _interpret.bind(i), false)
+        button.add_theme_font_size_override("font_size", 16)
+        preview_labels.append(button.text)
+    hint.text = "よだかの気持ちを選ぶ"
+    hint.add_theme_font_size_override("font_size", 12)
 
 func _interpret(index: int) -> void:
-    if feedback:
+    if feedback or state.counsel_step != "choice" or not completed or is_instance_valid(overlay):
         return
     feedback = true
+    var before: Array = state.stats.duplicate()
     var delta: Array = state.interpret(index)
+    if delta.is_empty():
+        return
+    _show_counseling()
     for i in range(6):
-        create_tween().tween_property(stat_bars[i], "value", float(state.stats[i]), 0.7)
-        stat_labels[i].text = str(int(state.stats[i]))
-    _panel(content, Rect2(426, 350, 798, 234), PAPER)
-    var responses := ["嬉しかったんですね。その気持ちを、大切にしましょう。",
-        "違うと感じたことも、自分を知る手がかりになりますね。",
-        "まだわからない。そのまま持っていても、いいんですよ。"]
-    _label(content, responses[index], Rect2(450, 362, 740, 48), 19)
-    var change_text := ""
-    for i in range(6):
-        change_text += "%s %s%d   " % [State.STAT_NAMES[i], "+" if delta[i] >= 0 else "", delta[i]]
-    var changes := _label(content, change_text, Rect2(450, 418, 730, 50), 17, Color("597c51"))
-    changes.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-    _button(content, "次の言葉へ  →" if state.answers.size() < state.collected.size() else "今日の輪郭を見る  →", Rect2(846, 513, 338, 52), _show_counseling, true)
+        if delta[i] != 0:
+            stat_bars[i].value = before[i]
+            create_tween().tween_property(stat_bars[i], "value", float(state.stats[i]), 0.7)
 
 func _show_result() -> void:
     mode = "result"
@@ -410,13 +578,14 @@ func _show_result() -> void:
     _label(content, "EPILOGUE  /  今日のカウンセリング", Rect2(85, 109, 800, 32), 16, MUTED)
     _label(content, "答えは、まだ途中でいい。", Rect2(80, 164, 1100, 72), 44)
     _label(content, "医師", Rect2(87, 260, 140, 30), 18, MUTED)
-    _label(content, "誰かの言葉に、あなた自身の気持ちが重なりました。\n受け入れることも、受け入れないことも、今は決めないことも。\nまた言葉が増えたら、一緒に考えましょう。", Rect2(86, 311, 950, 122), 24)
+    _label(content, "よだかさん自身の言葉で、聞かせてくれましたね。\n受け入れることも、受け入れないことも、今は決めないことも。\nまた言葉が増えたら、一緒に考えましょう。", Rect2(86, 311, 950, 122), 24)
     _label(content, "%d 個の言葉を持ち帰り、%d 個の気持ちを聞きました。" % [state.collected.size(), state.answers.size()], Rect2(86, 450, 1010, 38), 20, MUTED)
     _button(content, "タイトルへ", Rect2(87, 521, 238, 48), _show_title, true)
     _button(content, "振り返りの記録", Rect2(342, 521, 255, 48), _show_reflections)
     _label(content, "END OF PROTOTYPE", Rect2(843, 532, 352, 28), 16, MUTED)
 
 func _new_overlay(title: String) -> Panel:
+    overlay_kind = "modal"
     overlay = Control.new()
     overlay.size = Vector2(1280, 800)
     overlay.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -429,10 +598,13 @@ func _new_overlay(title: String) -> Panel:
     return card
 
 func _close_overlay() -> void:
+    if overlay_kind in ["scene", "word"]:
+        return
     if is_instance_valid(overlay):
         stage.remove_child(overlay)
         overlay.queue_free()
         overlay = null
+        overlay_kind = ""
 
 func _modal(title: String, text: String, action: String, callback: Callable) -> void:
     var card := _new_overlay(title)

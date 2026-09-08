@@ -38,7 +38,19 @@ def test_markers_are_original_dialogue_from_other_people():
         node = data["nodes"][word["node"]]
         assert word["word"] in node["text"]
         assert word["speaker"] in ["りあ", "あしか", "すみか"]
-        assert len(word["focus"]) == 6
+        assert word["word"] in word["memory"]
+        assert len(word["interpretations"]) == 3
+        for interpretation in word["interpretations"]:
+            assert len(interpretation["effects"]) <= 2
+            assert set(interpretation["effects"]) <= {
+                "ストレス",
+                "勇気",
+                "知性",
+                "忍耐",
+                "キラキラ",
+                "自認",
+            }
+            assert interpretation["reply"]
         assert word["model"] in ["flower", "rock"]
         assert len(word["color"]) == 6
     main_path = next(ROOT.glob("*メイン*.xlsx"))

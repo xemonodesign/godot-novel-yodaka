@@ -2,7 +2,7 @@
 
 ## 提供素材
 
-`bg.png`（街）、`bg_near.png`（会話背景）、`girl.png`（よだか）を使用。`slide_01.png`〜`slide_06.png` は画面デザインの参照資料で、ゲーム本体には含めていません。元のXLSXは改変せず、本文からゲーム用JSONを生成しています。
+`bg.png`（街）、`bg_near.png`（会話背景）を使用。人物は `images/character/yodaka.png`（よだか）、`asika.png`（あしか）、`doctor.png`（ドクター）を使用。初版の `girl.png` は保持しています。`slide_01.png`〜`slide_06.png` は画面デザインの参照資料で、ゲーム本体には含めていません。元のXLSXは改変せず、本文からゲーム用JSONを生成しています。
 
 ## 診察室の背景
 

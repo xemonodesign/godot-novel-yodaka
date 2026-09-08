@@ -14,6 +14,9 @@ var history: Array = []
 var read_count: int = 0
 var speed: float = 32.0
 var last_error: String = ""
+var scene_key: String = ""
+var pending_word: String = ""
+var counsel_step: String = "opening_doctor"
 
 func _init() -> void:
     data = JSON.parse_string(FileAccess.get_file_as_string("res://src/data/scenario.json"))
@@ -25,6 +28,9 @@ func reset() -> void:
     stats = INITIAL.duplicate()
     history.clear()
     read_count = 0
+    scene_key = ""
+    pending_word = ""
+    counsel_step = "opening_doctor"
 
 func word_by_id(id: String) -> Dictionary:
     for word in data.words:
@@ -39,6 +45,7 @@ func finish_line() -> bool:
     var added := false
     if node.has("word") and not collected.has(node.word):
         collected.append(node.word)
+        pending_word = node.word
         added = true
     if history.is_empty() or history.back().id != current:
         history.append({"id": current, "speaker": node.speaker, "text": node.text})
@@ -56,18 +63,26 @@ func choose(index: int) -> void:
         current = node.next
     save_game()
 
-func interpret(index: int) -> Array:
-    if answers.size() >= collected.size():
+func preview_effects(index: int) -> Array:
+    if answers.size() >= collected.size() or index not in [0, 1, 2]:
         return []
     var word := word_by_id(collected[answers.size()])
-    var bases := [[-18, 15, 3, 4, 12, 12], [14, 7, 10, 8, -8, 10], [-5, 2, 14, 15, 1, 5]]
-    var delta: Array = []
+    var delta: Array = [0, 0, 0, 0, 0, 0]
+    var effects: Dictionary = word.interpretations[index].effects
+    for stat in effects:
+        var i: int = STAT_NAMES.find(stat)
+        delta[i] = clampi(int(stats[i]) + int(effects[stat]), 0, 100) - int(stats[i])
+    return delta
+
+func interpret(index: int) -> Array:
+    var delta := preview_effects(index)
+    if delta.is_empty():
+        return []
+    var word := word_by_id(collected[answers.size()])
     for i in range(6):
-        var before: int = stats[i]
-        var amount: int = bases[index][i] + int(word.focus[i]) * 4
-        stats[i] = clampi(before + amount, 0, 100)
-        delta.append(stats[i] - before)
+        stats[i] += delta[i]
     answers.append({"word": word.id, "choice": index, "delta": delta})
+    counsel_step = "reply"
     save_game()
     return delta
 
@@ -76,9 +91,11 @@ func save_game() -> bool:
     if file == null:
         last_error = "この環境では保存できません"
         return false
-    file.store_string(JSON.stringify({"version": 1, "current": current,
+    file.store_string(JSON.stringify({"version": 2, "current": current,
         "collected": collected, "answers": answers, "stats": stats,
-        "history": history, "read_count": read_count, "speed": speed}))
+        "history": history, "read_count": read_count, "speed": speed,
+        "scene_key": scene_key, "pending_word": pending_word,
+        "counsel_step": counsel_step}))
     last_error = ""
     return true
 
@@ -92,7 +109,10 @@ func load_game() -> bool:
     if parser.parse(FileAccess.get_file_as_string(save_path)) != OK:
         return false
     var saved = parser.data
-    if not saved is Dictionary or saved.get("version") != 1:
+    if not saved is Dictionary:
+        return false
+    var version = saved.get("version", 0)
+    if not (version is float or version is int) or version != int(version) or int(version) not in [1, 2]:
         return false
     if not saved.get("current", "") in ["counseling", "result"] and not data.nodes.has(saved.get("current", "")):
         return false
@@ -127,6 +147,16 @@ func load_game() -> bool:
     for entry in saved.history:
         if not entry is Dictionary or not entry.get("text") is String or not entry.get("speaker") is String or not entry.get("id") is String:
             return false
+    var step = saved.get("counsel_step", "opening_doctor")
+    if step not in ["opening_doctor", "opening_yodaka", "recall", "question", "choice", "reply", "response"]:
+        return false
+    if step in ["reply", "response"] and saved.answers.is_empty():
+        return false
+    var pending = saved.get("pending_word", "")
+    if not pending is String or (pending != "" and not seen.has(pending)):
+        return false
+    if not saved.get("scene_key", "") is String:
+        return false
     current = saved.current
     collected = saved.collected
     answers = saved.answers
@@ -134,4 +164,7 @@ func load_game() -> bool:
     history = saved.history
     read_count = int(saved.get("read_count", 0))
     speed = clampf(float(saved.get("speed", 32)), 12, 80)
+    scene_key = saved.get("scene_key", "")
+    pending_word = pending
+    counsel_step = step
     return true
