@@ -17,7 +17,7 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#171e1c;col
 <div id="loading"><p>誰かにもらった言葉を、わたしの中に。</p><h1>よだか</h1><p>ことばの標本</p><progress id="progress"></progress><p id="message">物語を準備しています。初回は少し時間がかかります。</p><p id="error"></p></div>
 <script src="index.js"></script>
 <script>
-const engine = new Engine({"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":11711652,"index.wasm":37695054},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4});
+const engine = new Engine({"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":26293828,"index.wasm":37695054},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4});
 const progress = document.getElementById('progress');
 engine.startGame({canvas:document.getElementById('canvas'),onProgress:(loaded,total)=>{if(total>0){progress.max=total;progress.value=loaded;}}}).then(()=>{document.getElementById('loading').remove();document.getElementById('canvas').focus();}).catch(error=>{progress.remove();document.getElementById('message').textContent='読み込みに失敗しました。ページを再読み込みしてください。';document.getElementById('error').textContent=String(error);});
 </script>
