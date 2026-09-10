@@ -5,7 +5,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const scenario = require('../src/data/scenario.json');
-const output = process.env.YODAKA_SCREENSHOTS || '/tmp/yodaka-v2-browser';
+const output = process.env.YODAKA_SCREENSHOTS || '/tmp/yodaka-v3-browser';
 fs.mkdirSync(output, { recursive: true });
 
 async function saveRecord(page, replacement) {
@@ -74,7 +74,7 @@ async function saveRecord(page, replacement) {
     await page.waitForTimeout(2800);
     await shot('yodaka');
     let result;
-    for (let i = 0; i < 520; i++) {
+    for (let i = 0; i < 720; i++) {
       await page.mouse.click(1095, 557);
       await page.waitForTimeout(45);
       await page.mouse.click(550, 466);
@@ -82,6 +82,7 @@ async function saveRecord(page, replacement) {
       if (i % 50 === 49) {
         result = await saveRecord(page);
         console.log('Playthrough', i + 1, result.current, result.counsel_step);
+        if (result.current === 'map') await page.mouse.click(365, 455);
         if (result.current === 'result') break;
       }
     }
@@ -108,7 +109,7 @@ async function saveRecord(page, replacement) {
       await page.mouse.click(475, 500);
       await page.waitForTimeout(800);
     };
-    const common = { ...initial, version: 2, stats: [65, 40, 45, 40, 35, 35],
+    const common = { ...initial, version: 3, stats: [65, 40, 45, 40, 35, 35],
       collected: scenario.words.map(word => word.id), answers: [], history: [], pending_word: '' };
     await seed({ ...common, current: 'mother_10', collected: ['praise'],
       scene_key: '1|売ったバッシュで寿司を食う|自宅_リビング', pending_word: 'praise' });
@@ -130,7 +131,7 @@ async function saveRecord(page, replacement) {
       scene_key: '7|今週、僕に残った言葉|診察室' });
     await page.waitForTimeout(600);
     await shot('choice-preview');
-    await page.mouse.click(238, 468);
+    await page.mouse.click(431, 468);
     await page.waitForTimeout(2800);
     const answered = await saveRecord(page);
     assert.equal(answered.counsel_step, 'reply');
@@ -143,13 +144,48 @@ async function saveRecord(page, replacement) {
     await page.waitForTimeout(2000);
     assert.equal((await saveRecord(page)).counsel_step, 'reply');
     await shot('resumed-reply');
+    await seed({ ...common, current: 'map', selected_event: '', counsel_return: 'result' });
+    await shot('map');
+    await page.mouse.click(610, 325);
+    await page.waitForTimeout(1000);
+    let selected = await saveRecord(page);
+    assert.equal(selected.selected_event, 'cafe');
+    assert.equal(selected.current, 'map_cafe_6');
+    await shot('map-event-chapter');
+    await page.mouse.click(640, 710);
+    await page.waitForTimeout(2600);
+    await shot('cafe');
+
+    await seed({ ...common, current: 'mother_8', collected: [], scene_key: '1|売ったバッシュで寿司を食う|自宅_リビング' });
+    await page.waitForTimeout(2000);
+    await shot('mother');
+    const sumika = scenario.nodes.sumika_6;
+    await seed({ ...common, current: 'sumika_6', collected: [], scene_key: `4|${sumika.chapter}|${sumika.place}` });
+    await page.waitForTimeout(2000);
+    await shot('sumika');
+
+    const gate = scenario.nodes.main4_31;
+    const gateScene = `6|${gate.chapter}|${gate.place}`;
+    await seed({ ...common, current: 'main4_31', stats: [65, 54, 45, 40, 35, 35], scene_key: gateScene });
+    await page.waitForTimeout(1400);
+    await shot('courage-locked');
+    await page.mouse.click(791, 450);
+    await page.waitForTimeout(800);
+    assert.equal((await saveRecord(page)).current, 'main4_31');
+    await seed({ ...common, current: 'main4_31', stats: [65, 55, 45, 40, 35, 35], scene_key: gateScene });
+    await page.waitForTimeout(1400);
+    await shot('courage-unlocked');
+    await page.mouse.click(791, 450);
+    await page.waitForTimeout(2400);
+    assert.equal((await saveRecord(page)).current, 'main4_38');
+
     await page.setViewportSize({ width: 844, height: 390 });
     await page.waitForTimeout(500);
     await shot('mobile');
     fs.writeFileSync(path.join(output, 'verification.json'), JSON.stringify({ errors,
       fullRun: result, selectedReply: answered }, null, 2));
     assert.deepEqual(errors, [], 'No runtime errors');
-    console.log('PASS: full run, explicit blackout clicks, 8 words, 8 two-stat answers, previews, save migration and reply resume');
+    console.log('PASS: full run, explicit blackout clicks, 8 words, 8 two-stat answers, previews, MAP, courage gate and reply resume');
   } finally {
     await browser.close();
   }

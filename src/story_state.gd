@@ -17,6 +17,8 @@ var last_error: String = ""
 var scene_key: String = ""
 var pending_word: String = ""
 var counsel_step: String = "opening_doctor"
+var counsel_return: String = "result"
+var selected_event: String = ""
 
 func _init() -> void:
     data = JSON.parse_string(FileAccess.get_file_as_string("res://src/data/scenario.json"))
@@ -31,6 +33,8 @@ func reset() -> void:
     scene_key = ""
     pending_word = ""
     counsel_step = "opening_doctor"
+    counsel_return = "result"
+    selected_event = ""
 
 func word_by_id(id: String) -> Dictionary:
     for word in data.words:
@@ -53,7 +57,36 @@ func finish_line() -> bool:
     save_game()
     return added
 
-func choose(index: int) -> void:
+func can_choose(index: int) -> bool:
+    if not data.nodes.has(current):
+        return false
+    var node: Dictionary = data.nodes[current]
+    if not node.has("choices"):
+        return index == 0
+    if index < 0 or index >= node.choices.size():
+        return false
+    var requirement: Dictionary = node.choices[index].get("requires", {})
+    return requirement.is_empty() or stats[STAT_NAMES.find(requirement.stat)] >= requirement.min
+
+func select_event(id: String) -> bool:
+    if current != "map" or selected_event != "":
+        return false
+    for event in data.map_events:
+        if event.id == id:
+            selected_event = id
+            current = event.start
+            save_game()
+            return true
+    return false
+
+func complete_counseling() -> void:
+    current = counsel_return
+    counsel_step = "opening_doctor"
+    save_game()
+
+func choose(index: int) -> bool:
+    if not can_choose(index):
+        return false
     var node: Dictionary = data.nodes[current]
     if node.has("choices"):
         history.append({"id": current + "_choice", "speaker": "選んだこと",
@@ -61,7 +94,12 @@ func choose(index: int) -> void:
         current = node.choices[index].next
     else:
         current = node.next
+    if current in ["counseling_mid", "counseling"]:
+        counsel_return = "main4_5" if current == "counseling_mid" else "result"
+        current = "counseling"
+        counsel_step = "opening_doctor"
     save_game()
+    return true
 
 func preview_effects(index: int) -> Array:
     if answers.size() >= collected.size() or index not in [0, 1, 2]:
@@ -91,11 +129,12 @@ func save_game() -> bool:
     if file == null:
         last_error = "この環境では保存できません"
         return false
-    file.store_string(JSON.stringify({"version": 2, "current": current,
+    file.store_string(JSON.stringify({"version": 3, "current": current,
         "collected": collected, "answers": answers, "stats": stats,
         "history": history, "read_count": read_count, "speed": speed,
         "scene_key": scene_key, "pending_word": pending_word,
-        "counsel_step": counsel_step}))
+        "counsel_step": counsel_step, "counsel_return": counsel_return,
+        "selected_event": selected_event}))
     last_error = ""
     return true
 
@@ -112,9 +151,9 @@ func load_game() -> bool:
     if not saved is Dictionary:
         return false
     var version = saved.get("version", 0)
-    if not (version is float or version is int) or version != int(version) or int(version) not in [1, 2]:
+    if not (version is float or version is int) or version != int(version) or int(version) not in [1, 2, 3]:
         return false
-    if not saved.get("current", "") in ["counseling", "result"] and not data.nodes.has(saved.get("current", "")):
+    if not saved.get("current", "") in ["map", "counseling", "result"] and not data.nodes.has(saved.get("current", "")):
         return false
     if not saved.get("stats") is Array or saved.stats.size() != 6:
         return false
@@ -157,6 +196,10 @@ func load_game() -> bool:
         return false
     if not saved.get("scene_key", "") is String:
         return false
+    var return_id = saved.get("counsel_return", "result")
+    var event_id = saved.get("selected_event", "")
+    if return_id not in ["result", "main4_5"] or event_id not in ["", "mother", "cafe", "park"]:
+        return false
     current = saved.current
     collected = saved.collected
     answers = saved.answers
@@ -167,4 +210,6 @@ func load_game() -> bool:
     scene_key = saved.get("scene_key", "")
     pending_word = pending
     counsel_step = step
+    counsel_return = return_id
+    selected_event = event_id
     return true

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://f6puevtgf0kq"
-path="res://.godot/imported/reflection.png-ebb88c18c3ea81a50c0717e8b7af5074.ctex"
+uid="uid://cqra1y5eam3mk"
+path="res://.godot/imported/street.png-be573cb9f72ccc4ba4e766b4a9e74f9b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://docs/screenshots/reflection.png"
-dest_files=["res://.godot/imported/reflection.png-ebb88c18c3ea81a50c0717e8b7af5074.ctex"]
+source_file="res://src/assets/backgrounds/street.png"
+dest_files=["res://.godot/imported/street.png-be573cb9f72ccc4ba4e766b4a9e74f9b.ctex"]
 
 [params]
 

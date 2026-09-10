@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b1imem4r7woe"
-path="res://.godot/imported/counseling.png-2d0459a6b978841b1beaa8bdd5a1ade3.ctex"
+uid="uid://bxub22jsnnqh5"
+path="res://.godot/imported/restaurant.png-6606bb6f73551f4f1bbd50d276a5b392.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://docs/screenshots/counseling.png"
-dest_files=["res://.godot/imported/counseling.png-2d0459a6b978841b1beaa8bdd5a1ade3.ctex"]
+source_file="res://src/assets/backgrounds/restaurant.png"
+dest_files=["res://.godot/imported/restaurant.png-6606bb6f73551f4f1bbd50d276a5b392.ctex"]
 
 [params]
 

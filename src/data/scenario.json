@@ -2057,7 +2057,7 @@
       "chapter": "眠ってるふりのぼっち",
       "chapter_index": 5,
       "place": "廊下",
-      "next": "main4_5",
+      "next": "map",
       "source": {
         "file": "よだかプロト版メイン v3_26.07.17.xlsx",
         "sheet": "メイン03v3",
@@ -2423,7 +2423,11 @@
         },
         {
           "text": "お姫様じゃなくてもいい",
-          "next": "main4_38"
+          "next": "main4_38",
+          "requires": {
+            "stat": "勇気",
+            "min": 55
+          }
         }
       ]
     },
@@ -2870,6 +2874,372 @@
         "row": 24
       }
     },
+    "map_mother_6": {
+      "speaker": "",
+      "text": "母はぼくをよく褒める",
+      "chapter": "寄り道 / なきごえ",
+      "chapter_index": 5,
+      "place": "リビング",
+      "partner": "りあ",
+      "next": "map_mother_7",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片７",
+        "row": 6
+      }
+    },
+    "map_mother_7": {
+      "speaker": "",
+      "text": "褒めは母の社交の手段であって、\n赤子が気づいてほしがってなきごえをあげるのと同じ\n生存戦略の一環であり、当たり前なのだとわかっている",
+      "chapter": "寄り道 / なきごえ",
+      "chapter_index": 5,
+      "place": "リビング",
+      "partner": "りあ",
+      "next": "map_mother_8",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片７",
+        "row": 7
+      }
+    },
+    "map_mother_8": {
+      "speaker": "りあ",
+      "text": "いや〜、よだかかわいい〜！\nお母さんがよかったのかな〜、なんて",
+      "chapter": "寄り道 / なきごえ",
+      "chapter_index": 5,
+      "place": "リビング",
+      "partner": "りあ",
+      "next": "map_mother_9",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片７",
+        "row": 8
+      },
+      "word": "cute"
+    },
+    "map_mother_9": {
+      "speaker": "",
+      "text": "仲の良い女の子のビジュアルを褒めるのも\n母にとってはデフォルトで覚えている技のようなもの",
+      "chapter": "寄り道 / なきごえ",
+      "chapter_index": 5,
+      "place": "リビング",
+      "partner": "りあ",
+      "next": "map_mother_10",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片７",
+        "row": 9
+      }
+    },
+    "map_mother_10": {
+      "speaker": "よだか",
+      "text": "（前はカッコいいだったのに\n　今はカワイイが褒め言葉ですか。母よ）",
+      "chapter": "寄り道 / なきごえ",
+      "chapter_index": 5,
+      "place": "リビング",
+      "partner": "りあ",
+      "next": "map_mother_11",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片７",
+        "row": 10
+      }
+    },
+    "map_mother_11": {
+      "speaker": "りあ",
+      "text": "ホントはね、\n女の子がほしいって気持ちもあったの！",
+      "chapter": "寄り道 / なきごえ",
+      "chapter_index": 5,
+      "place": "リビング",
+      "partner": "りあ",
+      "next": "map_mother_12",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片７",
+        "row": 11
+      }
+    },
+    "map_mother_12": {
+      "speaker": "",
+      "text": "こんなのなきごえみたいなもので\nだから気にしなくてもいいんだけど。\nでもなんか、何かのステータスが下がる気がした",
+      "chapter": "寄り道 / なきごえ",
+      "chapter_index": 5,
+      "place": "リビング",
+      "partner": "りあ",
+      "next": "counseling_mid",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片７",
+        "row": 12
+      }
+    },
+    "map_cafe_6": {
+      "speaker": "",
+      "text": "放課後、喫茶店で時間をつぶしていると、\nふと隣の席の会話が耳に入ってきた",
+      "chapter": "寄り道 / 奇跡を待つ人",
+      "chapter_index": 5,
+      "place": "喫茶店",
+      "partner": "",
+      "next": "map_cafe_7",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片１",
+        "row": 6
+      }
+    },
+    "map_cafe_7": {
+      "speaker": "？？？",
+      "text": "奇跡が起こるとは思ってないけど、\n奇跡が来てほしいなって思ってるの",
+      "chapter": "寄り道 / 奇跡を待つ人",
+      "chapter_index": 5,
+      "place": "喫茶店",
+      "partner": "",
+      "next": "map_cafe_8",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片１",
+        "row": 7
+      },
+      "word": "miracle"
+    },
+    "map_cafe_8": {
+      "speaker": "よだか",
+      "text": "（いったいなんの話をしているんだろう）",
+      "chapter": "寄り道 / 奇跡を待つ人",
+      "chapter_index": 5,
+      "place": "喫茶店",
+      "partner": "",
+      "next": "map_cafe_9",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片１",
+        "row": 8
+      }
+    },
+    "map_cafe_9": {
+      "speaker": "",
+      "text": "ちらりとそちらを窺う。年配の女性が、同じく年配の\n女性に向かって話しかけていた",
+      "chapter": "寄り道 / 奇跡を待つ人",
+      "chapter_index": 5,
+      "place": "喫茶店",
+      "partner": "",
+      "next": "map_cafe_10",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片１",
+        "row": 9
+      }
+    },
+    "map_cafe_10": {
+      "speaker": "",
+      "text": "しかしもう、ふたりの会話は日常の雑事へと移っている",
+      "chapter": "寄り道 / 奇跡を待つ人",
+      "chapter_index": 5,
+      "place": "喫茶店",
+      "partner": "",
+      "next": "map_cafe_11",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片１",
+        "row": 10
+      }
+    },
+    "map_cafe_11": {
+      "speaker": "よだか",
+      "text": "（奇跡、か……）",
+      "chapter": "寄り道 / 奇跡を待つ人",
+      "chapter_index": 5,
+      "place": "喫茶店",
+      "partner": "",
+      "next": "map_cafe_12",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片１",
+        "row": 11
+      }
+    },
+    "map_cafe_12": {
+      "speaker": "",
+      "text": "僕は自分のカップに手を伸ばし、\nコーヒーの残りをしずかに飲み干した",
+      "chapter": "寄り道 / 奇跡を待つ人",
+      "chapter_index": 5,
+      "place": "喫茶店",
+      "partner": "",
+      "next": "map_cafe_13",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片１",
+        "row": 12
+      }
+    },
+    "map_cafe_13": {
+      "speaker": "よだか",
+      "text": "（奇跡が起きたら、僕は、）",
+      "chapter": "寄り道 / 奇跡を待つ人",
+      "chapter_index": 5,
+      "place": "喫茶店",
+      "partner": "",
+      "next": "map_cafe_14",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片１",
+        "row": 13
+      }
+    },
+    "map_cafe_14": {
+      "speaker": "よだか",
+      "text": "（──いったい何を願うだろう？）",
+      "chapter": "寄り道 / 奇跡を待つ人",
+      "chapter_index": 5,
+      "place": "喫茶店",
+      "partner": "",
+      "next": "counseling_mid",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片１",
+        "row": 14
+      }
+    },
+    "map_park_6": {
+      "speaker": "",
+      "text": "ぶらぶらと街中にある自然公園にやってきた",
+      "chapter": "寄り道 / 鴨のいる公園",
+      "chapter_index": 5,
+      "place": "自然公園",
+      "partner": "",
+      "next": "map_park_7",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片４",
+        "row": 6
+      }
+    },
+    "map_park_7": {
+      "speaker": "",
+      "text": "鴨を見るためだ",
+      "chapter": "寄り道 / 鴨のいる公園",
+      "chapter_index": 5,
+      "place": "自然公園",
+      "partner": "",
+      "next": "map_park_8",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片４",
+        "row": 7
+      }
+    },
+    "map_park_8": {
+      "speaker": "よだか",
+      "text": "（お、いたいた）",
+      "chapter": "寄り道 / 鴨のいる公園",
+      "chapter_index": 5,
+      "place": "自然公園",
+      "partner": "",
+      "next": "map_park_9",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片４",
+        "row": 8
+      }
+    },
+    "map_park_9": {
+      "speaker": "",
+      "text": "あまり広くはない公園の隅には人工の池があり、\nそこには幾羽もの鴨が浮かんでいる",
+      "chapter": "寄り道 / 鴨のいる公園",
+      "chapter_index": 5,
+      "place": "自然公園",
+      "partner": "",
+      "next": "map_park_10",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片４",
+        "row": 9
+      }
+    },
+    "map_park_10": {
+      "speaker": "",
+      "text": "岩の上に立つもの、すいすい泳いでいるもの、\n背中に顔を突っ込んで眠っているもの──",
+      "chapter": "寄り道 / 鴨のいる公園",
+      "chapter_index": 5,
+      "place": "自然公園",
+      "partner": "",
+      "next": "map_park_11",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片４",
+        "row": 10
+      }
+    },
+    "map_park_11": {
+      "speaker": "",
+      "text": "三者三葉の鴨たちを、僕はじっと無心に眺める",
+      "chapter": "寄り道 / 鴨のいる公園",
+      "chapter_index": 5,
+      "place": "自然公園",
+      "partner": "",
+      "next": "map_park_12",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片４",
+        "row": 11
+      }
+    },
+    "map_park_12": {
+      "speaker": "よだか",
+      "text": "（こいつら、なに考えてんだろ。\n……なにも考えてないか）",
+      "chapter": "寄り道 / 鴨のいる公園",
+      "chapter_index": 5,
+      "place": "自然公園",
+      "partner": "",
+      "next": "map_park_13",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片４",
+        "row": 12
+      }
+    },
+    "map_park_13": {
+      "speaker": "",
+      "text": "鴨を見ていると、水に落ちた綿菓子のように、\n時間はあっという間に溶けていく",
+      "chapter": "寄り道 / 鴨のいる公園",
+      "chapter_index": 5,
+      "place": "自然公園",
+      "partner": "",
+      "next": "map_park_14",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片４",
+        "row": 13
+      }
+    },
+    "map_park_14": {
+      "speaker": "よだか",
+      "text": "（我ながら暇だな）",
+      "chapter": "寄り道 / 鴨のいる公園",
+      "chapter_index": 5,
+      "place": "自然公園",
+      "partner": "",
+      "next": "map_park_15",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片４",
+        "row": 14
+      }
+    },
+    "map_park_15": {
+      "speaker": "",
+      "text": "そう思いながらも、このどこか間の抜けた生き物から\n目が離せない僕だった",
+      "chapter": "寄り道 / 鴨のいる公園",
+      "chapter_index": 5,
+      "place": "自然公園",
+      "partner": "",
+      "next": "counseling_mid",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片４",
+        "row": 15
+      }
+    },
     "intro_0": {
       "speaker": "医師",
       "text": "よだかさん。身体が変わってから、いろいろなことがありましたね。\n今日は、答えを急がずにお話ししましょう。",
@@ -3247,6 +3617,104 @@
       ],
       "quote": "公開は「親しい友達」限定にしました",
       "speaker": "あしか"
+    },
+    {
+      "id": "cute",
+      "node": "map_mother_8",
+      "word": "かわいい",
+      "memory": "母さんに、かわいいって言われました。\n前はカッコいいだったのに、って思って。",
+      "model": "flower",
+      "color": "e2b4ab",
+      "interpretations": [
+        {
+          "label": "嬉しかった",
+          "reply": "褒めてくれたのは、嬉しかったです。\nその気持ちは、大事にしたいです。",
+          "effects": {
+            "ストレス": -12,
+            "キラキラ": 16
+          }
+        },
+        {
+          "label": "前の自分も見てほしい",
+          "reply": "前の僕のことも、見てほしいです。\n言ってもいいのかな、そういうこと。",
+          "effects": {
+            "勇気": 18,
+            "自認": 14
+          }
+        },
+        {
+          "label": "まだわからない",
+          "reply": "まだ、うまく答えられません。\n嬉しいのか、さびしいのか。",
+          "effects": {
+            "知性": 12,
+            "忍耐": 14
+          }
+        }
+      ],
+      "quote": "いや〜、よだかかわいい〜！\nお母さんがよかったのかな〜、なんて",
+      "speaker": "りあ"
+    },
+    {
+      "id": "miracle",
+      "node": "map_cafe_7",
+      "word": "奇跡",
+      "memory": "喫茶店で、奇跡が来てほしいって言葉を聞いて。\n僕なら何を願うのか、考えてしまいました。",
+      "model": "rock",
+      "color": "a9becf",
+      "interpretations": [
+        {
+          "label": "願ってもいいと思った",
+          "reply": "僕も、願っていいのかもしれません。\n自分がどうしたいか、少し考えてみたいです。",
+          "effects": {
+            "勇気": 18,
+            "ストレス": -10
+          }
+        },
+        {
+          "label": "奇跡には頼れない",
+          "reply": "奇跡がなくても、自分で決めたいです。\n今の僕にできることから。",
+          "effects": {
+            "勇気": 16,
+            "自認": 12
+          }
+        },
+        {
+          "label": "何を願うか考えたい",
+          "reply": "まだ何を願うのか、わからなくて。\nその答えを、ゆっくり探したいです。",
+          "effects": {
+            "知性": 16,
+            "忍耐": 12
+          }
+        }
+      ],
+      "quote": "奇跡が起こるとは思ってないけど、\n奇跡が来てほしいなって思ってるの",
+      "speaker": "？？？"
+    }
+  ],
+  "map_events": [
+    {
+      "id": "mother",
+      "start": "map_mother_6",
+      "title": "なきごえ",
+      "label": "母と話す",
+      "place": "リビング",
+      "recap": "家で母さんと話しました。\nかわいいって言ってくれたんですけど、\n前とは違う褒め言葉が、少し引っかかって。"
+    },
+    {
+      "id": "cafe",
+      "start": "map_cafe_6",
+      "title": "奇跡を待つ人",
+      "label": "喫茶店に寄る",
+      "place": "喫茶店",
+      "recap": "喫茶店で、隣の席の人の話が聞こえて。\n奇跡が来てほしい、って。\n僕なら何を願うのか、考えていました。"
+    },
+    {
+      "id": "park",
+      "start": "map_park_6",
+      "title": "鴨のいる公園",
+      "label": "公園で過ごす",
+      "place": "自然公園",
+      "recap": "公園で、鴨を眺めていました。\n何も考えていないように見えて、\n気づいたら、ずいぶん時間が経っていました。"
     }
   ]
 }

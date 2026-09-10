@@ -112,6 +112,66 @@ def compile_scenario():
         "main4_31", ["おかしくない", "お姫様じゃなくてもいい"], ["main4_33", "main4_38"]
     )
     nodes["main4_36"]["next"] = "main4_48"
+    nodes["main4_31"]["choices"][1]["requires"] = {"stat": "勇気", "min": 55}
+    nodes["main3_54"]["next"] = "map"
+    map_events = []
+    events = [
+        (
+            "mother",
+            books["fragments2"][6],
+            "なきごえ",
+            "母と話す",
+            "リビング",
+            "りあ",
+            "家で母さんと話しました。\nかわいいって言ってくれたんですけど、\n前とは違う褒め言葉が、少し引っかかって。",
+        ),
+        (
+            "cafe",
+            books["fragments1"][0],
+            "奇跡を待つ人",
+            "喫茶店に寄る",
+            "喫茶店",
+            "",
+            "喫茶店で、隣の席の人の話が聞こえて。\n奇跡が来てほしい、って。\n僕なら何を願うのか、考えていました。",
+        ),
+        (
+            "park",
+            books["fragments1"][3],
+            "鴨のいる公園",
+            "公園で過ごす",
+            "自然公園",
+            "",
+            "公園で、鴨を眺めていました。\n何も考えていないように見えて、\n気づいたら、ずいぶん時間が経っていました。",
+        ),
+    ]
+    for key, sheet, title, label, place, partner, recap in events:
+        rows = [r for r in sheet["rows"] if r["row"] >= 5 and "C" in r]
+        ids = [f"map_{key}_{r['row']}" for r in rows]
+        map_events.append(
+            {
+                "id": key,
+                "start": ids[0],
+                "title": title,
+                "label": label,
+                "place": place,
+                "recap": recap,
+            }
+        )
+        for i, row in enumerate(rows):
+            nodes[ids[i]] = {
+                "speaker": row.get("B", ""),
+                "text": row["C"],
+                "chapter": "寄り道 / " + title,
+                "chapter_index": 5,
+                "place": place,
+                "partner": partner,
+                "next": ids[i + 1] if i + 1 < len(ids) else "counseling_mid",
+                "source": {
+                    "file": sheet["file"],
+                    "sheet": sheet["sheet"],
+                    "row": row["row"],
+                },
+            }
     intro = [
         (
             "医師",
@@ -160,6 +220,7 @@ def compile_scenario():
         "nodes": nodes,
         "chapters": chapters,
         "words": markers,
+        "map_events": map_events,
     }
     (ROOT / "src/data/scenario.json").write_text(
         json.dumps(result, ensure_ascii=False, indent=2)

@@ -23,3 +23,11 @@
 Noto Sans JP、SIL Open Font License 1.1。`src/assets/OFL-NotoSansJP.txt` にライセンス全文。Web配信物にもライセンスを同梱。
 
 取得元：https://github.com/google/fonts/tree/main/ofl/notosansjp
+
+## 追加素材（2026-09-10）
+
+りあ：提供された `images/character/mother.png` から組み込み image_gen で背景を除去し、`src/assets/mother_cutout.png` を使用。元画像は保持しています。すみか：専用素材がないため `images/character/girl.png` を仮使用。`sumika.png` を追加すると優先します。
+
+場所別の7背景とりあの背景透過のプロンプトは [生成記録](background-prompts.md) を参照。
+
+立ち絵は実行時に透明余白を除いた表示範囲を使い、縦長の全身素材は上半身まで表示します。元ファイル自体は変更しません。

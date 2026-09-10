@@ -15,6 +15,13 @@ def test_all_routes_reach_counseling_with_all_words():
         if node_id == "counseling":
             paths.append((visited, words))
             return
+        if node_id == "map":
+            for event in data["map_events"]:
+                walk(event["start"], visited + ["map"], words)
+            return
+        if node_id == "counseling_mid":
+            walk("main4_5", visited + ["counseling_mid"], words)
+            return
         assert node_id not in visited, f"Loop at {node_id}"
         node = data["nodes"][node_id]
         assert len(node["text"]) > 0
@@ -23,13 +30,20 @@ def test_all_routes_reach_counseling_with_all_words():
             walk(target["next"], visited + [node_id], words)
 
     walk(data["start"], [], set())
-    assert len(paths) == 12
+    assert len(paths) == 36
     for visited, words in paths:
-        assert len(words) == 8
+        assert len(words) == (8 if "map_park_6" in visited else 9)
+        assert (
+            visited.index("map")
+            < visited.index("counseling_mid")
+            < visited.index("main4_5")
+        )
         assert ("main2_33" in visited) != ("main2_40" in visited)
         assert ("main3_26" in visited) != ("main3_29" in visited)
         assert ("main4_33" in visited) != ("main4_38" in visited)
-    assert set(data["nodes"]) == set().union(*(set(p[0]) for p in paths))
+    assert set(data["nodes"]) == set().union(
+        *(set(p[0]) - {"map", "counseling_mid"} for p in paths)
+    )
 
 
 def test_markers_are_original_dialogue_from_other_people():
@@ -37,7 +51,7 @@ def test_markers_are_original_dialogue_from_other_people():
     for word in data["words"]:
         node = data["nodes"][word["node"]]
         assert word["word"] in node["text"]
-        assert word["speaker"] in ["りあ", "あしか", "すみか"]
+        assert word["speaker"] in ["りあ", "あしか", "すみか", "？？？"]
         assert word["word"] in word["memory"]
         assert len(word["interpretations"]) == 3
         for interpretation in word["interpretations"]:
