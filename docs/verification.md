@@ -17,6 +17,9 @@
 ![勇気の必要値](screenshots/courage-locked.png)
 
 
+- 公開URLで同じChrome検証を完走。MAP選択・8語8回答・エンディング・勇気54/55の制御・返信からの再開に成功。実行時エラー0件。
+- GitHub Pages [公開処理34457593226](https://github.com/xemonodesign/godot-novel-yodaka/actions/runs/34457593226) 成功。配信中のPCK（26,293,828 bytes）がローカルリリースとSHA-256で一致。
+
 ## 2026-09-09 演出・会話の更新
 
 - `make lint` 成功。`make test` はpytest 2件・カバレッジ98.85%、Godot 1,938チェック成功。
