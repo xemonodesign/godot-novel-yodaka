@@ -3,7 +3,7 @@ extends SubViewportContainer
 var pivot: Node3D
 var phase: float = 0.0
 
-func setup(kind: String, tint: Color) -> void:
+func setup(kind: String, tint: Color, grown: bool = false) -> void:
     mouse_filter = Control.MOUSE_FILTER_IGNORE
     stretch = true
     var viewport := SubViewport.new()
@@ -17,11 +17,11 @@ func setup(kind: String, tint: Color) -> void:
     var camera := Camera3D.new()
     camera.position = Vector3(0, 0.25, 4.4)
     camera.projection = Camera3D.PROJECTION_ORTHOGONAL
-    camera.size = 3.2
+    camera.size = 2.7 if grown else 3.2
     world.add_child(camera)
     var light := DirectionalLight3D.new()
     light.rotation_degrees = Vector3(-35, -25, 0)
-    light.light_energy = 1.5
+    light.light_energy = 1.9 if grown else 1.5
     world.add_child(light)
     var fill := DirectionalLight3D.new()
     fill.rotation_degrees = Vector3(25, 130, 0)
@@ -50,6 +50,10 @@ func setup(kind: String, tint: Color) -> void:
         leaf.rotation.z = 0.45
         var leaf2 := _rock(pivot, Color("527566"), Vector3(-0.22, -0.57, 0), Vector3(0.35, 0.08, 0.15))
         leaf2.rotation.z = -0.35
+    if grown:
+        # A grown word carries a small bright crystal: the interpretation Yodaka gave it.
+        var crystal := _rock(pivot, tint.lightened(0.45), Vector3(-0.55, 0.95, 0.1), Vector3(0.16, 0.26, 0.16))
+        crystal.rotation.z = 0.4
     pivot.rotation.x = 0.16
 
 func _mesh(parent: Node3D, mesh: Mesh, tint: Color, pos: Vector3) -> MeshInstance3D:
