@@ -40,9 +40,9 @@ func run() -> void:
                 if state.round_index == 0:
                     check(not state.select_event("sumika"), "Sumika unlocks from the second week")
                 var picked := ""
-                var order := ["sushi", "park", "cafe", "sumika", "cry"]
+                var order: Array = state.data.map_events.filter(func(e): return not e.get("repeatable", false)).map(func(e): return e.id)
                 for i in range(order.size()):
-                    var id: String = order[(i + selection) % order.size()]
+                    var id: String = order[(i + selection * 4) % order.size()]
                     if state.event_available(id):
                         picked = id
                         break
@@ -112,8 +112,8 @@ func run() -> void:
                 choice = 0
             check(state.choose(choice), "Available choice advances")
         check(chapters.size() == 4 and chapters[0] == "tiktokの女王" and chapters[3] == "溺れる海のあしか", "Four main chapters in order")
-        check(outings == 6, "Six outings across the rounds")
-        check(state.collected.size() >= 6 and state.collected.size() <= 10, "Words collected across outings and chapters: %d" % state.collected.size())
+        check(outings == 12, "Twelve outings across the rounds")
+        check(state.collected.size() >= 6 and state.collected.size() <= state.data.words.size(), "Words collected across outings and chapters: %d" % state.collected.size())
         print("Strategy %d: %d words, %d rests, stats %s" % [selection, state.collected.size(), outings - state.visited.size(), state.stats])
         check(state.answers.size() == state.collected.size(), "Every word interpreted by the end")
         for id in state.collected:
@@ -137,6 +137,10 @@ func run() -> void:
     check(state.choose(1) and state.current == "counsel1_14", "Tutorial choice branches")
     check(state.stats[3] == before_choice[3] + 4 and state.stats[0] == before_choice[0] + 3, "Tutorial choice moves stats")
     check(state.last_delta == [3, 0, 0, 4], "Choice delta reported")
+    state.current = "cover_15"
+    var before_cover: Array = state.stats.duplicate()
+    state.finish_line()
+    check(state.stats[1] == before_cover[1] + 4 and state.stats[2] == before_cover[2] + 2, "Wordless fragment gives its insight at the end")
     state.current = "rest_2"
     var before_rest: int = state.stats[0]
     state.finish_line()
@@ -154,9 +158,12 @@ func run() -> void:
     check(not state.event_available("park") and state.event_available("rest"), "High stress allows only resting")
     check(not state.select_event("park"), "Locked outing rejected")
     state.stats[0] = 79
-    check(state.event_available("park") and not state.event_available("sumika"), "Week one pool excludes later events")
+    check(state.event_available("park") and not state.event_available("sumika") and not state.event_available("cry"), "Week one pool excludes later events")
     state.round_index = 1
-    check(state.event_available("sumika") and state.event_available("cry"), "Week two unlocks new places")
+    check(state.event_available("sumika") and not state.event_available("cry"), "Week two unlocks new places")
+    state.round_index = 2
+    check(state.event_available("cry") and state.event_available("taiko"), "Week three unlocks the rest")
+    state.round_index = 1
     state.visited = ["park"]
     check(not state.event_available("park") and state.event_available("rest"), "Visited place closed, rest repeatable")
     var invalid := FileAccess.open(backup, FileAccess.WRITE)
@@ -258,9 +265,9 @@ func run() -> void:
     check(scene.mode == "map", "MAP renders")
     var enabled := 0
     for child in scene.content.get_children():
-        if child is Button and child.text.begins_with("0") and not child.disabled:
+        if child is Button and child.text.length() > 4 and child.text.substr(0, 2).is_valid_int() and child.text.substr(2, 2) == "  " and not child.disabled:
             enabled += 1
-    check(enabled == 4, "Week one offers three places and rest")
+    check(enabled == 8, "Week one offers seven places and rest")
     scene._select_map_event("sumika")
     check(scene.state.current == "map", "Locked place ignored")
     scene._select_map_event("park")
@@ -281,10 +288,11 @@ func run() -> void:
     scene._sleep()
     check(scene.mode == "map" and scene.state.outings_done == 1, "Sleeping returns to the map")
     scene.state.outings_done = 1
+    scene.state.outings_done = 2
     scene._select_map_event("cafe")
     scene.state.current = "cafe_14"
     scene.state.choose(0)
-    check(scene.state.after_night == "chapter", "Second outing completes the round")
+    check(scene.state.after_night == "chapter", "Third outing completes the round")
     scene._show_story()
     scene._sleep()
     check(scene.state.current == "main1_5", "Round leads into CHAPTER 1")

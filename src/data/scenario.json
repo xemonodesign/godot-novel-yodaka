@@ -3801,282 +3801,11 @@
       "partner": "あしか",
       "next": "main3_29"
     },
-    "sushi_6": {
-      "speaker": "",
-      "text": "入学時、かなり良いバッシュを買ってもらったのに\n履き潰すこともなく、履くことができなくなって",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片２",
-        "row": 6
-      },
-      "chapter": "寄り道 / 売ったバッシュで寿司を食う",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自宅_リビング",
-      "partner": "りあ",
-      "next": "sushi_7"
-    },
-    "sushi_7": {
-      "speaker": "",
-      "text": "ぼくがそのことについて母に謝ると、\n彼女は「いーよ別に」と笑いながら\nバッシュをメルカリで売りに出してしまった",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片２",
-        "row": 7
-      },
-      "chapter": "寄り道 / 売ったバッシュで寿司を食う",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自宅_リビング",
-      "partner": "りあ",
-      "next": "sushi_8"
-    },
-    "sushi_8": {
-      "speaker": "りあ",
-      "text": "いいけどじゃあ次の母の日、ご飯ご馳走して？\nバッシュ売ったお金でお寿司とか食べいこうよ",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片２",
-        "row": 8
-      },
-      "chapter": "寄り道 / 売ったバッシュで寿司を食う",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自宅_リビング",
-      "partner": "りあ",
-      "next": "sushi_9"
-    },
-    "sushi_9": {
-      "speaker": "よだか",
-      "text": "母さんが買って\n母さんが売るのにご馳走って",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片２",
-        "row": 9
-      },
-      "chapter": "寄り道 / 売ったバッシュで寿司を食う",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自宅_リビング",
-      "partner": "りあ",
-      "next": "sushi_10"
-    },
-    "sushi_10": {
-      "speaker": "りあ",
-      "text": "靴を選んだのはよだかで、綺麗に使ったのもよだかだよ\nえらい！　えらい！　えらい！　えらいだ……",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片２",
-        "row": 10
-      },
-      "chapter": "寄り道 / 売ったバッシュで寿司を食う",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自宅_リビング",
-      "partner": "りあ",
-      "next": "sushi_11",
-      "word": "praise"
-    },
-    "sushi_11": {
-      "speaker": "",
-      "text": "後日、母は楽しげに笑ってメルカリの画面を見せる。\n宮崎県に送るらしい",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片２",
-        "row": 11
-      },
-      "chapter": "寄り道 / 売ったバッシュで寿司を食う",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自宅_リビング",
-      "partner": "りあ",
-      "next": "sushi_12"
-    },
-    "sushi_12": {
-      "speaker": "",
-      "text": "ぼくがシューズを履いてバスケをしていた時間は\n結果「使用感アリ　値引き」になって、\n最終的に回転寿司になった",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片２",
-        "row": 12
-      },
-      "chapter": "寄り道 / 売ったバッシュで寿司を食う",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自宅_リビング",
-      "partner": "りあ",
-      "next": "sushi_13"
-    },
-    "sushi_13": {
-      "speaker": "",
-      "text": "どこかの誰かに発送し、ぐるぐる回る寿司を食べ笑う。\n会計が済む。瞬く間にぜんぶ終わる。\nぜんぶこのくらいのスピードで過ぎていってくれれば",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片２",
-        "row": 13
-      },
-      "chapter": "寄り道 / 売ったバッシュで寿司を食う",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自宅_リビング",
-      "partner": "りあ",
-      "next": "night"
-    },
-    "park_6": {
-      "speaker": "",
-      "text": "ぶらぶらと街中にある自然公園にやってきた",
-      "source": {
-        "file": "よだかプロト_断片集1.xlsx",
-        "sheet": "断片４",
-        "row": 6
-      },
-      "chapter": "寄り道 / 鴨のいる公園",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自然公園",
-      "partner": "",
-      "next": "park_7"
-    },
-    "park_7": {
-      "speaker": "",
-      "text": "鴨を見るためだ",
-      "source": {
-        "file": "よだかプロト_断片集1.xlsx",
-        "sheet": "断片４",
-        "row": 7
-      },
-      "chapter": "寄り道 / 鴨のいる公園",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自然公園",
-      "partner": "",
-      "next": "park_8"
-    },
-    "park_8": {
-      "speaker": "よだか",
-      "text": "（お、いたいた）",
-      "source": {
-        "file": "よだかプロト_断片集1.xlsx",
-        "sheet": "断片４",
-        "row": 8
-      },
-      "chapter": "寄り道 / 鴨のいる公園",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自然公園",
-      "partner": "",
-      "next": "park_9"
-    },
-    "park_9": {
-      "speaker": "",
-      "text": "あまり広くはない公園の隅には人工の池があり、\nそこには幾羽もの鴨が浮かんでいる",
-      "source": {
-        "file": "よだかプロト_断片集1.xlsx",
-        "sheet": "断片４",
-        "row": 9
-      },
-      "chapter": "寄り道 / 鴨のいる公園",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自然公園",
-      "partner": "",
-      "next": "park_10"
-    },
-    "park_10": {
-      "speaker": "",
-      "text": "岩の上に立つもの、すいすい泳いでいるもの、\n背中に顔を突っ込んで眠っているもの──",
-      "source": {
-        "file": "よだかプロト_断片集1.xlsx",
-        "sheet": "断片４",
-        "row": 10
-      },
-      "chapter": "寄り道 / 鴨のいる公園",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自然公園",
-      "partner": "",
-      "next": "park_11"
-    },
-    "park_11": {
-      "speaker": "",
-      "text": "三者三葉の鴨たちを、僕はじっと無心に眺める",
-      "source": {
-        "file": "よだかプロト_断片集1.xlsx",
-        "sheet": "断片４",
-        "row": 11
-      },
-      "chapter": "寄り道 / 鴨のいる公園",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自然公園",
-      "partner": "",
-      "next": "park_12"
-    },
-    "park_12": {
-      "speaker": "よだか",
-      "text": "（こいつら、なに考えてんだろ。\n……なにも考えてないか）",
-      "source": {
-        "file": "よだかプロト_断片集1.xlsx",
-        "sheet": "断片４",
-        "row": 12
-      },
-      "chapter": "寄り道 / 鴨のいる公園",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自然公園",
-      "partner": "",
-      "next": "park_13"
-    },
-    "park_13": {
-      "speaker": "",
-      "text": "鴨を見ていると、水に落ちた綿菓子のように、\n時間はあっという間に溶けていく",
-      "source": {
-        "file": "よだかプロト_断片集1.xlsx",
-        "sheet": "断片４",
-        "row": 13
-      },
-      "chapter": "寄り道 / 鴨のいる公園",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自然公園",
-      "partner": "",
-      "next": "park_14"
-    },
-    "park_14": {
-      "speaker": "よだか",
-      "text": "（我ながら暇だな）",
-      "source": {
-        "file": "よだかプロト_断片集1.xlsx",
-        "sheet": "断片４",
-        "row": 14
-      },
-      "chapter": "寄り道 / 鴨のいる公園",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自然公園",
-      "partner": "",
-      "next": "park_15"
-    },
-    "park_15": {
-      "speaker": "",
-      "text": "そう思いながらも、このどこか間の抜けた生き物から\n目が離せない僕だった",
-      "source": {
-        "file": "よだかプロト_断片集1.xlsx",
-        "sheet": "断片４",
-        "row": 15
-      },
-      "chapter": "寄り道 / 鴨のいる公園",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自然公園",
-      "partner": "",
-      "next": "night"
-    },
     "cafe_6": {
       "speaker": "",
       "text": "放課後、喫茶店で時間をつぶしていると、\nふと隣の席の会話が耳に入ってきた",
       "source": {
-        "file": "よだかプロト_断片集1.xlsx",
+        "file": "よだかプロト_断片集1.xlsx",
         "sheet": "断片１",
         "row": 6
       },
@@ -4091,7 +3820,7 @@
       "speaker": "？？？",
       "text": "奇跡が起こるとは思ってないけど、\n奇跡が来てほしいなって思ってるの",
       "source": {
-        "file": "よだかプロト_断片集1.xlsx",
+        "file": "よだかプロト_断片集1.xlsx",
         "sheet": "断片１",
         "row": 7
       },
@@ -4107,7 +3836,7 @@
       "speaker": "よだか",
       "text": "（いったいなんの話をしているんだろう）",
       "source": {
-        "file": "よだかプロト_断片集1.xlsx",
+        "file": "よだかプロト_断片集1.xlsx",
         "sheet": "断片１",
         "row": 8
       },
@@ -4122,7 +3851,7 @@
       "speaker": "",
       "text": "ちらりとそちらを窺う。年配の女性が、同じく年配の\n女性に向かって話しかけていた",
       "source": {
-        "file": "よだかプロト_断片集1.xlsx",
+        "file": "よだかプロト_断片集1.xlsx",
         "sheet": "断片１",
         "row": 9
       },
@@ -4137,7 +3866,7 @@
       "speaker": "",
       "text": "しかしもう、ふたりの会話は日常の雑事へと移っている",
       "source": {
-        "file": "よだかプロト_断片集1.xlsx",
+        "file": "よだかプロト_断片集1.xlsx",
         "sheet": "断片１",
         "row": 10
       },
@@ -4152,7 +3881,7 @@
       "speaker": "よだか",
       "text": "（奇跡、か……）",
       "source": {
-        "file": "よだかプロト_断片集1.xlsx",
+        "file": "よだかプロト_断片集1.xlsx",
         "sheet": "断片１",
         "row": 11
       },
@@ -4167,7 +3896,7 @@
       "speaker": "",
       "text": "僕は自分のカップに手を伸ばし、\nコーヒーの残りをしずかに飲み干した",
       "source": {
-        "file": "よだかプロト_断片集1.xlsx",
+        "file": "よだかプロト_断片集1.xlsx",
         "sheet": "断片１",
         "row": 12
       },
@@ -4182,7 +3911,7 @@
       "speaker": "よだか",
       "text": "（奇跡が起きたら、僕は、）",
       "source": {
-        "file": "よだかプロト_断片集1.xlsx",
+        "file": "よだかプロト_断片集1.xlsx",
         "sheet": "断片１",
         "row": 13
       },
@@ -4197,7 +3926,7 @@
       "speaker": "よだか",
       "text": "（──いったい何を願うだろう？）",
       "source": {
-        "file": "よだかプロト_断片集1.xlsx",
+        "file": "よだかプロト_断片集1.xlsx",
         "sheet": "断片１",
         "row": 14
       },
@@ -4208,11 +3937,1416 @@
       "partner": "",
       "next": "night"
     },
+    "hands_6": {
+      "speaker": "",
+      "text": "街でカップルが手を繋いで歩いているのを見ると、\nつい目で追ってしまう",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片２",
+        "row": 6
+      },
+      "chapter": "寄り道 / 手を繋ぐ相手",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "街（夕方）",
+      "partner": "",
+      "next": "hands_7"
+    },
+    "hands_7": {
+      "speaker": "よだか",
+      "text": "（前はそんなことなかったのにな）",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片２",
+        "row": 7
+      },
+      "chapter": "寄り道 / 手を繋ぐ相手",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "街（夕方）",
+      "partner": "",
+      "next": "hands_8"
+    },
+    "hands_8": {
+      "speaker": "",
+      "text": "自分の隣に立つ相手を想像する。\n僕が手を握る相手を",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片２",
+        "row": 8
+      },
+      "chapter": "寄り道 / 手を繋ぐ相手",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "街（夕方）",
+      "partner": "",
+      "next": "hands_9"
+    },
+    "hands_9": {
+      "speaker": "",
+      "text": "それは男？　それとも女？\nあるいはどっちでもない誰か──？",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片２",
+        "row": 9
+      },
+      "chapter": "寄り道 / 手を繋ぐ相手",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "街（夕方）",
+      "partner": "",
+      "next": "hands_10"
+    },
+    "hands_10": {
+      "speaker": "",
+      "text": "また一組のカップルが、手を繋ぎ、\n僕の目の前を夕日の方に向かって歩き去っていく",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片２",
+        "row": 10
+      },
+      "chapter": "寄り道 / 手を繋ぐ相手",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "街（夕方）",
+      "partner": "",
+      "next": "hands_11"
+    },
+    "hands_11": {
+      "speaker": "",
+      "text": "ぼくは男？　それとも女？",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片２",
+        "row": 11
+      },
+      "chapter": "寄り道 / 手を繋ぐ相手",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "街（夕方）",
+      "partner": "",
+      "next": "hands_12"
+    },
+    "hands_12": {
+      "speaker": "",
+      "text": "右手で虚空を握り、また開く\n風が指の間を通り過ぎていく",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片２",
+        "row": 12
+      },
+      "chapter": "寄り道 / 手を繋ぐ相手",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "街（夕方）",
+      "partner": "",
+      "next": "hands_13"
+    },
+    "hands_13": {
+      "speaker": "",
+      "text": "あるいはどっちでもない何か──？",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片２",
+        "row": 13
+      },
+      "chapter": "寄り道 / 手を繋ぐ相手",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "街（夕方）",
+      "partner": "",
+      "next": "night",
+      "effects": {
+        "自認": 3,
+        "ストレス": 2
+      }
+    },
+    "cover_6": {
+      "speaker": "",
+      "text": "雨が降り出しそうなある日、住宅街を歩いていると──",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片３",
+        "row": 6
+      },
+      "chapter": "寄り道 / 雨除けカバー",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "cover_7"
+    },
+    "cover_7": {
+      "speaker": "",
+      "text": "小学生くらいの女の子が、アパートの前でもぞもぞと\n何かをやっているところにでくわした",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片３",
+        "row": 7
+      },
+      "chapter": "寄り道 / 雨除けカバー",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "cover_8"
+    },
+    "cover_8": {
+      "speaker": "",
+      "text": "どうやら、自分の自転車に雨除けのカバーをかけよう\nとして苦戦しているらしい",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片３",
+        "row": 8
+      },
+      "chapter": "寄り道 / 雨除けカバー",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "cover_9"
+    },
+    "cover_9": {
+      "speaker": "",
+      "text": "彼女の小さな体には、自転車も、\n雨除けカバーも大きすぎるように見えた",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片３",
+        "row": 9
+      },
+      "chapter": "寄り道 / 雨除けカバー",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "cover_10"
+    },
+    "cover_10": {
+      "speaker": "よだか",
+      "text": "（手伝ってあげようか？\n──でも、声なんかかけたら不審者だよな）",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片３",
+        "row": 10
+      },
+      "chapter": "寄り道 / 雨除けカバー",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "cover_11"
+    },
+    "cover_11": {
+      "speaker": "",
+      "text": "見て見ぬふりで通り過ぎようとして\nふと、自分がいま女性の容姿であることを思い出した",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片３",
+        "row": 11
+      },
+      "chapter": "寄り道 / 雨除けカバー",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "cover_12"
+    },
+    "cover_12": {
+      "speaker": "よだか",
+      "text": "（いいのかな、いまの僕なら。……ええい、ままよ！）",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片３",
+        "row": 12
+      },
+      "chapter": "寄り道 / 雨除けカバー",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "cover_13"
+    },
+    "cover_13": {
+      "speaker": "よだか",
+      "text": "それ、手伝うよ",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片３",
+        "row": 13
+      },
+      "chapter": "寄り道 / 雨除けカバー",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "cover_14"
+    },
+    "cover_14": {
+      "speaker": "",
+      "text": "──自転車にカバーをかけ終えると、たどたどしく\nお礼を言う女の子に笑顔で応え、その場を後にした",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片３",
+        "row": 14
+      },
+      "chapter": "寄り道 / 雨除けカバー",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "cover_15"
+    },
+    "cover_15": {
+      "speaker": "",
+      "text": "満ち足りたような、どこか割り切れないような\n変な気分だった",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片３",
+        "row": 15
+      },
+      "chapter": "寄り道 / 雨除けカバー",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "night",
+      "effects": {
+        "勇気": 4,
+        "自認": 2
+      }
+    },
+    "park_6": {
+      "speaker": "",
+      "text": "ぶらぶらと街中にある自然公園にやってきた",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片４",
+        "row": 6
+      },
+      "chapter": "寄り道 / 鴨のいる公園",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自然公園",
+      "partner": "",
+      "next": "park_7"
+    },
+    "park_7": {
+      "speaker": "",
+      "text": "鴨を見るためだ",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片４",
+        "row": 7
+      },
+      "chapter": "寄り道 / 鴨のいる公園",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自然公園",
+      "partner": "",
+      "next": "park_8"
+    },
+    "park_8": {
+      "speaker": "よだか",
+      "text": "（お、いたいた）",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片４",
+        "row": 8
+      },
+      "chapter": "寄り道 / 鴨のいる公園",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自然公園",
+      "partner": "",
+      "next": "park_9"
+    },
+    "park_9": {
+      "speaker": "",
+      "text": "あまり広くはない公園の隅には人工の池があり、\nそこには幾羽もの鴨が浮かんでいる",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片４",
+        "row": 9
+      },
+      "chapter": "寄り道 / 鴨のいる公園",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自然公園",
+      "partner": "",
+      "next": "park_10"
+    },
+    "park_10": {
+      "speaker": "",
+      "text": "岩の上に立つもの、すいすい泳いでいるもの、\n背中に顔を突っ込んで眠っているもの──",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片４",
+        "row": 10
+      },
+      "chapter": "寄り道 / 鴨のいる公園",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自然公園",
+      "partner": "",
+      "next": "park_11"
+    },
+    "park_11": {
+      "speaker": "",
+      "text": "三者三葉の鴨たちを、僕はじっと無心に眺める",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片４",
+        "row": 11
+      },
+      "chapter": "寄り道 / 鴨のいる公園",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自然公園",
+      "partner": "",
+      "next": "park_12"
+    },
+    "park_12": {
+      "speaker": "よだか",
+      "text": "（こいつら、なに考えてんだろ。\n……なにも考えてないか）",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片４",
+        "row": 12
+      },
+      "chapter": "寄り道 / 鴨のいる公園",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自然公園",
+      "partner": "",
+      "next": "park_13"
+    },
+    "park_13": {
+      "speaker": "",
+      "text": "鴨を見ていると、水に落ちた綿菓子のように、\n時間はあっという間に溶けていく",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片４",
+        "row": 13
+      },
+      "chapter": "寄り道 / 鴨のいる公園",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自然公園",
+      "partner": "",
+      "next": "park_14"
+    },
+    "park_14": {
+      "speaker": "よだか",
+      "text": "（我ながら暇だな）",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片４",
+        "row": 14
+      },
+      "chapter": "寄り道 / 鴨のいる公園",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自然公園",
+      "partner": "",
+      "next": "park_15"
+    },
+    "park_15": {
+      "speaker": "",
+      "text": "そう思いながらも、このどこか間の抜けた生き物から\n目が離せない僕だった",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片４",
+        "row": 15
+      },
+      "chapter": "寄り道 / 鴨のいる公園",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自然公園",
+      "partner": "",
+      "next": "night",
+      "effects": {
+        "ストレス": -5
+      }
+    },
+    "parent_6": {
+      "speaker": "",
+      "text": "喫茶店で、小学生くらいの息子と\n友達同士のように話している母親がいた",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片５",
+        "row": 6
+      },
+      "chapter": "寄り道 / 友達親子",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "喫茶店",
+      "partner": "",
+      "next": "parent_7"
+    },
+    "parent_7": {
+      "speaker": "",
+      "text": "そうした親子を見るたび、僕は少し複雑な気分になる",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片５",
+        "row": 7
+      },
+      "chapter": "寄り道 / 友達親子",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "喫茶店",
+      "partner": "",
+      "next": "parent_8"
+    },
+    "parent_8": {
+      "speaker": "",
+      "text": "僕の母は〝ああ〟なので、子供の頃はよく「お茶」と\n称してはあちこちの喫茶店に連れていかれ、散々父や\n職場の愚痴に付き合わされたものだった",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片５",
+        "row": 8
+      },
+      "chapter": "寄り道 / 友達親子",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "喫茶店",
+      "partner": "",
+      "next": "parent_9"
+    },
+    "parent_9": {
+      "speaker": "",
+      "text": "あれも、外目には仲睦まじい、いわゆる〝友達親子〟に\n見えていたのだろうか",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片５",
+        "row": 9
+      },
+      "chapter": "寄り道 / 友達親子",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "喫茶店",
+      "partner": "",
+      "next": "parent_10"
+    },
+    "parent_10": {
+      "speaker": "",
+      "text": "そう思って、近くの席の親子に改めて目を向けると、\n聞き役に回っている少年の顔が、年に似合わず\n妙に大人びて見えてくる",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片５",
+        "row": 10
+      },
+      "chapter": "寄り道 / 友達親子",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "喫茶店",
+      "partner": "",
+      "next": "parent_11"
+    },
+    "parent_11": {
+      "speaker": "よだか",
+      "text": "（苦労するよな、お互い）",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片５",
+        "row": 11
+      },
+      "chapter": "寄り道 / 友達親子",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "喫茶店",
+      "partner": "",
+      "next": "parent_12"
+    },
+    "parent_12": {
+      "speaker": "",
+      "text": "僕はそんな同情めいた視線を、見知らぬ少年に\n送ってしまうのだった",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片５",
+        "row": 12
+      },
+      "chapter": "寄り道 / 友達親子",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "喫茶店",
+      "partner": "",
+      "next": "night",
+      "effects": {
+        "ストレス": 3,
+        "自認": 2
+      }
+    },
+    "chime_6": {
+      "speaker": "",
+      "text": "どこからか、風鈴の音が聞こえてきた",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片６",
+        "row": 6
+      },
+      "chapter": "寄り道 / 季節はずれの風鈴",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "chime_7"
+    },
+    "chime_7": {
+      "speaker": "",
+      "text": "いまは、風鈴を吊るすような季節ではない",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片６",
+        "row": 7
+      },
+      "chapter": "寄り道 / 季節はずれの風鈴",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "chime_8"
+    },
+    "chime_8": {
+      "speaker": "",
+      "text": "なんとなく音の出所が気になって、\n僕は視線を周囲にめぐらす",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片６",
+        "row": 8
+      },
+      "chapter": "寄り道 / 季節はずれの風鈴",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "chime_9"
+    },
+    "chime_9": {
+      "speaker": "よだか",
+      "text": "（ないな……）",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片６",
+        "row": 9
+      },
+      "chapter": "寄り道 / 季節はずれの風鈴",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "chime_10"
+    },
+    "chime_10": {
+      "speaker": "",
+      "text": "少し辺りを歩いてみたが、風鈴は近づいたかと思えば\n遠ざかり、遠ざかるかと思えば耳のそばで鳴る",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片６",
+        "row": 10
+      },
+      "chapter": "寄り道 / 季節はずれの風鈴",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "chime_11"
+    },
+    "chime_11": {
+      "speaker": "よだか",
+      "text": "（音はすれども姿は見えず、か）",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片６",
+        "row": 11
+      },
+      "chapter": "寄り道 / 季節はずれの風鈴",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "chime_12"
+    },
+    "chime_12": {
+      "speaker": "",
+      "text": "そうしているうちに風は止み、\nふっつりと風鈴の音は聞こえなくなった",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片６",
+        "row": 12
+      },
+      "chapter": "寄り道 / 季節はずれの風鈴",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "chime_13"
+    },
+    "chime_13": {
+      "speaker": "",
+      "text": "日暮れが迫っていた",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片６",
+        "row": 13
+      },
+      "chapter": "寄り道 / 季節はずれの風鈴",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "chime_14"
+    },
+    "chime_14": {
+      "speaker": "",
+      "text": "僕はあやしい心持ちのまま、その場を後にした",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片６",
+        "row": 14
+      },
+      "chapter": "寄り道 / 季節はずれの風鈴",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "night",
+      "effects": {
+        "ストレス": -4
+      }
+    },
+    "unicorn_6": {
+      "speaker": "",
+      "text": "予報通り雨が降り出した。僕はカバンから\n黒い折り畳み傘を取り出し、さっと広げる",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片７",
+        "row": 6
+      },
+      "chapter": "寄り道 / 傘のユニコーン",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "unicorn_7"
+    },
+    "unicorn_7": {
+      "speaker": "",
+      "text": "目の前を歩いていた少女も、\n手にしていた小さな傘を開いた",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片７",
+        "row": 7
+      },
+      "chapter": "寄り道 / 傘のユニコーン",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "unicorn_8"
+    },
+    "unicorn_8": {
+      "speaker": "",
+      "text": "その瞬間、まるで飛び出す絵本のように\n少女の傘から色鮮やかなユニコーンが現れた。\n頭と尻尾が、ピラピラと傘から突き出ている",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片７",
+        "row": 8
+      },
+      "chapter": "寄り道 / 傘のユニコーン",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "unicorn_9"
+    },
+    "unicorn_9": {
+      "speaker": "",
+      "text": "少女はご機嫌に雨の中を進んでいく。\n左右に振られる傘の上を、ユニコーンは眠たげに\nゆっくりと駆けていく",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片７",
+        "row": 9
+      },
+      "chapter": "寄り道 / 傘のユニコーン",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "unicorn_10"
+    },
+    "unicorn_10": {
+      "speaker": "",
+      "text": "世界が、にわかに色づいたようだった",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片７",
+        "row": 10
+      },
+      "chapter": "寄り道 / 傘のユニコーン",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "night",
+      "effects": {
+        "キラキラ": 4,
+        "ストレス": -3
+      }
+    },
+    "bridge_6": {
+      "speaker": "",
+      "text": "道路を渡るとき、歩道橋と横断歩道があれば、\n僕は歩道橋を選ぶようにしている",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片８",
+        "row": 6
+      },
+      "chapter": "寄り道 / 歩道橋の夕焼け",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "歩道橋",
+      "partner": "",
+      "next": "bridge_7"
+    },
+    "bridge_7": {
+      "speaker": "",
+      "text": "特に理由はない。高いところが好きなのかもしれない。\n遠くまで見えると、それだけで気分がスッとする",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片８",
+        "row": 7
+      },
+      "chapter": "寄り道 / 歩道橋の夕焼け",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "歩道橋",
+      "partner": "",
+      "next": "bridge_8"
+    },
+    "bridge_8": {
+      "speaker": "",
+      "text": "夕暮れ時には、歩道橋に立ち止まって、\n夕焼けを眺めたり、渋滞する車列を見下ろしたりする",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片８",
+        "row": 8
+      },
+      "chapter": "寄り道 / 歩道橋の夕焼け",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "歩道橋",
+      "partner": "",
+      "next": "bridge_9"
+    },
+    "bridge_9": {
+      "speaker": "",
+      "text": "寂しいのかもしれない、と思うときがある",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片８",
+        "row": 9
+      },
+      "chapter": "寄り道 / 歩道橋の夕焼け",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "歩道橋",
+      "partner": "",
+      "next": "bridge_10"
+    },
+    "bridge_10": {
+      "speaker": "",
+      "text": "男らしくないぞ、と自分に言い聞かせようとして、\nふと、自分がもう「男」ではないことを思い出す……",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片８",
+        "row": 10
+      },
+      "chapter": "寄り道 / 歩道橋の夕焼け",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "歩道橋",
+      "partner": "",
+      "next": "bridge_11"
+    },
+    "bridge_11": {
+      "speaker": "",
+      "text": "夕焼けの赤が、テールランプの赤が、ときどき、\n痛いくらいに目に染みる",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片８",
+        "row": 11
+      },
+      "chapter": "寄り道 / 歩道橋の夕焼け",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "歩道橋",
+      "partner": "",
+      "next": "night",
+      "effects": {
+        "ストレス": 3,
+        "自認": 2
+      }
+    },
+    "dream_6": {
+      "speaker": "",
+      "text": "昨日見た夢が頭から離れない",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片９",
+        "row": 6
+      },
+      "chapter": "寄り道 / 透明な人の夢",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "dream_7"
+    },
+    "dream_7": {
+      "speaker": "",
+      "text": "僕は裸の誰かに抱き着いている。\nその人の体は男でも女でもない、透明な、\nペットボトルのような素材でできていた",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片９",
+        "row": 7
+      },
+      "chapter": "寄り道 / 透明な人の夢",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "dream_8"
+    },
+    "dream_8": {
+      "speaker": "",
+      "text": "僕は透明な肋骨に、その凹凸に顔を押し付ける。\nひんやりしていて、とても気持ちがいい",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片９",
+        "row": 8
+      },
+      "chapter": "寄り道 / 透明な人の夢",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "dream_9"
+    },
+    "dream_9": {
+      "speaker": "",
+      "text": "その人の透き通った体には、\n澄んだ水が胸の辺りまで溜まっていて",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片９",
+        "row": 9
+      },
+      "chapter": "寄り道 / 透明な人の夢",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "dream_10"
+    },
+    "dream_10": {
+      "speaker": "",
+      "text": "耳を当てると、ちゃぽちゃぽという音がした",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片９",
+        "row": 10
+      },
+      "chapter": "寄り道 / 透明な人の夢",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "night",
+      "effects": {
+        "自認": 3,
+        "ストレス": -2
+      }
+    },
+    "karaoke_6": {
+      "speaker": "",
+      "text": "路上でポケットティッシュが配られていて、何気なく\n受け取ると、そこにはカラオケの割引券が入っていた",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片１０",
+        "row": 6
+      },
+      "chapter": "寄り道 / カラオケの割引券",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "karaoke_7"
+    },
+    "karaoke_7": {
+      "speaker": "よだか",
+      "text": "（カラオケ、か……）",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片１０",
+        "row": 7
+      },
+      "chapter": "寄り道 / カラオケの割引券",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "karaoke_8"
+    },
+    "karaoke_8": {
+      "speaker": "",
+      "text": "僕はつい、自分の喉元に手を遣った。そこには、\n本来あるべきはずの喉仏がなかった",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片１０",
+        "row": 8
+      },
+      "chapter": "寄り道 / カラオケの割引券",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "karaoke_9"
+    },
+    "karaoke_9": {
+      "speaker": "",
+      "text": "いまだに、高くなった自分の声には慣れない。いや、\n声変わり前に戻っただけ、と言えばそうなのかも\nしれないが、それでも違和感は拭えなかった",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片１０",
+        "row": 9
+      },
+      "chapter": "寄り道 / カラオケの割引券",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "karaoke_10"
+    },
+    "karaoke_10": {
+      "speaker": "",
+      "text": "もう随分長いこと歌は歌っていない。歌う必要が\nあるときは口パクで済ませている。周りもそれを\n黙認している",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片１０",
+        "row": 10
+      },
+      "chapter": "寄り道 / カラオケの割引券",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "karaoke_11"
+    },
+    "karaoke_11": {
+      "speaker": "",
+      "text": "もう一度、僕はポケットティッシュに目を落とした",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片１０",
+        "row": 11
+      },
+      "chapter": "寄り道 / カラオケの割引券",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "karaoke_12"
+    },
+    "karaoke_12": {
+      "speaker": "",
+      "text": "立ち止まる僕の脇を、鼻歌を歌いながらひとりの青年が\n通り過ぎていった",
+      "source": {
+        "file": "よだかプロト_断片集1.xlsx",
+        "sheet": "断片１０",
+        "row": 12
+      },
+      "chapter": "寄り道 / カラオケの割引券",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "路上",
+      "partner": "",
+      "next": "night",
+      "effects": {
+        "ストレス": 4,
+        "自認": 2
+      }
+    },
+    "native_6": {
+      "speaker": "よだか",
+      "text": "（黙読している時の自分の声が男であるうちは\nまだ自分のことを男だと思っていていいのかな）",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片１",
+        "row": 6
+      },
+      "chapter": "寄り道 / ネイティブスピーカー",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "教室",
+      "partner": "",
+      "next": "native_7"
+    },
+    "native_7": {
+      "speaker": "",
+      "text": "みたいなことを思う。授業中",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片１",
+        "row": 7
+      },
+      "chapter": "寄り道 / ネイティブスピーカー",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "教室",
+      "partner": "",
+      "next": "native_8"
+    },
+    "native_8": {
+      "speaker": "先生",
+      "text": "じゃあ次を……法月から一文ずつ",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片１",
+        "row": 8
+      },
+      "chapter": "寄り道 / ネイティブスピーカー",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "教室",
+      "partner": "",
+      "next": "native_9"
+    },
+    "native_9": {
+      "speaker": "よだか",
+      "text": "Mike is lonely wolf guy, \nbut Tenagazaru \nlike a rolling Pikachu-♡.",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片１",
+        "row": 9
+      },
+      "chapter": "寄り道 / ネイティブスピーカー",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "教室",
+      "partner": "",
+      "next": "native_10"
+    },
+    "native_10": {
+      "speaker": "よだか",
+      "text": "（ああーーーまあ）",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片１",
+        "row": 10
+      },
+      "chapter": "寄り道 / ネイティブスピーカー",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "教室",
+      "partner": "",
+      "next": "native_11"
+    },
+    "native_11": {
+      "speaker": "",
+      "text": "声を出して読むと女の子でしかない",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片１",
+        "row": 11
+      },
+      "chapter": "寄り道 / ネイティブスピーカー",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "教室",
+      "partner": "",
+      "next": "native_12"
+    },
+    "native_12": {
+      "speaker": "",
+      "text": "頭の中の声音と同じように、\nもしくはスマホの入力と同じくらい簡単に、\n男と女が切り替えられたらいいのに。無理だけど",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片１",
+        "row": 12
+      },
+      "chapter": "寄り道 / ネイティブスピーカー",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "教室",
+      "partner": "",
+      "next": "night",
+      "effects": {
+        "ストレス": 4,
+        "自認": 3
+      }
+    },
+    "sushi_6": {
+      "speaker": "",
+      "text": "入学時、かなり良いバッシュを買ってもらったのに\n履き潰すこともなく、履くことができなくなって",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片２",
+        "row": 6
+      },
+      "chapter": "寄り道 / 売ったバッシュで寿司を食う",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自宅_リビング",
+      "partner": "りあ",
+      "next": "sushi_7"
+    },
+    "sushi_7": {
+      "speaker": "",
+      "text": "ぼくがそのことについて母に謝ると、\n彼女は「いーよ別に」と笑いながら\nバッシュをメルカリで売りに出してしまった",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片２",
+        "row": 7
+      },
+      "chapter": "寄り道 / 売ったバッシュで寿司を食う",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自宅_リビング",
+      "partner": "りあ",
+      "next": "sushi_8"
+    },
+    "sushi_8": {
+      "speaker": "りあ",
+      "text": "いいけどじゃあ次の母の日、ご飯ご馳走して？\nバッシュ売ったお金でお寿司とか食べいこうよ",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片２",
+        "row": 8
+      },
+      "chapter": "寄り道 / 売ったバッシュで寿司を食う",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自宅_リビング",
+      "partner": "りあ",
+      "next": "sushi_9"
+    },
+    "sushi_9": {
+      "speaker": "よだか",
+      "text": "母さんが買って\n母さんが売るのにご馳走って",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片２",
+        "row": 9
+      },
+      "chapter": "寄り道 / 売ったバッシュで寿司を食う",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自宅_リビング",
+      "partner": "りあ",
+      "next": "sushi_10"
+    },
+    "sushi_10": {
+      "speaker": "りあ",
+      "text": "靴を選んだのはよだかで、綺麗に使ったのもよだかだよ\nえらい！　えらい！　えらい！　えらいだ……",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片２",
+        "row": 10
+      },
+      "chapter": "寄り道 / 売ったバッシュで寿司を食う",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自宅_リビング",
+      "partner": "りあ",
+      "next": "sushi_11",
+      "word": "praise"
+    },
+    "sushi_11": {
+      "speaker": "",
+      "text": "後日、母は楽しげに笑ってメルカリの画面を見せる。\n宮崎県に送るらしい",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片２",
+        "row": 11
+      },
+      "chapter": "寄り道 / 売ったバッシュで寿司を食う",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自宅_リビング",
+      "partner": "りあ",
+      "next": "sushi_12"
+    },
+    "sushi_12": {
+      "speaker": "",
+      "text": "ぼくがシューズを履いてバスケをしていた時間は\n結果「使用感アリ　値引き」になって、\n最終的に回転寿司になった",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片２",
+        "row": 12
+      },
+      "chapter": "寄り道 / 売ったバッシュで寿司を食う",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自宅_リビング",
+      "partner": "りあ",
+      "next": "sushi_13"
+    },
+    "sushi_13": {
+      "speaker": "",
+      "text": "どこかの誰かに発送し、ぐるぐる回る寿司を食べ笑う。\n会計が済む。瞬く間にぜんぶ終わる。\nぜんぶこのくらいのスピードで過ぎていってくれれば",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片２",
+        "row": 13
+      },
+      "chapter": "寄り道 / 売ったバッシュで寿司を食う",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自宅_リビング",
+      "partner": "りあ",
+      "next": "night"
+    },
+    "taiko_6": {
+      "speaker": "",
+      "text": "ゲーセン、前はバスケゲーム以外のコーナーに\nなんとなくアウェー感があった。\n今はそこには忌避感さえ覚えるようになった",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片３",
+        "row": 6
+      },
+      "chapter": "寄り道 / ２本のマイバチがあれば",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "ゲームセンター",
+      "partner": "",
+      "next": "taiko_7"
+    },
+    "taiko_7": {
+      "speaker": "",
+      "text": "時間つぶしに入ってみて\nアウェー感のない居場所を探して\nふらふらするけれど、そんなの見つかるわけもなく",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片３",
+        "row": 7
+      },
+      "chapter": "寄り道 / ２本のマイバチがあれば",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "ゲームセンター",
+      "partner": "",
+      "next": "taiko_8"
+    },
+    "taiko_8": {
+      "speaker": "太鼓戦士",
+      "text": "すいませんどいてもらっていいですか（超早口）\nあす、あす（ありがとうの略語）。……っ（舌打ち）",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片３",
+        "row": 8
+      },
+      "chapter": "寄り道 / ２本のマイバチがあれば",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "ゲームセンター",
+      "partner": "",
+      "next": "taiko_9",
+      "word": "asu"
+    },
+    "taiko_9": {
+      "speaker": "",
+      "text": "小声の早口に圧倒され、立っていた場所を離れると\n同年代くらいの男の子がそこ——太鼓の前に立った",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片３",
+        "row": 9
+      },
+      "chapter": "寄り道 / ２本のマイバチがあれば",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "ゲームセンター",
+      "partner": "",
+      "next": "taiko_10"
+    },
+    "taiko_10": {
+      "speaker": "太鼓戦士",
+      "text": "楽勝楽勝殺害減速あー早\nは？　は？　\n殺す殺す殺す殺す殺——しゃっ！",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片３",
+        "row": 10
+      },
+      "chapter": "寄り道 / ２本のマイバチがあれば",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "ゲームセンター",
+      "partner": "",
+      "next": "taiko_11"
+    },
+    "taiko_11": {
+      "speaker": "",
+      "text": "ゲームに興じる彼のあんまりな語彙に笑ってしまう。\n世界は君のもの。\n思わずそう言いたくなるような彼のあり方を見ている",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片３",
+        "row": 11
+      },
+      "chapter": "寄り道 / ２本のマイバチがあれば",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "ゲームセンター",
+      "partner": "",
+      "next": "taiko_12"
+    },
+    "taiko_12": {
+      "speaker": "",
+      "text": "2本のマイバチがあれば、\nあるいは\n2本のマイバチに代わる何かが、ぼくにあればと思った",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片３",
+        "row": 12
+      },
+      "chapter": "寄り道 / ２本のマイバチがあれば",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "ゲームセンター",
+      "partner": "",
+      "next": "taiko_13"
+    },
+    "taiko_13": {
+      "speaker": "太鼓戦士",
+      "text": "……ふゅぅーー（満足げに口呼吸）",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片３",
+        "row": 13
+      },
+      "chapter": "寄り道 / ２本のマイバチがあれば",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "ゲームセンター",
+      "partner": "",
+      "next": "taiko_14"
+    },
+    "taiko_14": {
+      "speaker": "",
+      "text": "いやでもマイバチじゃない方がいいな、とも少し思った",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片３",
+        "row": 14
+      },
+      "chapter": "寄り道 / ２本のマイバチがあれば",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "ゲームセンター",
+      "partner": "",
+      "next": "night"
+    },
     "sumika_6": {
       "speaker": "すみか",
       "text": "われわれには頭の中で嫌いな人を不幸にする自由がある",
       "source": {
-        "file": "よだかプロト_断片集2.xlsx",
+        "file": "よだかプロト_断片集2.xlsx",
         "sheet": "断片４",
         "row": 6
       },
@@ -4227,7 +5361,7 @@
       "speaker": "",
       "text": "ぼくが身の上話をしていたところ\n突然、先輩の夢小説講釈がはじまってしまった",
       "source": {
-        "file": "よだかプロト_断片集2.xlsx",
+        "file": "よだかプロト_断片集2.xlsx",
         "sheet": "断片４",
         "row": 7
       },
@@ -4242,7 +5376,7 @@
       "speaker": "すみか",
       "text": "いやなんだい。\n君の人生があまりに愛され系の導入みたいで",
       "source": {
-        "file": "よだかプロト_断片集2.xlsx",
+        "file": "よだかプロト_断片集2.xlsx",
         "sheet": "断片４",
         "row": 8
       },
@@ -4257,7 +5391,7 @@
       "speaker": "すみか",
       "text": "これから人気アイドルグループ全員から\n思いを寄せられる予定でもあるのかい？　と思ったのさ",
       "source": {
-        "file": "よだかプロト_断片集2.xlsx",
+        "file": "よだかプロト_断片集2.xlsx",
         "sheet": "断片４",
         "row": 9
       },
@@ -4272,7 +5406,7 @@
       "speaker": "すみか",
       "text": "いいかい、人生とはモテ&デストロイの連続だ。\n君も嫌いなアイツを滅して無責任に幸せになろう。\nわれわれには頭の中で不幸な私を幸せにする権利がある",
       "source": {
-        "file": "よだかプロト_断片集2.xlsx",
+        "file": "よだかプロト_断片集2.xlsx",
         "sheet": "断片４",
         "row": 10
       },
@@ -4288,7 +5422,7 @@
       "speaker": "よだか",
       "text": "あー……はい。学び、学びです",
       "source": {
-        "file": "よだかプロト_断片集2.xlsx",
+        "file": "よだかプロト_断片集2.xlsx",
         "sheet": "断片４",
         "row": 11
       },
@@ -4303,7 +5437,7 @@
       "speaker": "",
       "text": "頭の中にしかない自由と権利を大仰に主張する先輩は\nきっといつも自分のために使っている理屈を\n頭の外にいるぼくのために詳らかにしてくれたのだろう",
       "source": {
-        "file": "よだかプロト_断片集2.xlsx",
+        "file": "よだかプロト_断片集2.xlsx",
         "sheet": "断片４",
         "row": 12
       },
@@ -4318,7 +5452,7 @@
       "speaker": "",
       "text": "先輩が送ってくれた夢小説？　の検索エンジン？　を\n使うことはこれからもないだろうけど、\nその言葉は留めておこう。頭の中とか、記憶の片隅に",
       "source": {
-        "file": "よだかプロト_断片集2.xlsx",
+        "file": "よだかプロト_断片集2.xlsx",
         "sheet": "断片４",
         "row": 13
       },
@@ -4329,11 +5463,268 @@
       "partner": "すみか",
       "next": "night"
     },
+    "inori_6": {
+      "speaker": "",
+      "text": "ショート動画を眺めながら\n以前どこかで\nこんな話をしたことを思い出していた",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片５",
+        "row": 6
+      },
+      "chapter": "寄り道 / 姫様ご用心（tiktokに）",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自室",
+      "partner": "",
+      "next": "inori_7"
+    },
+    "inori_7": {
+      "speaker": "いのり",
+      "text": "よだか\nうわでた（ショート動画をみて）\nこんなの見てるとバカになるよ？",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片５",
+        "row": 7
+      },
+      "chapter": "寄り道 / 姫様ご用心（tiktokに）",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自室",
+      "partner": "",
+      "next": "inori_8"
+    },
+    "inori_8": {
+      "speaker": "よだか",
+      "text": "いのりの方が成績悪いよ。\n見てないのに",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片５",
+        "row": 8
+      },
+      "chapter": "寄り道 / 姫様ご用心（tiktokに）",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自室",
+      "partner": "",
+      "next": "inori_9"
+    },
+    "inori_9": {
+      "speaker": "いのり",
+      "text": "見ちゃダメ。\nバカになったら\n私に勉強教えられなくなるよ？",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片５",
+        "row": 9
+      },
+      "chapter": "寄り道 / 姫様ご用心（tiktokに）",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自室",
+      "partner": "",
+      "next": "inori_10"
+    },
+    "inori_10": {
+      "speaker": "よだか",
+      "text": "一緒に見ればいいんじゃない。\nふたりで同じ速度でバカになり続ければ\n計算上ずっと教える側に立てる？　はず",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片５",
+        "row": 10
+      },
+      "chapter": "寄り道 / 姫様ご用心（tiktokに）",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自室",
+      "partner": "",
+      "next": "inori_11"
+    },
+    "inori_11": {
+      "speaker": "いのり",
+      "text": "なるほどね……なら、いいけど。\nスマホ借りるね。\n仕方ないから、バカになるの付き合ってあげる",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片５",
+        "row": 11
+      },
+      "chapter": "寄り道 / 姫様ご用心（tiktokに）",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自室",
+      "partner": "",
+      "next": "inori_12",
+      "word": "company"
+    },
+    "inori_12": {
+      "speaker": "",
+      "text": "興味があるのに遠ざけるフリをしたり、仲直り待ちで\n怒ってみせたり、酸っぱい葡萄を擬人化したように\nめんどくさい彼女だったこと。",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片５",
+        "row": 12
+      },
+      "chapter": "寄り道 / 姫様ご用心（tiktokに）",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自室",
+      "partner": "",
+      "next": "inori_13"
+    },
+    "inori_13": {
+      "speaker": "",
+      "text": "結局、ぼく以上にショート動画にどハマりした彼女が\n「成績を落とした責任を取って」と言い出し\nぼくまでアプリを消すことになったことを思い出した",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片５",
+        "row": 13
+      },
+      "chapter": "寄り道 / 姫様ご用心（tiktokに）",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自室",
+      "partner": "",
+      "next": "night"
+    },
+    "tv_6": {
+      "speaker": "",
+      "text": "テレビ番組を見ていると\nひな壇で女性パーソナリティが「出た！　〇〇な男」と\n男のダメさの糾弾だけで番組を持たせる挑戦をしていて",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片６",
+        "row": 6
+      },
+      "chapter": "寄り道 / 楽しくなければテレビじゃないのだ",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自室",
+      "partner": "",
+      "next": "tv_7"
+    },
+    "tv_7": {
+      "speaker": "",
+      "text": "チャンネルを変えると\n男性芸人が「や〜、今は女性が元気な時代ですけど」と\nもう終わった時代への郷愁を酒とともにぼくに流し込む",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片６",
+        "row": 7
+      },
+      "chapter": "寄り道 / 楽しくなければテレビじゃないのだ",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自室",
+      "partner": "",
+      "next": "tv_8"
+    },
+    "tv_8": {
+      "speaker": "",
+      "text": "ふと。テレビの世界に招かれたとき、\nぼくが案内される場所はどこだろう。\n考えてみて秒でやめる。そもそもどこにも座りたくない",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片６",
+        "row": 8
+      },
+      "chapter": "寄り道 / 楽しくなければテレビじゃないのだ",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自室",
+      "partner": "",
+      "next": "tv_9"
+    },
+    "tv_9": {
+      "speaker": "",
+      "text": "リモコンで電源を切ってソファで横になって虚無。\nこんなにもつまらなかったんだろうか。テレビって",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片６",
+        "row": 9
+      },
+      "chapter": "寄り道 / 楽しくなければテレビじゃないのだ",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自室",
+      "partner": "",
+      "next": "tv_10"
+    },
+    "tv_10": {
+      "speaker": "",
+      "text": "これまでは見る時間があんまりなくて気づかなかった\nだけなのか、それともぼくが変わってしまったせいで\n楽しめなくなってしまったのか",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片６",
+        "row": 10
+      },
+      "chapter": "寄り道 / 楽しくなければテレビじゃないのだ",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自室",
+      "partner": "",
+      "next": "tv_11"
+    },
+    "tv_11": {
+      "speaker": "",
+      "text": "スマートフォンを何となく触って、\nYoutubeで宇宙について解説する動画を見る",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片６",
+        "row": 11
+      },
+      "chapter": "寄り道 / 楽しくなければテレビじゃないのだ",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自室",
+      "partner": "",
+      "next": "tv_12"
+    },
+    "tv_12": {
+      "speaker": "ずんだもん",
+      "text": "（宇宙の破滅についてっぽいことを語っている）のだ！",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片６",
+        "row": 12
+      },
+      "chapter": "寄り道 / 楽しくなければテレビじゃないのだ",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自室",
+      "partner": "",
+      "next": "tv_13",
+      "word": "doom"
+    },
+    "tv_13": {
+      "speaker": "",
+      "text": "性別もさだかではなさそうな機械音声が語る\nぼくの人生に一切関係なく訪れる宇宙の破滅の方が",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片６",
+        "row": 13
+      },
+      "chapter": "寄り道 / 楽しくなければテレビじゃないのだ",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自室",
+      "partner": "",
+      "next": "tv_14"
+    },
+    "tv_14": {
+      "speaker": "",
+      "text": "否応なしに男とか女にぼくを絡め取ろうとする\nテレビの言葉よりずっと安心できるもののように思えた",
+      "source": {
+        "file": "よだかプロト_断片集2.xlsx",
+        "sheet": "断片６",
+        "row": 14
+      },
+      "chapter": "寄り道 / 楽しくなければテレビじゃないのだ",
+      "chapter_index": 0,
+      "kind": "outing",
+      "place": "自室",
+      "partner": "",
+      "next": "night"
+    },
     "cry_6": {
       "speaker": "",
       "text": "母はぼくをよく褒める",
       "source": {
-        "file": "よだかプロト_断片集2.xlsx",
+        "file": "よだかプロト_断片集2.xlsx",
         "sheet": "断片７",
         "row": 6
       },
@@ -4348,7 +5739,7 @@
       "speaker": "",
       "text": "褒めは母の社交の手段であって、\n赤子が気づいてほしがってなきごえをあげるのと同じ\n生存戦略の一環であり、当たり前なのだとわかっている",
       "source": {
-        "file": "よだかプロト_断片集2.xlsx",
+        "file": "よだかプロト_断片集2.xlsx",
         "sheet": "断片７",
         "row": 7
       },
@@ -4363,7 +5754,7 @@
       "speaker": "りあ",
       "text": "いや〜、よだかかわいい〜！\nお母さんがよかったのかな〜、なんて",
       "source": {
-        "file": "よだかプロト_断片集2.xlsx",
+        "file": "よだかプロト_断片集2.xlsx",
         "sheet": "断片７",
         "row": 8
       },
@@ -4379,7 +5770,7 @@
       "speaker": "",
       "text": "仲の良い女の子のビジュアルを褒めるのも\n母にとってはデフォルトで覚えている技のようなもの",
       "source": {
-        "file": "よだかプロト_断片集2.xlsx",
+        "file": "よだかプロト_断片集2.xlsx",
         "sheet": "断片７",
         "row": 9
       },
@@ -4394,7 +5785,7 @@
       "speaker": "よだか",
       "text": "（前はカッコいいだったのに\n　今はカワイイが褒め言葉ですか。母よ）",
       "source": {
-        "file": "よだかプロト_断片集2.xlsx",
+        "file": "よだかプロト_断片集2.xlsx",
         "sheet": "断片７",
         "row": 10
       },
@@ -4409,7 +5800,7 @@
       "speaker": "りあ",
       "text": "ホントはね、\n女の子がほしいって気持ちもあったの！",
       "source": {
-        "file": "よだかプロト_断片集2.xlsx",
+        "file": "よだかプロト_断片集2.xlsx",
         "sheet": "断片７",
         "row": 11
       },
@@ -4424,7 +5815,7 @@
       "speaker": "",
       "text": "こんなのなきごえみたいなもので\nだから気にしなくてもいいんだけど。\nでもなんか、何かのステータスが下がる気がした",
       "source": {
-        "file": "よだかプロト_断片集2.xlsx",
+        "file": "よだかプロト_断片集2.xlsx",
         "sheet": "断片７",
         "row": 12
       },
@@ -4497,29 +5888,45 @@
   ],
   "rounds": [
     {
-      "outings": 2,
+      "outings": 3,
       "chapter": "main1"
     },
     {
-      "outings": 2,
+      "outings": 3,
       "chapter": "main2"
     },
     {
-      "outings": 1,
+      "outings": 3,
       "chapter": "main3"
     },
     {
-      "outings": 1,
+      "outings": 3,
       "chapter": "main4"
     }
   ],
   "map_events": [
     {
-      "id": "sushi",
-      "start": "sushi_6",
-      "title": "売ったバッシュで寿司を食う",
-      "label": "母と夕飯を食べる",
-      "place": "自宅_リビング",
+      "id": "cafe",
+      "start": "cafe_6",
+      "title": "奇跡を待つ人",
+      "label": "喫茶店に寄る",
+      "place": "喫茶店",
+      "unlock": 1
+    },
+    {
+      "id": "hands",
+      "start": "hands_6",
+      "title": "手を繋ぐ相手",
+      "label": "夕方の街を歩く",
+      "place": "街（夕方）",
+      "unlock": 1
+    },
+    {
+      "id": "cover",
+      "start": "cover_6",
+      "title": "雨除けカバー",
+      "label": "住宅街を歩く",
+      "place": "路上",
       "unlock": 1
     },
     {
@@ -4531,12 +5938,76 @@
       "unlock": 1
     },
     {
-      "id": "cafe",
-      "start": "cafe_6",
-      "title": "奇跡を待つ人",
-      "label": "喫茶店に寄る",
+      "id": "parent",
+      "start": "parent_6",
+      "title": "友達親子",
+      "label": "喫茶店で親子を見る",
       "place": "喫茶店",
+      "unlock": 2
+    },
+    {
+      "id": "chime",
+      "start": "chime_6",
+      "title": "季節はずれの風鈴",
+      "label": "風鈴の音を追う",
+      "place": "路上",
+      "unlock": 2
+    },
+    {
+      "id": "unicorn",
+      "start": "unicorn_6",
+      "title": "傘のユニコーン",
+      "label": "雨の帰り道",
+      "place": "路上",
+      "unlock": 2
+    },
+    {
+      "id": "bridge",
+      "start": "bridge_6",
+      "title": "歩道橋の夕焼け",
+      "label": "歩道橋に立つ",
+      "place": "歩道橋",
       "unlock": 1
+    },
+    {
+      "id": "dream",
+      "start": "dream_6",
+      "title": "透明な人の夢",
+      "label": "夢を思い出しながら歩く",
+      "place": "路上",
+      "unlock": 3
+    },
+    {
+      "id": "karaoke",
+      "start": "karaoke_6",
+      "title": "カラオケの割引券",
+      "label": "路上でティッシュをもらう",
+      "place": "路上",
+      "unlock": 3
+    },
+    {
+      "id": "native",
+      "start": "native_6",
+      "title": "ネイティブスピーカー",
+      "label": "授業を受ける",
+      "place": "教室",
+      "unlock": 2
+    },
+    {
+      "id": "sushi",
+      "start": "sushi_6",
+      "title": "売ったバッシュで寿司を食う",
+      "label": "母と夕飯を食べる",
+      "place": "自宅_リビング",
+      "unlock": 1
+    },
+    {
+      "id": "taiko",
+      "start": "taiko_6",
+      "title": "２本のマイバチがあれば",
+      "label": "ゲーセンに寄る",
+      "place": "ゲームセンター",
+      "unlock": 3
     },
     {
       "id": "sumika",
@@ -4547,12 +6018,28 @@
       "unlock": 2
     },
     {
+      "id": "inori",
+      "start": "inori_6",
+      "title": "姫様ご用心（tiktokに）",
+      "label": "ショート動画を眺める",
+      "place": "自室",
+      "unlock": 3
+    },
+    {
+      "id": "tv",
+      "start": "tv_6",
+      "title": "楽しくなければテレビじゃないのだ",
+      "label": "テレビを見る",
+      "place": "自室",
+      "unlock": 1
+    },
+    {
       "id": "cry",
       "start": "cry_6",
       "title": "なきごえ",
       "label": "母と話す",
       "place": "リビング",
-      "unlock": 2
+      "unlock": 3
     },
     {
       "id": "rest",
@@ -4582,7 +6069,7 @@
           "reply": "できなくなったことばかり考えていたけど、\n母さんが見ていたのは、そこだけじゃなかった。嬉しかったです。",
           "effects": {
             "ストレス": -8,
-            "自認": 6
+            "自認": 4
           }
         },
         {
@@ -4590,14 +6077,14 @@
           "reply": "えらいって言われるほどのことじゃない、と思いました。\nでも、そう言われたことは、ずっと残っていて。",
           "effects": {
             "ストレス": 5,
-            "自認": 8
+            "自認": 6
           }
         },
         {
           "label": "まだ、わからない",
           "reply": "嬉しいのか、申し訳ないのか、まだよくわかりません。\nでも、忘れたくはないんです。",
           "effects": {
-            "自認": 4,
+            "自認": 3,
             "勇気": 4
           }
         }
@@ -4630,14 +6117,14 @@
           "reply": "女王って言われても、自分のことだとは思えなくて。\n誘ってくれた気持ちまで、嫌だったわけではないけど。",
           "effects": {
             "ストレス": 5,
-            "自認": 8
+            "自認": 6
           }
         },
         {
           "label": "まだ、わからない",
           "reply": "なりたいかは、まだわかりません。\nでも、由梨さんが何を見ているのかは、気になりました。",
           "effects": {
-            "自認": 5,
+            "自認": 3,
             "勇気": 3
           }
         }
@@ -4662,7 +6149,7 @@
           "reply": "今のままで止まっていなくてもいいのかもしれない。\nそんなふうに考えられて、少し嬉しかったです。",
           "effects": {
             "勇気": 8,
-            "自認": 5
+            "自認": 3
           }
         },
         {
@@ -4677,7 +6164,7 @@
           "label": "まだ、わからない",
           "reply": "変わりたい気持ちと、変わりたくない気持ちがあって。\nまだ、どちらも僕の気持ちなんだと思います。",
           "effects": {
-            "自認": 5,
+            "自認": 3,
             "ストレス": -3
           }
         }
@@ -4717,7 +6204,7 @@
           "label": "まだ、わからない",
           "reply": "無駄だったかどうか、今はまだ決めたくありません。\nもう少し、持っていてもいいのかなって。",
           "effects": {
-            "自認": 6
+            "自認": 4
           }
         }
       ],
@@ -4748,7 +6235,7 @@
           "label": "自分らしくないと思った",
           "reply": "そんなふうに自由に考えるのは、僕らしくない気もして。\nでも、少し羨ましかったのかもしれません。",
           "effects": {
-            "自認": 8,
+            "自認": 6,
             "ストレス": 3
           }
         },
@@ -4796,7 +6283,7 @@
           "label": "まだ、わからない",
           "reply": "ほっとしたのか、もっと申し訳なくなったのか。\nまだ、うまく分けられません。",
           "effects": {
-            "自認": 5,
+            "自認": 3,
             "勇気": 3
           }
         }
@@ -4828,7 +6315,7 @@
           "label": "自分らしくないと思った",
           "reply": "同じようにキラキラしたいのかは、違う気がします。\n僕の欲しいものは、別にあるのかもしれません。",
           "effects": {
-            "自認": 8,
+            "自認": 6,
             "ストレス": 4
           }
         },
@@ -4837,7 +6324,7 @@
           "reply": "羨ましいのか、眩しすぎるのか、まだわかりません。\nでも、由梨さんがそう望むことは、覚えていたいです。",
           "effects": {
             "勇気": 4,
-            "自認": 4
+            "自認": 3
           }
         }
       ],
@@ -4868,7 +6355,7 @@
           "label": "自分らしくないと思った",
           "reply": "親しいって言われる自分に、まだ慣れなくて。\nそんなにすぐ、変われるのかなと思いました。",
           "effects": {
-            "自認": 6,
+            "自認": 4,
             "ストレス": 3
           }
         },
@@ -4908,7 +6395,7 @@
           "label": "前の自分も見てほしい",
           "reply": "前の僕のことも、見てほしいです。\n言ってもいいのかな、そういうこと。",
           "effects": {
-            "自認": 8,
+            "自認": 6,
             "ストレス": 3
           }
         },
@@ -4917,7 +6404,7 @@
           "reply": "まだ、うまく答えられません。\n嬉しいのか、さびしいのか。",
           "effects": {
             "勇気": 3,
-            "自認": 5
+            "自認": 3
           }
         }
       ],
@@ -4948,7 +6435,7 @@
           "label": "奇跡には頼れない",
           "reply": "奇跡がなくても、自分で決めたいです。\n今の僕にできることから。",
           "effects": {
-            "自認": 6,
+            "自認": 4,
             "ストレス": 3
           }
         },
@@ -4957,12 +6444,132 @@
           "reply": "まだ何を願うのか、わからなくて。\nその答えを、ゆっくり探したいです。",
           "effects": {
             "勇気": 5,
-            "自認": 5
+            "自認": 3
           }
         }
       ],
       "quote": "奇跡が起こるとは思ってないけど、\n奇跡が来てほしいなって思ってるの",
       "speaker": "？？？"
+    },
+    {
+      "id": "asu",
+      "node": "taiko_8",
+      "word": "あす、あす",
+      "model": "rock",
+      "color": "d9c27a",
+      "effects": {
+        "キラキラ": 4,
+        "ストレス": 3
+      },
+      "memory": "ゲーセンで太鼓の前を譲ったら、\n「あす、あす」って早口で言われました。\nありがとう、の略らしくて。",
+      "interpretations": [
+        {
+          "label": "嬉しかった",
+          "reply": "変な言い方だけど、ちゃんとお礼だったんですよね。\n世界は君のもの、って思えるくらい楽しそうで。",
+          "effects": {
+            "キラキラ": 6,
+            "ストレス": -4
+          }
+        },
+        {
+          "label": "自分らしくないと思った",
+          "reply": "あんなふうに夢中になれる場所が、今の僕にはなくて。\n羨ましいというより、置いていかれた気がしました。",
+          "effects": {
+            "ストレス": 5,
+            "自認": 4
+          }
+        },
+        {
+          "label": "まだ、わからない",
+          "reply": "マイバチじゃない何かが僕にもあればって思ったけど、\nそれが何かは、まだわかりません。",
+          "effects": {
+            "勇気": 4,
+            "自認": 3
+          }
+        }
+      ],
+      "quote": "すいませんどいてもらっていいですか（超早口）\nあす、あす（ありがとうの略語）。……っ（舌打ち）",
+      "speaker": "太鼓戦士"
+    },
+    {
+      "id": "company",
+      "node": "inori_11",
+      "word": "付き合ってあげる",
+      "model": "flower",
+      "color": "f0b8c8",
+      "effects": {
+        "ストレス": -5,
+        "キラキラ": 4
+      },
+      "memory": "いのりのことを思い出しました。\nショート動画を見るなって言いながら、\n結局「バカになるの付き合ってあげる」って。",
+      "interpretations": [
+        {
+          "label": "嬉しかった",
+          "reply": "めんどくさい言い方だけど、一緒にいたいってことで。\n思い出すと、今でも少し嬉しいです。",
+          "effects": {
+            "ストレス": -6,
+            "キラキラ": 5
+          }
+        },
+        {
+          "label": "自分らしくないと思った",
+          "reply": "あの頃の僕といのりの話で、今の僕の話じゃない。\nそう思ったら、少し遠く感じました。",
+          "effects": {
+            "ストレス": 4,
+            "自認": 4
+          }
+        },
+        {
+          "label": "まだ、わからない",
+          "reply": "今の僕にも、そう言ってくれるのかはわかりません。\nでも、忘れたくない言葉です。",
+          "effects": {
+            "自認": 3,
+            "勇気": 3
+          }
+        }
+      ],
+      "quote": "なるほどね……なら、いいけど。\nスマホ借りるね。\n仕方ないから、バカになるの付き合ってあげる",
+      "speaker": "いのり"
+    },
+    {
+      "id": "doom",
+      "node": "tv_12",
+      "word": "宇宙の破滅",
+      "model": "rock",
+      "color": "9fd0b8",
+      "effects": {
+        "ストレス": -6,
+        "自認": 3
+      },
+      "memory": "テレビを消して、動画で「宇宙の破滅」の話を聞きました。\n性別のわからない機械の声が、なぜか一番安心できて。",
+      "interpretations": [
+        {
+          "label": "嬉しかった",
+          "reply": "男とか女とか関係なく、いつか全部終わるんだって。\nそれが妙に気楽で、嬉しかったです。",
+          "effects": {
+            "ストレス": -8,
+            "自認": 3
+          }
+        },
+        {
+          "label": "自分らしくないと思った",
+          "reply": "安心するのが機械の声だけって、それも変ですよね。\n人と話すのを、避けているだけかもしれない。",
+          "effects": {
+            "ストレス": 4,
+            "自認": 4
+          }
+        },
+        {
+          "label": "まだ、わからない",
+          "reply": "何に安心したのか、まだうまく説明できません。\nでも、あの声はまた聞くと思います。",
+          "effects": {
+            "自認": 3,
+            "勇気": 3
+          }
+        }
+      ],
+      "quote": "（宇宙の破滅についてっぽいことを語っている）のだ！",
+      "speaker": "ずんだもん"
     }
   ]
 }

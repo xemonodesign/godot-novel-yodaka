@@ -74,7 +74,7 @@ def test_every_round_chapter_and_outing_ends_in_the_night():
         "main3",
         "main4",
     ]
-    assert sum(r["outings"] for r in data["rounds"]) == 6
+    assert sum(r["outings"] for r in data["rounds"]) == 12
     chapter_paths = {}
     for chapter in data["chapters"]:
         paths = walk(data, chapter["start"], {"night"})
@@ -108,19 +108,24 @@ def test_every_round_chapter_and_outing_ends_in_the_night():
             for n in paths[0][0]
             if n != "night"
         )
-    assert outing_words == {
+    assert len(outing_words) == 18
+    assert {k: v for k, v in outing_words.items() if v} == {
         "sushi": {"praise"},
-        "park": set(),
         "cafe": {"miracle"},
         "sumika": {"happiness"},
         "cry": {"cute"},
-        "rest": set(),
+        "taiko": {"asu"},
+        "inori": {"company"},
+        "tv": {"doom"},
     }
+    for event in data["map_events"]:
+        last = data["nodes"][walk(data, event["start"], {"night"})[0][0][-2]]
+        assert bool(outing_words[event["id"]]) or "effects" in last, event["id"]
     rest = next(e for e in data["map_events"] if e["id"] == "rest")
     assert rest["repeatable"] and data["nodes"]["rest_2"]["effects"] == {
         "ストレス": -15
     }
-    assert {e["unlock"] for e in data["map_events"]} == {1, 2}
+    assert {e["unlock"] for e in data["map_events"]} == {1, 2, 3}
     reachable = set()
     for paths in chapter_paths.values():
         for visited, _ in paths:
@@ -139,7 +144,15 @@ def test_markers_are_original_dialogue_with_bounded_effects():
     for word in data["words"]:
         node = data["nodes"][word["node"]]
         assert word["word"] in node["text"]
-        assert word["speaker"] in ["りあ", "あしか", "すみか", "？？？"]
+        assert word["speaker"] in [
+            "りあ",
+            "あしか",
+            "すみか",
+            "？？？",
+            "太鼓戦士",
+            "いのり",
+            "ずんだもん",
+        ]
         assert word["word"] in word["memory"]
         assert 1 <= len(word["effects"]) <= 2 and set(word["effects"]) <= set(STATS)
         assert len(word["interpretations"]) == 3
@@ -169,7 +182,8 @@ def test_sources_come_from_workbooks_or_the_committed_cache():
         "よだかプロト_断片集1.xlsx",
         "よだかプロト_断片集2.xlsx",
     }
-    assert set(cache["よだかプロト_断片集1.xlsx"]) == {"断片１", "断片４"}
+    assert len(cache["よだかプロト_断片集1.xlsx"]) == 10
+    assert len(cache["よだかプロト_断片集2.xlsx"]) == 7
     for path in ROOT.glob("*カウンセリング*.xlsx"):
         sheets = read_workbook(path)
         assert [s["sheet"] for s in sheets] == ["カウンセリング0", "カウンセリング1"]

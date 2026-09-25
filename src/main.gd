@@ -288,8 +288,9 @@ func _background_path(place: String) -> String:
     if place == "診察室":
         return "res://src/assets/counseling.png"
     var backgrounds := {"廊下": "hallway", "教室": "classroom", "自宅_リビング": "living",
-        "リビング": "living", "ファミレス": "restaurant", "ファミレス(昼)": "restaurant",
-        "喫茶店": "cafe", "自然公園": "park", "街": "street"}
+        "リビング": "living", "自室": "living", "ファミレス": "restaurant", "ファミレス(昼)": "restaurant",
+        "喫茶店": "cafe", "自然公園": "park", "街": "street", "街（夕方）": "street", "路上": "street",
+        "歩道橋": "street", "ゲームセンター": "street"}
     return "res://src/assets/backgrounds/%s.png" % backgrounds.get(place, "street")
 
 func _chapter_title(id: String) -> String:
@@ -318,11 +319,13 @@ func _show_map() -> void:
         note_text = "ストレスが %d。\n疲れていて、今日は出かけられない。\n\n家で休んで、ストレスを下げよう。" % int(state.stats[0])
     var note := _label(content, note_text, Rect2(854, 238, 320, 275), 17, Color("c8d5c5"))
     note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-    var positions := [Vector2(95, 175), Vector2(465, 175), Vector2(95, 300), Vector2(465, 300), Vector2(95, 425), Vector2(465, 425)]
-    for i in range(mini(state.data.map_events.size(), positions.size())):
+    # Up to 18 destinations in a 3 x 6 grid over the map.
+    for i in range(mini(state.data.map_events.size(), 18)):
         var event: Dictionary = state.data.map_events[i]
+        var origin := Vector2(86 + (i % 3) * 244, 156 + (i / 3) * 66)
         var available: bool = state.event_available(event.id)
-        var button := _button(content, "%02d  %s\n%s" % [i + 1, event.label, event.title], Rect2(positions[i], Vector2(316, 72)), _select_map_event.bind(event.id), true)
+        var button := _button(content, "%02d  %s\n%s" % [i + 1, event.label, event.title], Rect2(origin, Vector2(232, 58)), _select_map_event.bind(event.id), true)
+        button.add_theme_font_size_override("font_size", 14)
         button.disabled = not available
         var reason := ""
         if state.visited.has(event.id) and not event.get("repeatable", false):
@@ -334,7 +337,8 @@ func _show_map() -> void:
         elif event.get("repeatable", false):
             reason = "ストレス %d" % int(state.data.nodes["rest_2"].effects["ストレス"])
         if reason != "":
-            _label(content, reason, Rect2(positions[i] + Vector2(6, 76), Vector2(300, 22)), 12, PAPER)
+            var tag := _label(content, reason, Rect2(origin + Vector2(130, 1), Vector2(98, 14)), 10, Color("59835c") if available else MUTED)
+            tag.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
     _button(content, "カルテ", Rect2(854, 509, 160, 38), _show_karte.bind(Callable()))
     _button(content, "タイトル", Rect2(1030, 509, 160, 38), _show_title)
 
@@ -374,23 +378,23 @@ func _show_night() -> void:
     else:
         _label(content, "もらった言葉を、ひとつ見つめる。", Rect2(77, 140, 900, 44), 30, PAPER)
         _label(content, "一晩にひとつ。どう受け取ったかを決めると、言葉が育つ。", Rect2(77, 190, 900, 26), 15, Color("8d9c8d"))
-        for i in range(mini(candidates.size(), 10)):
+        for i in range(mini(candidates.size(), 14)):
             var word: Dictionary = state.word_by_id(candidates[i])
-            var x: float = 80 + (i % 5) * 122
-            var y: float = 228 + (i / 5) * 132
+            var x: float = 80 + (i % 7) * 88
+            var y: float = 228 + (i / 7) * 132
             var selected: bool = word.id == night_selected
-            _panel(content, Rect2(x, y, 112, 122), Color("1c262b") if selected else Color("141c20"), Color("f3d79e") if selected else Color("2c393f"), 4)
+            _panel(content, Rect2(x, y, 84, 122), Color("1c262b") if selected else Color("141c20"), Color("f3d79e") if selected else Color("2c393f"), 4)
             var specimen = Specimen.new()
-            specimen.position = Vector2(x + 17, y + 4)
+            specimen.position = Vector2(x + 3, y + 4)
             specimen.size = Vector2(78, 68)
             content.add_child(specimen)
             specimen.setup(word.model, Color(word.color))
-            var label := _label(content, word.word, Rect2(x + 4, y + 74, 104, 44), 11, PAPER)
+            var label := _label(content, word.word, Rect2(x + 3, y + 74, 78, 44), 11, PAPER)
             label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
             label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
             var hit := Button.new()
             hit.position = Vector2(x, y)
-            hit.size = Vector2(112, 122)
+            hit.size = Vector2(84, 122)
             hit.flat = true
             hit.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
             hit.pressed.connect(_pick_night_word.bind(word.id))

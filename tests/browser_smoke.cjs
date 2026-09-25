@@ -51,7 +51,7 @@ const SLEEP = [1044, 543];
 const FIRST_WORD = [136, 289];
 const FIRST_GROWTH = [952, 373];
 const COUNSEL_CHOICE = [434, 463];
-const MAP_SLOTS = [[253, 211], [623, 211], [253, 336], [623, 336], [253, 461], [623, 461]];
+const MAP_SLOTS = Array.from({ length: 18 }, (_, i) => [202 + (i % 3) * 244, 185 + Math.floor(i / 3) * 66]);
 
 function availableEvent(save) {
   const week = save.round_index + 1;
@@ -110,8 +110,17 @@ function availableEvent(save) {
     // Drive the whole loop from the real save state: counseling, outings, nights, chapters.
     const seen = { map: 0, night: 0, chapter: new Set(), grown: 0, karte: 0 };
     let save = initial;
-    for (let i = 0; i < 900 && save.current !== 'result'; i++) {
+    let signature = '';
+    let stalled = 0;
+    for (let i = 0; i < 1600 && save.current !== 'result'; i++) {
       save = await saveRecord(page);
+      const next = JSON.stringify([save.current, save.counsel_step, save.night_step, save.read_count, save.answers.length, save.visited.length]);
+      stalled = next === signature ? stalled + 1 : 0;
+      signature = next;
+      if (stalled >= 12) {
+        await shot('stall');
+        throw new Error('Playthrough stalled at ' + next);
+      }
       if (save.current === 'map') {
         seen.map++;
         if (seen.map === 1) await shot('map');
@@ -132,8 +141,7 @@ function availableEvent(save) {
           seen.grown++;
           if (seen.grown === 1) await shot('night-grown');
         }
-        await click(SLEEP, 900);
-        await click(OVERLAY, 900);
+        await click(SLEEP, 900);  // the map or a chapter card follows; the next pass handles it
         continue;
       }
       const node = scenario.nodes[save.current];
@@ -163,8 +171,8 @@ function availableEvent(save) {
     assert.equal(save.current, 'result');
     assert.equal(save.round_index, 4);
     assert.equal(seen.chapter.size, 4, 'All four chapters played');
-    assert.equal(seen.map, 6, 'Six outings');
-    assert.equal(seen.night, 10, 'A night after every outing and chapter');
+    assert.equal(seen.map, 12, 'Twelve outings');
+    assert.equal(seen.night, 16, 'A night after every outing and chapter');
     assert.ok(save.collected.length >= 8, 'Words collected');
     assert.equal(save.answers.length, save.collected.length, 'Every word interpreted');
     assert.ok(seen.karte >= 2, 'Karte shown in the tutorial and the closing');
@@ -218,7 +226,7 @@ function availableEvent(save) {
     await shot('map-stress');
     await click(MAP_SLOTS[1], 600);
     assert.equal((await settled(record => record.current !== 'map', 1500)).current, 'map', 'High stress blocks outings');
-    await click(MAP_SLOTS[5], 900);
+    await click(MAP_SLOTS[17], 900);
     assert.equal((await settled(record => record.current === 'rest_0')).current, 'rest_0');
 
     const gate = scenario.nodes.main4_31;
@@ -241,8 +249,8 @@ function availableEvent(save) {
     await click(COUNSEL_CHOICE, 2800);
     const answered = await settled(record => record.counsel_step === 'reply');
     assert.equal(answered.counsel_step, 'reply');
-    assert.deepEqual(answered.answers[1].delta, [-8, 0, 6, 0]);
-    assert.deepEqual(answered.stats, [52, 35, 41, 35]);
+    assert.deepEqual(answered.answers[1].delta, [-8, 0, 4, 0]);
+    assert.deepEqual(answered.stats, [52, 35, 39, 35]);
     await shot('yodaka-reply');
 
     await page.setViewportSize({ width: 844, height: 390 });
