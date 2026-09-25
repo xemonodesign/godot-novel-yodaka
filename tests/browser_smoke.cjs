@@ -125,6 +125,7 @@ function availableEvent(save) {
         seen.map++;
         if (seen.map === 1) await shot('map');
         await click(MAP_SLOTS[availableEvent(save)], 900);
+        await settled(record => record.current !== 'map');
         await click(OVERLAY, 900);
         continue;
       }
@@ -142,6 +143,7 @@ function availableEvent(save) {
           if (seen.grown === 1) await shot('night-grown');
         }
         await click(SLEEP, 900);  // the map or a chapter card follows; the next pass handles it
+        await settled(record => record.current !== 'night');
         continue;
       }
       const node = scenario.nodes[save.current];

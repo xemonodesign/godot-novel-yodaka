@@ -317,7 +317,7 @@ func _show_map() -> void:
     note_text += "出かけるとストレス +%d。\n出会った言葉は、その場で\nよだかの輪郭を変えていく。" % int(State.OUTING_EFFECTS["ストレス"])
     if state.stress_locked():
         note_text = "ストレスが %d。\n疲れていて、今日は出かけられない。\n\n家で休んで、ストレスを下げよう。" % int(state.stats[0])
-    var note := _label(content, note_text, Rect2(854, 238, 320, 275), 17, Color("c8d5c5"))
+    var note := _label(content, note_text, Rect2(854, 238, 320, 215), 17, Color("c8d5c5"))
     note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
     # Up to 18 destinations in a 3 x 6 grid over the map.
     for i in range(mini(state.data.map_events.size(), 18)):
@@ -339,8 +339,9 @@ func _show_map() -> void:
         if reason != "":
             var tag := _label(content, reason, Rect2(origin + Vector2(130, 1), Vector2(98, 14)), 10, Color("59835c") if available else MUTED)
             tag.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-    _button(content, "カルテ", Rect2(854, 509, 160, 38), _show_karte.bind(Callable()))
-    _button(content, "タイトル", Rect2(1030, 509, 160, 38), _show_title)
+    # Kept clear of the night screen's sleep button so a double click cannot leave the map.
+    _button(content, "カルテ", Rect2(854, 462, 160, 38), _show_karte.bind(Callable()))
+    _button(content, "タイトル", Rect2(1030, 462, 160, 38), _show_title)
 
 func _select_map_event(id: String) -> void:
     if state.select_event(id):
