@@ -46,12 +46,15 @@ func _draw() -> void:
     for node in lit:
         var radius: float = 30.0 + float(node.crystals) * 9.0
         var pulse := 1.0 + 0.05 * sin(time * 1.4 + node.pos.x * 0.03)
-        draw_line(center, node.pos, Color(node.color, 0.12 + 0.05 * float(node.crystals)), 1.5, true)
+        # Pastel specimen colors are pushed toward their hue so the light reads as colored.
+        var base: Color = node.color
+        var tint := Color.from_hsv(base.h, minf(base.s * 2.2 + 0.2, 0.85), 1.0)
+        draw_line(center, node.pos, Color(tint, 0.14 + 0.05 * float(node.crystals)), 1.5, true)
         for ring in range(7):
             var t := ring / 7.0
-            var alpha := (0.16 - 0.02 * ring) * (1.0 - t) + 0.02
-            draw_circle(node.pos, radius * pulse * (1.0 - t * 0.85), Color(node.color, alpha))
+            var alpha := (0.2 - 0.02 * ring) * (1.0 - t) + 0.025
+            draw_circle(node.pos, radius * pulse * (1.0 - t * 0.85), Color(tint, alpha))
         for i in range(mini(node.crystals, 12)):
             var angle := i * 0.52 + time * 0.25
             var point: Vector2 = node.pos + Vector2(cos(angle), sin(angle)) * (radius * 0.55)
-            draw_circle(point, 1.6, Color(node.color.lightened(0.5), 0.6))
+            draw_circle(point, 1.6, Color(tint.lightened(0.5), 0.7))
