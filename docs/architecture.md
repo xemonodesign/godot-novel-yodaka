@@ -22,8 +22,8 @@
 - `map_events` の `unlock` は行ける週、`repeatable` は「家で休む」。訪問済みは `visited`。ストレスが `STRESS_LIMIT`（80）以上なら休息以外を選べません。言葉の無い断片は末尾ノードの `effects`（気づき）でパラメータを動かします。
 - 言葉は読み終えた行で収集し、`word.effects` をその場で適用して `gains[id]` に差分を記録します。同じ行を再開しても重複しません。ノードの `effects`（休息）と選択肢の `effects`（チュートリアル）も同様にその場で適用します。
 - 出かけると `OUTING_EFFECTS`（ストレス+5）、章が始まると `CHAPTER_EFFECTS`（+6）。休息は `rest_2` の `effects`（-15）。
-- 夜は `grow(id, index)` で集めた言葉のどれか1つを見つめ、`answers` に `stage: "night"` で記録し `crystals[id]` を1増やします。同じ言葉の2回目以降は `interpretation_effects()` が効果を半分にします。`answer_for()` は最新の受け取り方を返します。`sleep()` で `SLEEP_EFFECTS`（-4）のうえ次へ進みます。
-- 総括へ向かう `sleep()` で、結晶が `KEEP_CRYSTALS`（4）未満の言葉を `forgotten` に移し、`counsel_step` を `forget` にします。UIは忘れた言葉が薄れる画面を出してから `opening_doctor` へ。
+- 夜は `grow(id, index)` で集めた言葉のどれか1つを見つめ、`answers` に `stage: "night"` で記録し `crystals[id]` を1増やします。`interpretation_effects()` は各指標を±1にし、`bonus_pending()`（次の結晶が `BONUS_EVERY`=5 の倍数）なら `bonus_effects()`（最大値を `BONUS_MAX`=8 に拡大した表）を足します。`answer_for()` は最新の受け取り方を返します。`sleep()` で `SLEEP_EFFECTS`（-4）のうえ次へ進みます。
+- 総括へ向かう `sleep()` で、結晶が `KEEP_CRYSTALS`（1）未満、つまり一度も見つめなかった言葉を `forgotten` に移し、`counsel_step` を `forget` にします。UIは忘れた言葉が薄れる画面を出してから `opening_doctor` へ。
 - 総括のカウンセリングは `reviewed` 番目の言葉を順に扱い、育てた言葉は `grown_reply`、未成長の言葉は `question → choice → reply` を経て `response`。最後に `closing`（カルテ）→ `farewell` → `result`。
 - `preview()` が0〜100の上限・下限を反映した差分を返し、予告と適用の両方で使用します。1回に動く項目は最大2つ。
 

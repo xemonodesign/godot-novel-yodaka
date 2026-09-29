@@ -180,8 +180,8 @@ function availableEvent(save) {
     assert.equal(seen.map, 12, 'Twelve outings');
     assert.equal(seen.night, 16, 'A night after every outing and chapter');
     assert.ok(save.collected.length + save.forgotten.length >= 6, 'Words received');
-    for (const id of save.collected) assert.ok(save.crystals[id] >= 4, 'Kept words have crystals');
-    for (const id of save.forgotten) assert.ok((save.crystals[id] || 0) < 4, 'Forgotten words lacked crystals');
+    for (const id of save.collected) assert.ok(save.crystals[id] >= 1, 'Kept words have crystals');
+    for (const id of save.forgotten) assert.ok((save.crystals[id] || 0) < 1, 'Forgotten words were never looked at');
     assert.equal(seen.grown, 16, 'A word grown every night');
     assert.ok(seen.karte >= 2, 'Karte shown in the tutorial and the closing');
     for (const answer of save.answers) {

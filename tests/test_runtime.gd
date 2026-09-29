@@ -68,6 +68,9 @@ func run() -> void:
                     bounded(state, before, delta, "growth")
                     check(state.is_grown(pick) and state.night_step == "reply", "Word grown at night")
                     check(state.crystal_count(pick) == crystals_before + 1, "A night adds one crystal")
+                    var moved: int = delta.map(func(v): return absi(v)).max()
+                    check(moved <= (1 if (crystals_before + 1) % State.BONUS_EVERY != 0 else State.BONUS_MAX + 1), "Nights nudge by one unless a bonus lands")
+                    check(state.answers.back().bonus == ((crystals_before + 1) % State.BONUS_EVERY == 0), "Bonus recorded on every fifth crystal")
                     check(state.grow(pick, 0).is_empty(), "One growth per night")
                     if candidates.size() > 1:
                         check(state.grow(candidates[1], 0).is_empty(), "Second word cannot grow the same night")
@@ -312,9 +315,9 @@ func run() -> void:
     await dismiss(scene)
     check(not is_instance_valid(scene.overlay) and scene.night_intro_seen, "Click ends the night intro")
     scene._pick_night_word("queen")
-    check(scene.preview_labels.size() == 3 and "勇気 +6" in scene.preview_labels[0], "Night growth previews effects")
+    check(scene.preview_labels.size() == 3 and "勇気 +1" in scene.preview_labels[0], "Night growth previews effects")
     scene._grow("queen", 0)
-    check(scene.state.is_grown("queen") and scene.state.stats[1] == 41, "UI growth applies interpretation")
+    check(scene.state.is_grown("queen") and scene.state.stats[1] == 36, "UI growth applies interpretation")
     scene._grow("praise", 0)
     check(not scene.state.is_grown("praise"), "Only one word grows per night")
     check(scene.state.crystal_count("queen") == 1, "Night growth leaves a crystal")
@@ -345,7 +348,7 @@ func run() -> void:
         check(scene.state.counsel_step == step, "Counseling order: " + step)
     scene._finish_line()
     check(scene.preview_labels.size() == 3 and "ストレス -8" in scene.preview_labels[0], "Named effects visible before answering")
-    var before_reply: Array = scene.state.preview_interpretation("praise", 0)
+    var before_reply: Array = scene.state.preview(scene.state.word_by_id("praise").interpretations[0].effects)
     scene._interpret(0)
     scene._interpret(0)
     check(scene.state.answers.size() == 2, "Double click answers once")
@@ -376,13 +379,24 @@ func run() -> void:
     scene.state.after_night = "counseling"
     scene.state.round_index = 4
     scene.state.collected = ["queen", "praise", "miracle"]
-    scene.state.crystals = {"queen": 4, "praise": 3}
-    scene.state.answers = [{"word": "queen", "choice": 0, "delta": [0, 6, 0, 6], "stage": "night"}, {"word": "praise", "choice": 2, "delta": [0, 3, 3, 0], "stage": "night"}]
+    scene.state.crystals = {"queen": 4, "praise": 1}
+    scene.state.answers = [{"word": "queen", "choice": 0, "delta": [0, 1, 0, 1], "stage": "night"}, {"word": "praise", "choice": 2, "delta": [0, 1, 1, 0], "stage": "night"}]
     scene.night_intro_seen = true
     scene._show_story()
     scene._sleep()
     check(scene.state.current == "counseling" and scene.state.counsel_step == "forget", "Words short of crystals are forgotten before counseling")
-    check(scene.state.collected == ["queen"] and scene.state.forgotten == ["praise", "miracle"], "Only well-grown words remain")
+    check(scene.state.collected == ["queen", "praise"] and scene.state.forgotten == ["miracle"], "Only words looked at remain")
+    scene.state.current = "night"
+    scene.state.after_night = "map"
+    scene.state.night_step = "pick"
+    scene.night_intro_seen = true
+    var before_bonus: Array = scene.state.stats.duplicate()
+    check(scene.state.bonus_pending("queen"), "Fifth crystal announces a bonus")
+    var bonus_delta: Array = scene.state.grow("queen", 0)
+    check(scene.state.answers.back().bonus and bonus_delta[1] >= 8 - 1, "Fifth crystal pays about eight")
+    check(scene.state.stats[1] == before_bonus[1] + bonus_delta[1], "Bonus applied to stats")
+    scene.state.night_step = "pick"
+    scene.state.current = "counseling"
     check(scene.mode == "counseling" and scene.body == null, "Forgetting screen has no dialogue body")
     scene._advance()
     check(scene.state.counsel_step == "forget", "Space does nothing on the forgetting screen")
@@ -390,7 +404,7 @@ func run() -> void:
     check(scene.state.counsel_step == "opening_doctor", "Forgetting leads into the counseling")
     var restored_forget = State.new()
     restored_forget.save_path = scene.state.save_path
-    check(restored_forget.load_game() and restored_forget.forgotten == ["praise", "miracle"] and restored_forget.crystals.get("queen") == 4, "Forgotten words and crystals persist")
+    check(restored_forget.load_game() and restored_forget.forgotten == ["miracle"] and restored_forget.crystals.get("queen") == 5, "Forgotten words and crystals persist")
     scene._show_karte(Callable())
     check(is_instance_valid(scene.overlay), "Karte opens from the outline panel callback")
     scene._close_overlay()

@@ -8,7 +8,9 @@ const SLEEP_EFFECTS = {"ストレス": -4}
 const OUTING_EFFECTS = {"ストレス": 5}
 const CHAPTER_EFFECTS = {"ストレス": 6}
 const SAVE_PATH = "user://yodaka_v1.json"
-const KEEP_CRYSTALS = 4  # words with fewer crystals are forgotten before the closing counseling
+const KEEP_CRYSTALS = 1  # words never looked at are forgotten before the closing counseling
+const BONUS_EVERY = 5  # every fifth crystal on a word pays a bonus
+const BONUS_MAX = 8  # the bonus scales the interpretation so its largest effect is this
 const COUNSEL_STEPS = ["forget", "opening_doctor", "opening_yodaka", "recall", "grown_reply",
     "question", "choice", "reply", "response", "closing", "farewell"]
 var save_path: String = SAVE_PATH
@@ -198,19 +200,37 @@ func select_event(id: String) -> bool:
 func grow_candidates() -> Array:
     return collected.duplicate()
 
-func interpretation_effects(id: String, index: int) -> Dictionary:
-    # The first night moves the stats fully; later nights on the same word move them half as much.
+func bonus_effects(id: String, index: int) -> Dictionary:
+    # The interpretation's table, scaled so its strongest effect is BONUS_MAX.
     var word := word_by_id(id)
     if word.is_empty() or index not in [0, 1, 2]:
         return {}
     var effects: Dictionary = word.interpretations[index].effects
-    if crystal_count(id) == 0:
-        return effects
+    var largest := 1
+    for stat in effects:
+        largest = maxi(largest, absi(int(effects[stat])))
     var scaled := {}
     for stat in effects:
-        var value: int = int(effects[stat])
-        scaled[stat] = signi(value) * maxi(1, absi(value) / 2)
+        scaled[stat] = int(round(float(effects[stat]) * BONUS_MAX / largest))
     return scaled
+
+func bonus_pending(id: String) -> bool:
+    return (crystal_count(id) + 1) % BONUS_EVERY == 0
+
+func interpretation_effects(id: String, index: int) -> Dictionary:
+    # A night nudges each stat of the interpretation by one; every fifth crystal adds the bonus.
+    var word := word_by_id(id)
+    if word.is_empty() or index not in [0, 1, 2]:
+        return {}
+    var effects: Dictionary = word.interpretations[index].effects
+    var nightly := {}
+    for stat in effects:
+        nightly[stat] = signi(int(effects[stat]))
+    if bonus_pending(id):
+        var bonus := bonus_effects(id, index)
+        for stat in bonus:
+            nightly[stat] = int(nightly.get(stat, 0)) + int(bonus[stat])
+    return nightly
 
 func preview_interpretation(id: String, index: int) -> Array:
     if word_by_id(id).is_empty() or index not in [0, 1, 2]:
@@ -223,8 +243,9 @@ func grow(id: String, index: int) -> Array:
     var delta := preview_interpretation(id, index)
     if delta.is_empty():
         return []
+    var bonus: bool = bonus_pending(id)
     apply(interpretation_effects(id, index))
-    answers.append({"word": id, "choice": index, "delta": delta, "stage": "night"})
+    answers.append({"word": id, "choice": index, "delta": delta, "stage": "night", "bonus": bonus})
     crystals[id] = crystal_count(id) + 1
     night_word = id
     night_step = "reply"
@@ -268,10 +289,9 @@ func interpret(index: int) -> Array:
     var id: String = collected[reviewed]
     if is_grown(id):
         return []
-    var delta := preview_interpretation(id, index)
-    if delta.is_empty():
-        return []
-    apply(word_by_id(id).interpretations[index].effects)
+    var effects: Dictionary = word_by_id(id).interpretations[index].effects
+    var delta := preview(effects)
+    apply(effects)
     answers.append({"word": id, "choice": index, "delta": delta, "stage": "counseling"})
     counsel_step = "reply"
     save_game()

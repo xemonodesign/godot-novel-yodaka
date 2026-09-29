@@ -240,7 +240,7 @@ func _draw_bottom() -> void:
             bottom.add_child(specimen)
             specimen.setup(word.model, Color(word.color), crystals)
             if crystals > 0:
-                _label(bottom, "★%d" % crystals, Rect2(x + spacing - 40, 656, 32, 20), 12, Color("f3d79e") if crystals >= State.KEEP_CRYSTALS else Color("c9b985")).horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+                _label(bottom, "★%d" % crystals, Rect2(x + spacing - 40, 656, 32, 20), 12, Color("f3d79e") if crystals >= State.BONUS_EVERY else Color("c9b985")).horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
             var label := _label(bottom, word.word, Rect2(x + 3, 722, spacing - 13, 32), 11, PAPER)
             label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
             label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -387,7 +387,7 @@ func _show_night() -> void:
     _panel(content, Rect2(44, 76, 1192, 516), NIGHT)
     _label(content, "NIGHT  /  夜、部屋で", Rect2(77, 94, 780, 34), 17, Color("8d9c8d"))
     var candidates: Array = state.grow_candidates()
-    var next_text := {"map": "眠ると、次の自由行動へ。", "chapter": "眠ると、本編 CHAPTER %02d へ（ストレス +%d）。" % [int(state.current_round().get("chapter", "main1").trim_prefix("main")), int(State.CHAPTER_EFFECTS["ストレス"])], "counseling": "眠ると、総括のカウンセリングへ。結晶が %d 個未満の言葉は忘れてしまう。" % State.KEEP_CRYSTALS}
+    var next_text := {"map": "眠ると、次の自由行動へ。", "chapter": "眠ると、本編 CHAPTER %02d へ（ストレス +%d）。" % [int(state.current_round().get("chapter", "main1").trim_prefix("main")), int(State.CHAPTER_EFFECTS["ストレス"])], "counseling": "眠ると、総括のカウンセリングへ。一度も見つめなかった言葉は忘れてしまう。"}
     if state.night_step == "reply":
         var word: Dictionary = state.word_by_id(state.night_word)
         var answer: Dictionary = state.answer_for(word.id)
@@ -402,7 +402,12 @@ func _show_night() -> void:
         var reply := _label(content, word.interpretations[int(answer.choice)].reply, Rect2(360, 240, 820, 130), 22, PAPER)
         reply.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
         _label(content, _delta_text(answer.delta), Rect2(360, 380, 820, 30), 16, Color("d9e5a3"))
-        _label(content, "結晶が %d 個になった。" % count + ("　総括まで持っていける。" if count >= State.KEEP_CRYSTALS else "　あと %d 個で忘れなくなる。" % (State.KEEP_CRYSTALS - count)), Rect2(360, 420, 820, 30), 16, Color("f3d79e"))
+        var note_line: String = "結晶が %d 個になった。" % count
+        if answer.get("bonus", false):
+            note_line += "　結晶 %d 個のボーナス！" % count
+        else:
+            note_line += "　あと %d 個でボーナス。" % (State.BONUS_EVERY - count % State.BONUS_EVERY)
+        _label(content, note_line, Rect2(360, 420, 820, 30), 16, Color("f3d79e"))
         _button(content, "眠る（ストレス %d）  →" % int(State.SLEEP_EFFECTS["ストレス"]), Rect2(884, 520, 320, 46), _sleep, true)
         _label(content, next_text[state.after_night], Rect2(77, 530, 800, 26), 14, Color("8d9c8d"))
         return
@@ -411,7 +416,7 @@ func _show_night() -> void:
         _label(content, "自由行動や本編で言葉をもらうと、夜にひとつ選んで見つめられます。\n見つめるたびに結晶が増え、よだかの輪郭を動かします。", Rect2(77, 210, 1000, 80), 18, Color("c8d5c5"))
     else:
         _label(content, "もらった言葉を、ひとつ見つめる。", Rect2(77, 140, 900, 44), 30, PAPER)
-        _label(content, "一晩にひとつ。同じ言葉を何度見つめてもいい。そのたびに結晶がひとつ増える。", Rect2(77, 190, 900, 26), 15, Color("8d9c8d"))
+        _label(content, "一晩にひとつ、結晶がひとつ。結晶 %d 個ごとに大きなボーナス。一度も見つめなかった言葉は総括の前に忘れてしまう。" % State.BONUS_EVERY, Rect2(77, 190, 1100, 26), 15, Color("8d9c8d"))
         for i in range(mini(candidates.size(), 14)):
             var word: Dictionary = state.word_by_id(candidates[i])
             var count: int = state.crystal_count(word.id)
@@ -425,7 +430,7 @@ func _show_night() -> void:
             content.add_child(specimen)
             specimen.setup(word.model, Color(word.color), count)
             if count > 0:
-                _label(content, "★%d" % count, Rect2(x + 46, y + 4, 36, 16), 11, Color("f3d79e") if count >= State.KEEP_CRYSTALS else Color("c9b985")).horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+                _label(content, "★%d" % count, Rect2(x + 46, y + 4, 36, 16), 11, Color("f3d79e") if count >= State.BONUS_EVERY else Color("c9b985")).horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
             var label := _label(content, word.word, Rect2(x + 3, y + 74, 78, 44), 11, PAPER)
             label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
             label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -440,7 +445,8 @@ func _show_night() -> void:
             var word: Dictionary = state.word_by_id(night_selected)
             var answer: Dictionary = state.answer_for(word.id)
             _panel(content, Rect2(700, 224, 504, 286), Color("1c262b"), Color("2c393f"), 4)
-            _label(content, "「%s」  /  %s　　結晶 %d" % [word.word, word.speaker, state.crystal_count(word.id)], Rect2(716, 234, 470, 28), 17, Color("f3d79e"))
+            var crystal_note: String = "結晶 %d" % state.crystal_count(word.id) + ("　·　次でボーナス！" if state.bonus_pending(word.id) else "")
+            _label(content, "「%s」  /  %s　　%s" % [word.word, word.speaker, crystal_note], Rect2(716, 234, 470, 28), 17, Color("f3d79e"))
             var quote := _label(content, word.quote, Rect2(716, 264, 472, 80), 13, Color("c8d5c5"))
             quote.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
             preview_labels.clear()
@@ -832,7 +838,7 @@ func _show_forgetting() -> void:
     _panel(content, Rect2(44, 76, 1192, 516), NIGHT)
     _label(content, "COUNSELING  /  診察室へ向かう朝", Rect2(77, 94, 780, 34), 17, Color("8d9c8d"))
     _label(content, "結晶が足りなかった言葉は、こぼれ落ちてしまった。", Rect2(77, 140, 1000, 44), 28, PAPER)
-    _label(content, "結晶が %d 個に満たない言葉は、診察室に着くころには思い出せない。\n残った言葉だけを、みなとに話す。" % State.KEEP_CRYSTALS, Rect2(77, 192, 1000, 60), 16, Color("c8d5c5"))
+    _label(content, "一度も見つめなかった言葉は、診察室に着くころには思い出せない。\n残った言葉だけを、みなとに話す。", Rect2(77, 192, 1000, 60), 16, Color("c8d5c5"))
     for i in range(mini(state.forgotten.size(), 10)):
         var word: Dictionary = state.word_by_id(state.forgotten[i])
         var x: float = 80 + (i % 5) * 200
@@ -879,7 +885,7 @@ func _counsel_choices() -> void:
     var word: Dictionary = state.review_word()
     for i in range(3):
         var interpretation: Dictionary = word.interpretations[i]
-        var delta: Array = state.preview_interpretation(word.id, i)
+        var delta: Array = state.preview(interpretation.effects)
         var lines: PackedStringArray = [interpretation.label, ""]
         for stat in interpretation.effects:
             var k: int = State.STAT_NAMES.find(stat)
@@ -933,7 +939,7 @@ func _show_karte(on_close: Callable) -> void:
         card.add_child(bar)
         bar.size = Vector2(210, 14)
         _label(card, str(int(state.stats[i])), Rect2(362, y, 60, 30), 19)
-    var notes := "ストレス：出かけると+%d、本編で+%d。%d以上で外出できず、休むと下がる。\n勇気：本編の選択肢に必要。　自認：自分の捉え方への納得度。　キラキラ：人前での輝き。\n\n夜に見つめた言葉には結晶がつく。総括までに結晶が %d 個未満の言葉は忘れてしまう。" % [int(State.OUTING_EFFECTS["ストレス"]), int(State.CHAPTER_EFFECTS["ストレス"]), State.STRESS_LIMIT, State.KEEP_CRYSTALS]
+    var notes := "ストレス：出かけると+%d、本編で+%d。%d以上で外出できず、休むと下がる。\n勇気：本編の選択肢に必要。　自認：自分の捉え方への納得度。　キラキラ：人前での輝き。\n\n夜に見つめた言葉には結晶がつき、%d 個ごとにボーナス。一度も見つめなかった言葉は総括の前に忘れてしまう。" % [int(State.OUTING_EFFECTS["ストレス"]), int(State.CHAPTER_EFFECTS["ストレス"]), State.STRESS_LIMIT, State.BONUS_EVERY]
     var note := _label(card, notes, Rect2(40, 340, 385, 150), 13, MUTED)
     note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
     # The garden: every word Yodaka keeps, with the crystals its nights have grown.
@@ -958,7 +964,7 @@ func _show_karte(on_close: Callable) -> void:
         label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
         label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
         if count > 0:
-            _label(card, "★%d" % count, Rect2(x + 46, y, 40, 16), 11, Color("f3d79e") if count >= State.KEEP_CRYSTALS else Color("c9b985")).horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+            _label(card, "★%d" % count, Rect2(x + 46, y, 40, 16), 11, Color("f3d79e") if count >= State.BONUS_EVERY else Color("c9b985")).horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
     if state.collected.is_empty():
         _label(card, "まだ言葉がない。", Rect2(456, 250, 340, 30), 14, Color("8d9c8d")).horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     if on_close.is_valid():
