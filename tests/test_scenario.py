@@ -108,16 +108,17 @@ def test_every_round_chapter_and_outing_ends_in_the_night():
             for n in paths[0][0]
             if n != "night"
         )
-    assert len(outing_words) == 18
+    assert len(outing_words) == 16
     assert {k: v for k, v in outing_words.items() if v} == {
         "sushi": {"praise"},
         "cafe": {"miracle"},
         "sumika": {"happiness"},
         "cry": {"cute"},
-        "taiko": {"asu"},
         "inori": {"company"},
-        "tv": {"doom"},
     }
+    for event in data["map_events"]:
+        assert len(event["pin"]) == 2
+        assert 0 <= event["pin"][0] <= 510 and 0 <= event["pin"][1] <= 310
     for event in data["map_events"]:
         last = data["nodes"][walk(data, event["start"], {"night"})[0][0][-2]]
         assert bool(outing_words[event["id"]]) or "effects" in last, event["id"]
@@ -149,9 +150,7 @@ def test_markers_are_original_dialogue_with_bounded_effects():
             "あしか",
             "すみか",
             "？？？",
-            "太鼓戦士",
             "いのり",
-            "ずんだもん",
         ]
         assert word["word"] in word["memory"]
         assert 1 <= len(word["effects"]) <= 2 and set(word["effects"]) <= set(STATS)
@@ -183,7 +182,7 @@ def test_sources_come_from_workbooks_or_the_committed_cache():
         "よだかプロト_断片集2.xlsx",
     }
     assert len(cache["よだかプロト_断片集1.xlsx"]) == 10
-    assert len(cache["よだかプロト_断片集2.xlsx"]) == 7
+    assert len(cache["よだかプロト_断片集2.xlsx"]) == 5
     for path in ROOT.glob("*カウンセリング*.xlsx"):
         sheets = read_workbook(path)
         assert [s["sheet"] for s in sheets] == ["カウンセリング0", "カウンセリング1"]

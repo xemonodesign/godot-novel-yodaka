@@ -43,6 +43,8 @@ var portraits: Dictionary = {}
 var portrait_textures: Dictionary = {}
 var preview_labels: Array = []
 var night_selected: String = ""
+var night_intro_seen: bool = false
+var last_place: String = "自宅_リビング"
 
 func _ready() -> void:
     mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -194,6 +196,7 @@ func _draw_bottom() -> void:
     stat_labels.clear()
     _panel(bottom, Rect2(44, 612, 224, 155), DARK)
     _label(bottom, "いまの輪郭", Rect2(59, 620, 170, 23), 14, Color("d9e5d3"))
+    _label(bottom, "カルテ ▸", Rect2(196, 622, 66, 20), 11, Color("81947f")).horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
     for i in range(State.STAT_NAMES.size()):
         _label(bottom, State.STAT_NAMES[i], Rect2(60, 648 + i * 27, 78, 20), 13, Color("b9c1b8"))
         var bar := ProgressBar.new()
@@ -209,6 +212,15 @@ func _draw_bottom() -> void:
         bar.size = Vector2(76, 7)
         stat_bars.append(bar)
         stat_labels.append(_label(bottom, str(int(state.stats[i])), Rect2(225, 647 + i * 27, 32, 22), 13, PAPER))
+    # The whole outline panel opens the karte.
+    var karte_hit := Button.new()
+    karte_hit.position = Vector2(44, 612)
+    karte_hit.size = Vector2(224, 155)
+    karte_hit.flat = true
+    karte_hit.tooltip_text = "カルテを開く"
+    karte_hit.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+    karte_hit.pressed.connect(_show_karte.bind(Callable()))
+    bottom.add_child(karte_hit)
     _panel(bottom, Rect2(280, 612, 956, 155), DARK)
     _label(bottom, "もらった言葉", Rect2(296, 619, 270, 26), 15, PAPER)
     count_label = _label(bottom, _count_text(), Rect2(793, 620, 425, 24), 13, Color("a2b49f"))
@@ -221,14 +233,14 @@ func _draw_bottom() -> void:
         _label(bottom, "%02d" % (i + 1), Rect2(x + 6, 657, 28, 20), 11, Color("81947f"))
         if i < state.collected.size():
             var word: Dictionary = state.word_by_id(state.collected[i])
-            var grown: bool = state.is_grown(word.id)
+            var crystals: int = state.crystal_count(word.id)
             var specimen = Specimen.new()
             specimen.position = Vector2(x + (spacing - 78) / 2, 654)
             specimen.size = Vector2(78, 68)
             bottom.add_child(specimen)
-            specimen.setup(word.model, Color(word.color), grown)
-            if grown:
-                _label(bottom, "★", Rect2(x + spacing - 30, 656, 20, 20), 12, Color("f3d79e"))
+            specimen.setup(word.model, Color(word.color), crystals)
+            if crystals > 0:
+                _label(bottom, "★%d" % crystals, Rect2(x + spacing - 40, 656, 32, 20), 12, Color("f3d79e") if crystals >= State.KEEP_CRYSTALS else Color("c9b985")).horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
             var label := _label(bottom, word.word, Rect2(x + 3, 722, spacing - 13, 32), 11, PAPER)
             label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
             label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -245,15 +257,47 @@ func _draw_bottom() -> void:
             _label(bottom, "まだない言葉", Rect2(x + 16, 730, 95, 20), 10, Color("637460"))
 
 func _count_text() -> String:
-    return "%02d 個    ·    見つめた言葉 %02d    ·    読んだ言葉 %03d" % [state.collected.size(), state.answers.size(), state.read_count]
+    var total := 0
+    for id in state.collected:
+        total += state.crystal_count(id)
+    return "%02d 個    ·    結晶 %02d    ·    読んだ言葉 %03d" % [state.collected.size(), total, state.read_count]
 
 func _animate_stats(before: Array) -> void:
     for i in range(State.STAT_NAMES.size()):
-        if i < stat_bars.size() and int(before[i]) != int(state.stats[i]):
-            stat_bars[i].value = before[i]
-            create_tween().tween_property(stat_bars[i], "value", float(state.stats[i]), 0.7)
-            stat_labels[i].text = str(int(state.stats[i]))
-
+        if i >= stat_bars.size() or int(before[i]) == int(state.stats[i]):
+            continue
+        var bar: ProgressBar = stat_bars[i]
+        var target := float(state.stats[i])
+        var change: int = int(state.stats[i]) - int(before[i])
+        var up: bool = change > 0
+        # The meter lunges past its target, snaps back, and glows while the number pops.
+        bar.value = before[i]
+        bar.pivot_offset = Vector2(0, bar.size.y / 2)
+        var motion := create_tween().bind_node(bar)
+        motion.tween_property(bar, "value", clampf(target + (8 if up else -8), 0, 100), 0.22).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+        motion.tween_property(bar, "value", target, 0.5).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+        var glow := create_tween().bind_node(bar)
+        bar.modulate = Color(1.8, 1.8, 1.5)
+        bar.scale = Vector2(1.0, 2.4)
+        glow.set_parallel(true)
+        glow.tween_property(bar, "modulate", Color.WHITE, 0.8)
+        glow.tween_property(bar, "scale", Vector2.ONE, 0.6).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+        var number: Label = stat_labels[i]
+        number.text = str(int(state.stats[i]))
+        number.pivot_offset = number.size / 2
+        number.scale = Vector2(1.7, 1.7)
+        number.add_theme_color_override("font_color", Color("d9e5a3") if up else Color("e8b0a0"))
+        var pop := create_tween().bind_node(number)
+        pop.set_parallel(true)
+        pop.tween_property(number, "scale", Vector2.ONE, 0.55).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+        pop.tween_property(number, "theme_override_colors/font_color", PAPER, 1.2)
+        var floating := _label(bottom, "%s%d" % ["+" if up else "", change], Rect2(bar.position.x + 20, bar.position.y - 12, 60, 20), 15, Color("d9e5a3") if up else Color("e8b0a0"))
+        floating.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+        var drift := create_tween().bind_node(floating)
+        drift.set_parallel(true)
+        drift.tween_property(floating, "position:y", floating.position.y - 22, 1.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+        drift.tween_property(floating, "modulate:a", 0.0, 1.1).set_delay(0.3)
+        drift.chain().tween_callback(floating.queue_free)
 func _portrait(parent: Node, who: String, rect: Rect2, speaking: bool) -> TextureRect:
     var paths := {"よだか": "yodaka.png", "あしか": "asika.png", "医師": "doctor.png", "みなと": "doctor.png", "りあ": "mother.png", "すみか": "girl.png"}
     if who == "すみか" and ResourceLoader.exists("res://images/character/sumika.png"):
@@ -293,12 +337,6 @@ func _background_path(place: String) -> String:
         "歩道橋": "street", "ゲームセンター": "street"}
     return "res://src/assets/backgrounds/%s.png" % backgrounds.get(place, "street")
 
-func _chapter_title(id: String) -> String:
-    for chapter in state.data.chapters:
-        if chapter.id == id:
-            return chapter.title
-    return ""
-
 func _show_map() -> void:
     mode = "map"
     auto_mode = false
@@ -308,41 +346,35 @@ func _show_map() -> void:
     var week: int = state.round_index + 1
     var remaining: int = int(round_info.outings) - state.outings_done
     _panel(content, Rect2(44, 76, 1192, 516), PAPER)
-    _label(content, "MAP  /  第%d週の寄り道" % week, Rect2(77, 94, 780, 38), 23)
+    var title := _button(content, "← タイトル", Rect2(60, 92, 96, 26), _show_title)
+    title.add_theme_font_size_override("font_size", 12)
+    _label(content, "MAP  /  第%d週" % week, Rect2(176, 92, 600, 34), 21)
     _image(content, "res://bg.png", Rect2(76, 148, 730, 409))
+    _panel(content, Rect2(76, 148, 730, 409), Color(0.05, 0.1, 0.08, 0.18))
     _panel(content, Rect2(830, 148, 374, 409), DARK)
     _label(content, "今日は、どこへ行こう。", Rect2(853, 173, 330, 43), 23, PAPER)
-    var note_text := "寄り道  %d / %d\n\n" % [state.outings_done + 1, int(round_info.outings)]
-    note_text += "あと%d回寄り道すると、\nCHAPTER %02d「%s」へ。\n\n" % [remaining, int(round_info.get("chapter", "main1").trim_prefix("main")), _chapter_title(round_info.chapter)]
-    note_text += "出かけるとストレス +%d。\n出会った言葉は、その場で\nよだかの輪郭を変えていく。" % int(State.OUTING_EFFECTS["ストレス"])
+    _label(content, "自由行動　あと %d 回" % remaining, Rect2(853, 232, 330, 40), 26, MINT)
+    var note_text := "地図のピンをクリックすると出かけます。\n出かけるとストレス +%d。" % int(State.OUTING_EFFECTS["ストレス"])
     if state.stress_locked():
-        note_text = "ストレスが %d。\n疲れていて、今日は出かけられない。\n\n家で休んで、ストレスを下げよう。" % int(state.stats[0])
-    var note := _label(content, note_text, Rect2(854, 238, 320, 215), 17, Color("c8d5c5"))
+        note_text = "ストレスが %d。\n疲れていて、今日は出かけられない。\n家で休んで、ストレスを下げよう。" % int(state.stats[0])
+    var note := _label(content, note_text, Rect2(854, 292, 320, 200), 16, Color("c8d5c5"))
     note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-    # Up to 18 destinations in a 3 x 6 grid over the map.
-    for i in range(mini(state.data.map_events.size(), 18)):
+    # Only places Yodaka can go today are pinned; everything else stays off the map.
+    for i in range(state.data.map_events.size()):
         var event: Dictionary = state.data.map_events[i]
-        var origin := Vector2(86 + (i % 3) * 244, 156 + (i / 3) * 66)
-        var available: bool = state.event_available(event.id)
-        var button := _button(content, "%02d  %s\n%s" % [i + 1, event.label, event.title], Rect2(origin, Vector2(232, 58)), _select_map_event.bind(event.id), true)
-        button.add_theme_font_size_override("font_size", 14)
-        button.disabled = not available
-        var reason := ""
-        if state.visited.has(event.id) and not event.get("repeatable", false):
-            reason = "行った"
-        elif int(event.unlock) > week:
-            reason = "第%d週から" % int(event.unlock)
-        elif not available and state.stress_locked():
-            reason = "疲れていて行けない"
-        elif event.get("repeatable", false):
-            reason = "ストレス %d" % int(state.data.nodes["rest_2"].effects["ストレス"])
-        if reason != "":
-            var tag := _label(content, reason, Rect2(origin + Vector2(130, 1), Vector2(98, 14)), 10, Color("59835c") if available else MUTED)
-            tag.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-    # Kept clear of the night screen's sleep button so a double click cannot leave the map.
-    _button(content, "カルテ", Rect2(854, 462, 160, 38), _show_karte.bind(Callable()))
-    _button(content, "タイトル", Rect2(1030, 462, 160, 38), _show_title)
-
+        if not state.event_available(event.id):
+            continue
+        var pin: Array = event.get("pin", [40 + (i % 3) * 240, 30 + (i / 3) * 65])
+        var text: String = "●  " + event.label
+        if event.get("repeatable", false):
+            text += "（ストレス %d）" % int(state.data.nodes["rest_2"].effects["ストレス"])
+        var width: float = 24 + text.length() * 13
+        var button := _button(content, text, Rect2(76 + float(pin[0]), 148 + float(pin[1]), width, 30), _select_map_event.bind(event.id), true)
+        button.add_theme_font_size_override("font_size", 13)
+        button.add_theme_stylebox_override("normal", _box(MINT, INK, 15))
+        button.add_theme_stylebox_override("hover", _box(Color("e0edd7"), INK, 15))
+        button.add_theme_stylebox_override("pressed", _box(Color("b5d8a5"), INK, 15))
+        button.tooltip_text = event.title
 func _select_map_event(id: String) -> void:
     if state.select_event(id):
         _show_story()
@@ -355,32 +387,34 @@ func _show_night() -> void:
     _panel(content, Rect2(44, 76, 1192, 516), NIGHT)
     _label(content, "NIGHT  /  夜、部屋で", Rect2(77, 94, 780, 34), 17, Color("8d9c8d"))
     var candidates: Array = state.grow_candidates()
-    var next_text := {"map": "眠ると、次の寄り道へ。", "chapter": "眠ると、本編 CHAPTER %02d へ（ストレス +%d）。" % [int(state.current_round().get("chapter", "main1").trim_prefix("main")), int(State.CHAPTER_EFFECTS["ストレス"])], "counseling": "眠ると、総括のカウンセリングへ。"}
+    var next_text := {"map": "眠ると、次の自由行動へ。", "chapter": "眠ると、本編 CHAPTER %02d へ（ストレス +%d）。" % [int(state.current_round().get("chapter", "main1").trim_prefix("main")), int(State.CHAPTER_EFFECTS["ストレス"])], "counseling": "眠ると、総括のカウンセリングへ。結晶が %d 個未満の言葉は忘れてしまう。" % State.KEEP_CRYSTALS}
     if state.night_step == "reply":
         var word: Dictionary = state.word_by_id(state.night_word)
         var answer: Dictionary = state.answer_for(word.id)
+        var count: int = state.crystal_count(word.id)
         _label(content, "「%s」を見つめた。" % word.word, Rect2(77, 140, 900, 44), 30, PAPER)
         var specimen = Specimen.new()
         specimen.position = Vector2(80, 200)
         specimen.size = Vector2(240, 240)
         content.add_child(specimen)
-        specimen.setup(word.model, Color(word.color), true)
+        specimen.setup(word.model, Color(word.color), count)
         _label(content, "よだか", Rect2(360, 206, 200, 26), 15, Color("a8b7a8"))
         var reply := _label(content, word.interpretations[int(answer.choice)].reply, Rect2(360, 240, 820, 130), 22, PAPER)
         reply.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
         _label(content, _delta_text(answer.delta), Rect2(360, 380, 820, 30), 16, Color("d9e5a3"))
-        _label(content, "標本に、小さな結晶がついた。", Rect2(360, 420, 820, 30), 16, Color("8d9c8d"))
+        _label(content, "結晶が %d 個になった。" % count + ("　総括まで持っていける。" if count >= State.KEEP_CRYSTALS else "　あと %d 個で忘れなくなる。" % (State.KEEP_CRYSTALS - count)), Rect2(360, 420, 820, 30), 16, Color("f3d79e"))
         _button(content, "眠る（ストレス %d）  →" % int(State.SLEEP_EFFECTS["ストレス"]), Rect2(884, 520, 320, 46), _sleep, true)
-        _label(content, next_text[state.after_night], Rect2(77, 530, 700, 26), 14, Color("8d9c8d"))
+        _label(content, next_text[state.after_night], Rect2(77, 530, 800, 26), 14, Color("8d9c8d"))
         return
     if candidates.is_empty():
         _label(content, "見つめる言葉は、まだない。", Rect2(77, 140, 900, 44), 30, PAPER)
-        _label(content, "寄り道や本編で言葉をもらうと、夜にひとつ選んで見つめられます。\n見つめた言葉は育ち、よだかの輪郭を大きく動かします。", Rect2(77, 210, 1000, 80), 18, Color("c8d5c5"))
+        _label(content, "自由行動や本編で言葉をもらうと、夜にひとつ選んで見つめられます。\n見つめるたびに結晶が増え、よだかの輪郭を動かします。", Rect2(77, 210, 1000, 80), 18, Color("c8d5c5"))
     else:
         _label(content, "もらった言葉を、ひとつ見つめる。", Rect2(77, 140, 900, 44), 30, PAPER)
-        _label(content, "一晩にひとつ。どう受け取ったかを決めると、言葉が育つ。", Rect2(77, 190, 900, 26), 15, Color("8d9c8d"))
+        _label(content, "一晩にひとつ。同じ言葉を何度見つめてもいい。そのたびに結晶がひとつ増える。", Rect2(77, 190, 900, 26), 15, Color("8d9c8d"))
         for i in range(mini(candidates.size(), 14)):
             var word: Dictionary = state.word_by_id(candidates[i])
+            var count: int = state.crystal_count(word.id)
             var x: float = 80 + (i % 7) * 88
             var y: float = 228 + (i / 7) * 132
             var selected: bool = word.id == night_selected
@@ -389,7 +423,9 @@ func _show_night() -> void:
             specimen.position = Vector2(x + 3, y + 4)
             specimen.size = Vector2(78, 68)
             content.add_child(specimen)
-            specimen.setup(word.model, Color(word.color))
+            specimen.setup(word.model, Color(word.color), count)
+            if count > 0:
+                _label(content, "★%d" % count, Rect2(x + 46, y + 4, 36, 16), 11, Color("f3d79e") if count >= State.KEEP_CRYSTALS else Color("c9b985")).horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
             var label := _label(content, word.word, Rect2(x + 3, y + 74, 78, 44), 11, PAPER)
             label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
             label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -402,23 +438,26 @@ func _show_night() -> void:
             content.add_child(hit)
         if night_selected != "" and candidates.has(night_selected):
             var word: Dictionary = state.word_by_id(night_selected)
+            var answer: Dictionary = state.answer_for(word.id)
             _panel(content, Rect2(700, 224, 504, 286), Color("1c262b"), Color("2c393f"), 4)
-            _label(content, "「%s」  /  %s" % [word.word, word.speaker], Rect2(716, 234, 470, 28), 17, Color("f3d79e"))
+            _label(content, "「%s」  /  %s　　結晶 %d" % [word.word, word.speaker, state.crystal_count(word.id)], Rect2(716, 234, 470, 28), 17, Color("f3d79e"))
             var quote := _label(content, word.quote, Rect2(716, 264, 472, 80), 13, Color("c8d5c5"))
             quote.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
             preview_labels.clear()
             for i in range(3):
                 var interpretation: Dictionary = word.interpretations[i]
                 var delta: Array = state.preview_interpretation(word.id, i)
-                var text: String = interpretation.label + "\n" + _preview_text(interpretation.effects, delta)
+                var current_mark: String = "（いまの受け取り方）" if not answer.is_empty() and int(answer.choice) == i else ""
+                var text: String = interpretation.label + current_mark + "\n" + _preview_text(state.interpretation_effects(word.id, i), delta)
                 var button := _button(content, text, Rect2(716, 350 + i * 52, 472, 46), _grow.bind(word.id, i), false)
                 button.add_theme_font_size_override("font_size", 14)
                 preview_labels.append(button.text)
         else:
             _label(content, "← 言葉を選ぶと、\n  3つの受け取り方が出ます。", Rect2(716, 250, 470, 60), 16, Color("8d9c8d"))
     _button(content, "今夜は眠る（ストレス %d）  →" % int(State.SLEEP_EFFECTS["ストレス"]), Rect2(884, 520, 320, 46), _sleep, true)
-    _label(content, next_text[state.after_night], Rect2(77, 530, 700, 26), 14, Color("8d9c8d"))
-
+    _label(content, next_text[state.after_night], Rect2(77, 530, 800, 26), 14, Color("8d9c8d"))
+    if not night_intro_seen and state.night_step == "pick":
+        _show_interlude("night")
 func _pick_night_word(id: String) -> void:
     night_selected = id
     _show_night()
@@ -437,6 +476,7 @@ func _sleep() -> void:
     if mode != "night" or is_instance_valid(overlay):
         return
     night_selected = ""
+    night_intro_seen = false
     state.sleep()
     _show_story()
 
@@ -517,9 +557,12 @@ func _render_dialogue(node: Dictionary) -> void:
     _button(content, "文字速度", Rect2(574, 541, 135, 36), _show_settings)
     _button(content, "タイトル", Rect2(719, 541, 135, 36), _show_title)
     status.text = "自動保存  /  " + ("診察室" if room else "言葉を集める日")
+    last_place = node.place
     active_scene_key = "%d|%s|%s" % [int(node.chapter_index), node.chapter, node.place]
 
 func _check_interlude() -> void:
+    if mode not in ["story", "counseling"]:
+        return
     if state.scene_key != active_scene_key:
         _show_interlude("scene")
     elif state.pending_word != "" and mode == "story":
@@ -534,6 +577,30 @@ func _show_interlude(kind: String) -> void:
     overlay.gui_input.connect(_interlude_input)
     stage.add_child(overlay)
     _panel(overlay, Rect2(0, 0, 1280, 800), Color("0b100e"))
+    if kind == "night":
+        # The day's last place slowly sinks into darkness before the room appears.
+        content.visible = false
+        bottom.visible = false
+        _image(overlay, _background_path(last_place), Rect2(0, 0, 1280, 800))
+        var dusk := _panel(overlay, Rect2(0, 0, 1280, 800), Color("06090c"))
+        dusk.modulate.a = 0.0
+        var moon := _center_label(overlay, "夜", Rect2(90, 330, 1100, 90), 54, PAPER)
+        moon.modulate.a = 0.0
+        var caption := _center_label(overlay, "部屋に戻って、今日もらった言葉を見つめる。", Rect2(90, 430, 1100, 36), 18, Color("b5c1b5"))
+        caption.modulate.a = 0.0
+        var hint_label := _center_label(overlay, "クリックして、つづける", Rect2(90, 710, 1100, 32), 15, Color("8d9c8d"))
+        hint_label.modulate.a = 0.0
+        overlay.modulate.a = 1.0
+        interlude_tween = create_tween()
+        interlude_tween.tween_property(dusk, "modulate:a", 0.94, 2.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+        interlude_tween.parallel().tween_property(moon, "modulate:a", 1.0, 1.4).set_delay(1.4)
+        interlude_tween.parallel().tween_property(caption, "modulate:a", 1.0, 1.0).set_delay(2.2)
+        interlude_tween.parallel().tween_property(hint_label, "modulate:a", 1.0, 0.6).set_delay(2.6)
+        interlude_tween.tween_callback(func(): interlude_ready = true)
+        var focused_button := get_viewport().gui_get_focus_owner()
+        if focused_button != null:
+            focused_button.release_focus()
+        return
     if kind == "scene":
         content.visible = false
         bottom.visible = false
@@ -579,7 +646,7 @@ func _interlude_input(event: InputEvent) -> void:
         _dismiss_interlude()
 
 func _dismiss_interlude() -> void:
-    if not interlude_ready or overlay_kind not in ["scene", "word"]:
+    if not interlude_ready or overlay_kind not in ["scene", "word", "night"]:
         return
     interlude_ready = false
     var kind := overlay_kind
@@ -590,8 +657,10 @@ func _dismiss_interlude() -> void:
     interlude_tween.tween_callback(func():
         if kind == "scene":
             state.scene_key = active_scene_key
-        else:
+        elif kind == "word":
             state.pending_word = ""
+        else:
+            night_intro_seen = true
         state.save_game()
         overlay_kind = "modal"
         _close_overlay()
@@ -647,7 +716,7 @@ func _finish_line() -> void:
         _show_interlude("word")
 
 func _advance() -> void:
-    if mode not in ["story", "counseling"] or is_instance_valid(overlay):
+    if mode not in ["story", "counseling"] or is_instance_valid(overlay) or not is_instance_valid(body):
         return
     if not completed:
         _finish_line()
@@ -717,14 +786,19 @@ func _show_counseling() -> void:
     var speaker := "みなと"
     var text := ""
     var word: Dictionary = state.review_word()
+    if step == "forget":
+        _show_forgetting()
+        return
     match step:
         "opening_doctor":
             text = "こんにちは、法月さん。\nこの数週間は、どうでしたか？"
         "opening_yodaka":
             speaker = "よだか"
             text = "いろんな人と話しました。\n%d個の言葉を、持ち帰ってきました。" % state.collected.size()
+            if not state.forgotten.is_empty() and not state.collected.is_empty():
+                text = "いろんな人と話しました。\n忘れてしまった言葉もあるけど、\n%d個は、持ち帰ってこられました。" % state.collected.size()
             if state.collected.is_empty():
-                text = "……あまり、人と話せませんでした。\nでも、少しだけ休めた気がします。"
+                text = "……いろいろ言われた気がするのに、\nどれも、うまく思い出せません。"
         "recall":
             speaker = "よだか"
             text = word.memory
@@ -751,6 +825,29 @@ func _show_counseling() -> void:
         var line: String = _delta_text(answer.delta) if step == "reply" else "夜に見つめた言葉　/　" + ANSWERS[int(answer.choice)]
         _center_label(content, line, Rect2(333, 501, 614, 24), 15, Color("597c51"))
     _check_interlude()
+
+func _show_forgetting() -> void:
+    body = null
+    _base()
+    _panel(content, Rect2(44, 76, 1192, 516), NIGHT)
+    _label(content, "COUNSELING  /  診察室へ向かう朝", Rect2(77, 94, 780, 34), 17, Color("8d9c8d"))
+    _label(content, "結晶が足りなかった言葉は、こぼれ落ちてしまった。", Rect2(77, 140, 1000, 44), 28, PAPER)
+    _label(content, "結晶が %d 個に満たない言葉は、診察室に着くころには思い出せない。\n残った言葉だけを、みなとに話す。" % State.KEEP_CRYSTALS, Rect2(77, 192, 1000, 60), 16, Color("c8d5c5"))
+    for i in range(mini(state.forgotten.size(), 10)):
+        var word: Dictionary = state.word_by_id(state.forgotten[i])
+        var x: float = 80 + (i % 5) * 200
+        var y: float = 262 + (i / 5) * 122
+        var specimen = Specimen.new()
+        specimen.position = Vector2(x + 50, y)
+        specimen.size = Vector2(90, 78)
+        content.add_child(specimen)
+        specimen.setup(word.model, Color(word.color), state.crystal_count(word.id))
+        var label := _label(content, "「%s」　結晶 %d" % [word.word, state.crystal_count(word.id)], Rect2(x, y + 82, 190, 24), 13, Color("8d9c8d"))
+        label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+        var fade := create_tween().bind_node(specimen)
+        fade.tween_property(specimen, "modulate:a", 0.18, 2.4).set_delay(0.3 + i * 0.2)
+    _label(content, "残った言葉 %d 個" % state.collected.size(), Rect2(77, 530, 600, 26), 15, Color("f3d79e"))
+    _button(content, "診察室へ  →", Rect2(884, 520, 320, 46), _advance_counseling, true)
 
 func _advance_counseling() -> void:
     if state.counsel_step == "choice":
@@ -820,13 +917,13 @@ func _stress_note() -> String:
 
 func _show_karte(on_close: Callable) -> void:
     var card := _new_overlay("メンタル〇〇（仮）  /  いまのカルテ")
-    _label(card, "法月 よだか　　状態：" + _stress_note(), Rect2(36, 84, 740, 32), 18, MUTED)
+    _label(card, "法月 よだか　　状態：" + _stress_note(), Rect2(36, 74, 400, 30), 15, MUTED)
     for i in range(State.STAT_NAMES.size()):
-        var y: int = 140 + i * 66
-        _label(card, State.STAT_NAMES[i], Rect2(40, y, 140, 30), 21)
+        var y: int = 118 + i * 54
+        _label(card, State.STAT_NAMES[i], Rect2(40, y, 100, 30), 19)
         var bar := ProgressBar.new()
-        bar.position = Vector2(190, y + 8)
-        bar.size = Vector2(520, 16)
+        bar.position = Vector2(140, y + 8)
+        bar.size = Vector2(210, 14)
         bar.show_percentage = false
         bar.add_theme_font_size_override("font_size", 1)
         bar.value = state.stats[i]
@@ -834,17 +931,40 @@ func _show_karte(on_close: Callable) -> void:
         bar.add_theme_stylebox_override("background", _box(Color("e4e6df")))
         bar.add_theme_stylebox_override("fill", _box(Color("c98f7c") if i == 0 else Color("7fae70")))
         card.add_child(bar)
-        bar.size = Vector2(520, 16)
-        _label(card, str(int(state.stats[i])), Rect2(730, y, 80, 30), 21)
-    var notes := "ストレス：出かけると+%d、本編で+%d。%d以上になると寄り道に出かけられません。家で休むと下がります。\n勇気：本編の一部の選択肢に必要です。　自認：自分の捉え方への納得度。　キラキラ：人前での輝き。" % [int(State.OUTING_EFFECTS["ストレス"]), int(State.CHAPTER_EFFECTS["ストレス"]), State.STRESS_LIMIT]
-    var note := _label(card, notes, Rect2(40, 410, 770, 70), 14, MUTED)
+        bar.size = Vector2(210, 14)
+        _label(card, str(int(state.stats[i])), Rect2(362, y, 60, 30), 19)
+    var notes := "ストレス：出かけると+%d、本編で+%d。%d以上で外出できず、休むと下がる。\n勇気：本編の選択肢に必要。　自認：自分の捉え方への納得度。　キラキラ：人前での輝き。\n\n夜に見つめた言葉には結晶がつく。総括までに結晶が %d 個未満の言葉は忘れてしまう。" % [int(State.OUTING_EFFECTS["ストレス"]), int(State.CHAPTER_EFFECTS["ストレス"]), State.STRESS_LIMIT, State.KEEP_CRYSTALS]
+    var note := _label(card, notes, Rect2(40, 340, 385, 150), 13, MUTED)
     note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-    _label(card, "もらった言葉 %d 個　·　見つめた言葉 %d 個" % [state.collected.size(), state.answers.size()], Rect2(40, 482, 600, 30), 17)
+    # The garden: every word Yodaka keeps, with the crystals its nights have grown.
+    _panel(card, Rect2(440, 72, 375, 440), Color("101816"), Color("2c393f"), 6)
+    _label(card, "ことばの箱庭", Rect2(456, 80, 200, 26), 15, PAPER)
+    var total := 0
+    for id in state.collected:
+        total += state.crystal_count(id)
+    _label(card, "%d 語　·　結晶 %d" % [state.collected.size(), total], Rect2(620, 82, 180, 24), 12, Color("a2b49f")).horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+    _panel(card, Rect2(452, 470, 351, 30), Color("1a2a24"), Color.TRANSPARENT, 12)
+    for i in range(mini(state.collected.size(), 12)):
+        var word: Dictionary = state.word_by_id(state.collected[i])
+        var count: int = state.crystal_count(word.id)
+        var x: float = 452 + (i % 4) * 88
+        var y: float = 110 + (i / 4) * 118
+        var specimen = Specimen.new()
+        specimen.position = Vector2(x + 3, y)
+        specimen.size = Vector2(80, 76)
+        card.add_child(specimen)
+        specimen.setup(word.model, Color(word.color), count)
+        var label := _label(card, word.word, Rect2(x, y + 78, 86, 30), 10, PAPER)
+        label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+        label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+        if count > 0:
+            _label(card, "★%d" % count, Rect2(x + 46, y, 40, 16), 11, Color("f3d79e") if count >= State.KEEP_CRYSTALS else Color("c9b985")).horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+    if state.collected.is_empty():
+        _label(card, "まだ言葉がない。", Rect2(456, 250, 340, 30), 14, Color("8d9c8d")).horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     if on_close.is_valid():
         for child in card.get_children():
             if child is Button:
                 child.pressed.connect(on_close)
-
 func _show_result() -> void:
     mode = "result"
     body = null
@@ -854,7 +974,7 @@ func _show_result() -> void:
     _label(content, "答えは、まだ途中でいい。", Rect2(80, 164, 1100, 72), 44)
     _label(content, "みなと", Rect2(87, 260, 140, 30), 18, MUTED)
     _label(content, "法月さん自身の言葉で、聞かせてくれましたね。\n受け入れることも、受け入れないことも、今は決めないことも。\nまた言葉が増えたら、一緒に考えましょう。", Rect2(86, 311, 950, 122), 24)
-    _label(content, "%d 個の言葉を持ち帰り、%d 個を見つめました。　ストレス %d　/　勇気 %d　/　自認 %d　/　キラキラ %d" % [state.collected.size(), state.answers.size(), state.stats[0], state.stats[1], state.stats[2], state.stats[3]], Rect2(86, 450, 1100, 38), 18, MUTED)
+    _label(content, "%d 個の言葉が残り、%d 個を忘れました。　ストレス %d　/　勇気 %d　/　自認 %d　/　キラキラ %d" % [state.collected.size(), state.forgotten.size(), state.stats[0], state.stats[1], state.stats[2], state.stats[3]], Rect2(86, 450, 1100, 38), 18, MUTED)
     _button(content, "タイトルへ", Rect2(87, 521, 238, 48), _show_title, true)
     _button(content, "振り返りの記録", Rect2(342, 521, 255, 48), _show_reflections)
     _button(content, "カルテ", Rect2(614, 521, 160, 48), _show_karte.bind(Callable()))
@@ -895,15 +1015,16 @@ func _show_word(word: Dictionary) -> void:
     specimen.position = Vector2(47, 170)
     specimen.size = Vector2(198, 228)
     card.add_child(specimen)
-    specimen.setup(word.model, Color(word.color), state.is_grown(word.id))
+    specimen.setup(word.model, Color(word.color), state.crystal_count(word.id))
+    _label(card, "結晶 %d" % state.crystal_count(word.id), Rect2(37, 424, 219, 24), 14, Color("8d9c8d")).horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     var quote := _label(card, word.quote, Rect2(291, 162, 520, 200), 23)
     quote.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
     var gained: Array = state.gains.get(word.id, [])
     _label(card, "もらった時：" + (_delta_text(gained) if not gained.is_empty() else "—"), Rect2(291, 372, 520, 30), 15, MUTED)
-    var feeling := "まだ見つめていない言葉。夜に見つめると育ちます。"
+    var feeling := "まだ見つめていない言葉。夜に見つめると結晶がつきます。"
     var answer: Dictionary = state.answer_for(word.id)
     if not answer.is_empty():
-        feeling = "受け取り方：%s　（%s）" % [ANSWERS[int(answer.choice)], _delta_text(answer.delta)]
+        feeling = "いまの受け取り方：%s　（前回 %s）" % [ANSWERS[int(answer.choice)], _delta_text(answer.delta)]
     _label(card, feeling, Rect2(36, 449, 770, 41), 17, MUTED)
 
 func _scroll_text(card: Panel, text: String) -> void:
@@ -932,8 +1053,11 @@ func _show_reflections() -> void:
         var answer: Dictionary = state.answer_for(id)
         var line: String = "まだ見つめていない"
         if not answer.is_empty():
-            line = ANSWERS[int(answer.choice)] + ("（夜）" if answer.get("stage", "") == "night" else "（カウンセリング）")
+            line = ANSWERS[int(answer.choice)] + "　·　結晶 %d" % state.crystal_count(id)
         text += "[color=#6b8563]「%s」 / %s[/color]\n%s\n\n" % [word.word, word.speaker, line]
+    for id in state.forgotten:
+        var word: Dictionary = state.word_by_id(id)
+        text += "[color=#9a9a9a]「%s」 / %s　—　忘れてしまった（結晶 %d）[/color]\n\n" % [word.word, word.speaker, state.crystal_count(id)]
     text += "自認は、自分の捉え方への納得度です。\n数値は物語の中の気持ちを表す、プロトタイプ用の表現です。"
     _scroll_text(card, text)
 

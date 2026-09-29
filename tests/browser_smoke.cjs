@@ -51,7 +51,7 @@ const SLEEP = [1044, 543];
 const FIRST_WORD = [136, 289];
 const FIRST_GROWTH = [952, 373];
 const COUNSEL_CHOICE = [434, 463];
-const MAP_SLOTS = Array.from({ length: 18 }, (_, i) => [202 + (i % 3) * 244, 185 + Math.floor(i / 3) * 66]);
+const pinPoint = event => [76 + event.pin[0] + 20, 148 + event.pin[1] + 15];
 
 function availableEvent(save) {
   const week = save.round_index + 1;
@@ -124,14 +124,18 @@ function availableEvent(save) {
       if (save.current === 'map') {
         seen.map++;
         if (seen.map === 1) await shot('map');
-        await click(MAP_SLOTS[availableEvent(save)], 900);
+        await click(pinPoint(scenario.map_events[availableEvent(save)]), 900);
         await settled(record => record.current !== 'map');
         await click(OVERLAY, 900);
         continue;
       }
       if (save.current === 'night') {
         seen.night++;
-        const candidates = save.collected.filter(id => !save.answers.some(a => a.word === id));
+        const candidates = save.collected;
+        if (save.night_step === 'pick') {
+          await page.waitForTimeout(3400);  // the darkening intro
+          await click(OVERLAY, 600);
+        }
         if (save.night_step === 'pick' && candidates.length > 0) {
           await click(FIRST_WORD, 400);
           if (seen.night === 1) await shot('night');
@@ -175,13 +179,15 @@ function availableEvent(save) {
     assert.equal(seen.chapter.size, 4, 'All four chapters played');
     assert.equal(seen.map, 12, 'Twelve outings');
     assert.equal(seen.night, 16, 'A night after every outing and chapter');
-    assert.ok(save.collected.length >= 8, 'Words collected');
-    assert.equal(save.answers.length, save.collected.length, 'Every word interpreted');
+    assert.ok(save.collected.length + save.forgotten.length >= 6, 'Words received');
+    for (const id of save.collected) assert.ok(save.crystals[id] >= 4, 'Kept words have crystals');
+    for (const id of save.forgotten) assert.ok((save.crystals[id] || 0) < 4, 'Forgotten words lacked crystals');
+    assert.equal(seen.grown, 16, 'A word grown every night');
     assert.ok(seen.karte >= 2, 'Karte shown in the tutorial and the closing');
     for (const answer of save.answers) {
       assert.ok(answer.delta.filter(value => value !== 0).length <= 2);
     }
-    for (const id of save.collected) assert.equal(save.gains[id].length, 4);
+    for (const id of [...save.collected, ...save.forgotten]) assert.equal(save.gains[id].length, 4);
     await shot('result');
     await page.reload();
     await ready();
@@ -204,7 +210,7 @@ function availableEvent(save) {
       throw new Error('Seeded save was not restored: ' + replacement.current);
     };
     const common = { ...initial, version: 4, stats: [60, 35, 35, 35], collected: [], gains: {}, answers: [],
-      history: [], pending_word: '', visited: [], round_index: 0, outings_done: 0, after_night: 'map',
+      history: [], pending_word: '', visited: [], round_index: 0, outings_done: 0, after_night: 'map', crystals: {}, forgotten: [],
       night_step: 'pick', night_word: '', reviewed: 0, counsel_step: 'opening_doctor' };
     await seed({ ...common, current: 'sushi_10', collected: ['praise'], gains: { praise: [-6, 0, 5, 0] },
       scene_key: '0|寄り道 / 売ったバッシュで寿司を食う|自宅_リビング', pending_word: 'praise' });
@@ -226,9 +232,9 @@ function availableEvent(save) {
 
     await seed({ ...common, current: 'map', stats: [80, 35, 35, 35] });
     await shot('map-stress');
-    await click(MAP_SLOTS[1], 600);
-    assert.equal((await settled(record => record.current !== 'map', 1500)).current, 'map', 'High stress blocks outings');
-    await click(MAP_SLOTS[17], 900);
+    await click(pinPoint(scenario.map_events[1]), 600);
+    assert.equal((await settled(record => record.current !== 'map', 1500)).current, 'map', 'High stress hides outings');
+    await click(pinPoint(scenario.map_events[scenario.map_events.length - 1]), 900);
     assert.equal((await settled(record => record.current === 'rest_0')).current, 'rest_0');
 
     const gate = scenario.nodes.main4_31;
@@ -244,7 +250,7 @@ function availableEvent(save) {
     assert.equal((await settled(record => record.current === 'main4_38')).current, 'main4_38');
 
     await seed({ ...common, current: 'counseling', collected: ['queen', 'praise'], gains: { queen: [3, 0, 0, 6], praise: [-6, 0, 5, 0] },
-      answers: [{ word: 'queen', choice: 0, delta: [0, 6, 0, 6], stage: 'night' }], reviewed: 1, counsel_step: 'choice',
+      answers: [{ word: 'queen', choice: 0, delta: [0, 6, 0, 6], stage: 'night' }], crystals: { queen: 1 }, reviewed: 1, counsel_step: 'choice',
       scene_key: '0|総括のカウンセリング|診察室', round_index: 4, after_night: 'counseling' });
     await page.waitForTimeout(600);
     await shot('choice-preview');
@@ -261,7 +267,7 @@ function availableEvent(save) {
     fs.writeFileSync(path.join(output, 'verification.json'), JSON.stringify({ errors, seen: { ...seen, chapter: [...seen.chapter] },
       fullRun: save, answered }, null, 2));
     assert.deepEqual(errors, [], 'No runtime errors');
-    console.log(`PASS: full loop (${seen.map} outings, ${seen.night} nights, ${seen.grown} grown words, ${save.collected.length} words), tutorial effects, stress lock, courage gate, counseling reply`);
+    console.log(`PASS: full loop (${seen.map} outings, ${seen.night} nights, ${seen.grown} growths, ${save.collected.length} kept, ${save.forgotten.length} forgotten), tutorial effects, stress lock, courage gate, counseling reply`);
     await page.close();
   } catch (error) {
     for (const page of browser.contexts().flatMap(context => context.pages())) {

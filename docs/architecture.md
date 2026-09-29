@@ -7,7 +7,7 @@
 - `src/specimen.gd`: SubViewportごとの3D世界、カメラ・照明と実メッシュ。育てた言葉は明るく大きく描き、結晶を足す。
 - `src/data/word_marks.json`: 原稿に対する編集用マーキング。もらった時の `effects` と3つの `interpretations`。
 - `src/data/source_rows.json`: ゲームで使うシートの本文キャッシュ（行番号・話者・セリフ・演出欄）。元のXLSXが無い環境でのインポートとテストに使用。
-- `src/data/scenario.json`: ビルドに含まれる379ノードの有向グラフ、周回設定 `rounds`、行き先 `map_events`（断片17編＋休息）、13種類の言葉。
+- `src/data/scenario.json`: ビルドに含まれる361ノードの有向グラフ、周回設定 `rounds`、行き先 `map_events`（断片15編＋休息、地図上の `pin` 座標つき）、11種類の言葉。
 - `src/tools/import_scenario.py`: XLSX（または上記キャッシュ）のB/C/D列を読み込み、カウンセリング台本の3択、本編の分岐、寄り道、休息を接続。Excelの読み仮名rPhは除外。
 - `tests/test_scenario.py`: カウンセリングの27通り、章ごとの全ルート、寄り道18種の到達語（言葉か気づきのどちらかを持つこと）、効果の範囲、キャッシュの存在。
 - `tests/test_runtime.gd`: 実際のGodot状態・UIで3方針の通しプレイ、即時効果、夜の成長、週の解放・ストレス制限、勇気の分岐、保存復元、旧形式の拒否、モーダル、二重クリック、本文の収まりを検証。
@@ -22,7 +22,8 @@
 - `map_events` の `unlock` は行ける週、`repeatable` は「家で休む」。訪問済みは `visited`。ストレスが `STRESS_LIMIT`（80）以上なら休息以外を選べません。言葉の無い断片は末尾ノードの `effects`（気づき）でパラメータを動かします。
 - 言葉は読み終えた行で収集し、`word.effects` をその場で適用して `gains[id]` に差分を記録します。同じ行を再開しても重複しません。ノードの `effects`（休息）と選択肢の `effects`（チュートリアル）も同様にその場で適用します。
 - 出かけると `OUTING_EFFECTS`（ストレス+5）、章が始まると `CHAPTER_EFFECTS`（+6）。休息は `rest_2` の `effects`（-15）。
-- 夜は `grow(id, index)` で未成長の言葉を1つだけ育て、`answers` に `stage: "night"` で記録。`sleep()` で `SLEEP_EFFECTS`（-4）のうえ次へ進みます。
+- 夜は `grow(id, index)` で集めた言葉のどれか1つを見つめ、`answers` に `stage: "night"` で記録し `crystals[id]` を1増やします。同じ言葉の2回目以降は `interpretation_effects()` が効果を半分にします。`answer_for()` は最新の受け取り方を返します。`sleep()` で `SLEEP_EFFECTS`（-4）のうえ次へ進みます。
+- 総括へ向かう `sleep()` で、結晶が `KEEP_CRYSTALS`（4）未満の言葉を `forgotten` に移し、`counsel_step` を `forget` にします。UIは忘れた言葉が薄れる画面を出してから `opening_doctor` へ。
 - 総括のカウンセリングは `reviewed` 番目の言葉を順に扱い、育てた言葉は `grown_reply`、未成長の言葉は `question → choice → reply` を経て `response`。最後に `closing`（カルテ）→ `farewell` → `result`。
 - `preview()` が0〜100の上限・下限を反映した差分を返し、予告と適用の両方で使用します。1回に動く項目は最大2つ。
 
@@ -32,7 +33,7 @@
 
 保存先は `user://yodaka_v1.json`。WebではGodotのIndexedDBを使います。別端末への同期はありません。
 
-形式v4は `current` `collected` `gains` `answers` `stats` `history` `read_count` `speed` `scene_key` `pending_word` `counsel_step` `reviewed` `round_index` `outings_done` `visited` `after_night` `night_step` `night_word` を保存し、読み込み時にすべて検証します。v1〜v3（以前の流れ）は読み込まず、タイトルで「はじめから」を案内します。
+形式v4は `current` `collected` `gains` `answers` `crystals` `forgotten` `stats` `history` `read_count` `speed` `scene_key` `pending_word` `counsel_step` `reviewed` `round_index` `outings_done` `visited` `after_night` `night_step` `night_word` を保存し、読み込み時にすべて検証します。v1〜v3（以前の流れ）は読み込まず、タイトルで「はじめから」を案内します。
 
 暗転中は本文描画のタイマー・AUTO・Space・Escapeを止め、クリックのフェードアウト完了で確認済みにします。カルテ（`karte: true` の行と総括の `closing`）はクリックで開き、閉じてから次へ進みます。
 

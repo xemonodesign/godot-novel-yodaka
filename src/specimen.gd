@@ -3,7 +3,8 @@ extends SubViewportContainer
 var pivot: Node3D
 var phase: float = 0.0
 
-func setup(kind: String, tint: Color, grown: bool = false) -> void:
+func setup(kind: String, tint: Color, crystals: int = 0) -> void:
+    var grown: bool = crystals > 0
     mouse_filter = Control.MOUSE_FILTER_IGNORE
     stretch = true
     var viewport := SubViewport.new()
@@ -50,10 +51,13 @@ func setup(kind: String, tint: Color, grown: bool = false) -> void:
         leaf.rotation.z = 0.45
         var leaf2 := _rock(pivot, Color("527566"), Vector3(-0.22, -0.57, 0), Vector3(0.35, 0.08, 0.15))
         leaf2.rotation.z = -0.35
-    if grown:
-        # A grown word carries a small bright crystal: the interpretation Yodaka gave it.
-        var crystal := _rock(pivot, tint.lightened(0.45), Vector3(-0.55, 0.95, 0.1), Vector3(0.16, 0.26, 0.16))
-        crystal.rotation.z = 0.4
+    # Every night spent on the word leaves a small bright crystal around it.
+    for i in range(mini(crystals, 8)):
+        var angle := 2.1 + i * 2.4
+        var height := 0.95 - (i % 3) * 0.55
+        var crystal := _rock(pivot, tint.lightened(0.45 - (i % 2) * 0.15), Vector3(cos(angle) * 0.62, height, sin(angle) * 0.62), Vector3(0.14, 0.24, 0.14))
+        crystal.rotation.z = 0.4 - i * 0.3
+        crystal.rotation.y = angle
     pivot.rotation.x = 0.16
 
 func _mesh(parent: Node3D, mesh: Mesh, tint: Color, pos: Vector3) -> MeshInstance3D:

@@ -32,7 +32,8 @@ ROUNDS = [
 ]
 # Every fragment is a MAP destination:
 # (id, book, sheet, title or None for the sheet's own, label, place, partner,
-#  week unlocked, effect of the closing line for fragments without a word).
+#  week unlocked, effect of the closing line for fragments without a word,
+#  pin position on the 730x409 map image).
 EVENTS = [
     (
         "cafe",
@@ -44,6 +45,7 @@ EVENTS = [
         "",
         1,
         {},
+        (20, 34),
     ),
     (
         "hands",
@@ -55,6 +57,7 @@ EVENTS = [
         "",
         1,
         {"自認": 3, "ストレス": 2},
+        (500, 40),
     ),
     (
         "cover",
@@ -66,6 +69,7 @@ EVENTS = [
         "",
         1,
         {"勇気": 4, "自認": 2},
+        (262, 78),
     ),
     (
         "park",
@@ -77,6 +81,7 @@ EVENTS = [
         "",
         1,
         {"ストレス": -5},
+        (505, 90),
     ),
     (
         "parent",
@@ -88,6 +93,7 @@ EVENTS = [
         "",
         2,
         {"ストレス": 3, "自認": 2},
+        (18, 138),
     ),
     (
         "chime",
@@ -99,6 +105,7 @@ EVENTS = [
         "",
         2,
         {"ストレス": -4},
+        (275, 130),
     ),
     (
         "unicorn",
@@ -110,6 +117,7 @@ EVENTS = [
         "",
         2,
         {"キラキラ": 4, "ストレス": -3},
+        (498, 142),
     ),
     (
         "bridge",
@@ -121,6 +129,7 @@ EVENTS = [
         "",
         1,
         {"ストレス": 3, "自認": 2},
+        (508, 196),
     ),
     (
         "dream",
@@ -132,6 +141,7 @@ EVENTS = [
         "",
         3,
         {"自認": 3, "ストレス": -2},
+        (22, 244),
     ),
     (
         "karaoke",
@@ -143,6 +153,7 @@ EVENTS = [
         "",
         3,
         {"ストレス": 4, "自認": 2},
+        (258, 184),
     ),
     (
         "native",
@@ -154,6 +165,7 @@ EVENTS = [
         "",
         2,
         {"ストレス": 4, "自認": 3},
+        (270, 26),
     ),
     (
         "sushi",
@@ -165,17 +177,7 @@ EVENTS = [
         "りあ",
         1,
         {},
-    ),
-    (
-        "taiko",
-        "fragments2",
-        "断片３",
-        None,
-        "ゲーセンに寄る",
-        "ゲームセンター",
-        "",
-        3,
-        {},
+        (25, 190),
     ),
     (
         "sumika",
@@ -187,10 +189,32 @@ EVENTS = [
         "すみか",
         2,
         {},
+        (502, 248),
     ),
-    ("inori", "fragments2", "断片５", None, "ショート動画を眺める", "自室", "", 3, {}),
-    ("tv", "fragments2", "断片６", None, "テレビを見る", "自室", "", 1, {}),
-    ("cry", "fragments2", "断片７", None, "母と話す", "リビング", "りあ", 3, {}),
+    (
+        "inori",
+        "fragments2",
+        "断片５",
+        None,
+        "ショート動画を眺める",
+        "自室",
+        "",
+        3,
+        {},
+        (268, 236),
+    ),
+    (
+        "cry",
+        "fragments2",
+        "断片７",
+        None,
+        "母と話す",
+        "リビング",
+        "りあ",
+        3,
+        {},
+        (30, 86),
+    ),
 ]
 # Tutorial choices: the counselor's questions move the parameters right away.
 TUTORIAL_EFFECTS = {
@@ -436,7 +460,7 @@ def compile_scenario():
 
     # --- MAP outings: every fragment is a place to go; each ends in the night.
     map_events = []
-    for key, book, name, title, label, place, partner, unlock, effects in EVENTS:
+    for key, book, name, title, label, place, partner, unlock, effects, pin in EVENTS:
         source = sheet(book, name)
         title = title or sheet_title(source)
         rows = dialogue_rows(source)
@@ -463,6 +487,7 @@ def compile_scenario():
                 "label": label,
                 "place": place,
                 "unlock": unlock,
+                "pin": list(pin),
             }
         )
     for i, (speaker, text) in enumerate(REST_LINES):
@@ -486,6 +511,7 @@ def compile_scenario():
             "place": "自宅_リビング",
             "unlock": 1,
             "repeatable": True,
+            "pin": [280, 300],
         }
     )
 

@@ -5206,142 +5206,6 @@
       "partner": "りあ",
       "next": "night"
     },
-    "taiko_6": {
-      "speaker": "",
-      "text": "ゲーセン、前はバスケゲーム以外のコーナーに\nなんとなくアウェー感があった。\n今はそこには忌避感さえ覚えるようになった",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片３",
-        "row": 6
-      },
-      "chapter": "寄り道 / ２本のマイバチがあれば",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "ゲームセンター",
-      "partner": "",
-      "next": "taiko_7"
-    },
-    "taiko_7": {
-      "speaker": "",
-      "text": "時間つぶしに入ってみて\nアウェー感のない居場所を探して\nふらふらするけれど、そんなの見つかるわけもなく",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片３",
-        "row": 7
-      },
-      "chapter": "寄り道 / ２本のマイバチがあれば",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "ゲームセンター",
-      "partner": "",
-      "next": "taiko_8"
-    },
-    "taiko_8": {
-      "speaker": "太鼓戦士",
-      "text": "すいませんどいてもらっていいですか（超早口）\nあす、あす（ありがとうの略語）。……っ（舌打ち）",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片３",
-        "row": 8
-      },
-      "chapter": "寄り道 / ２本のマイバチがあれば",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "ゲームセンター",
-      "partner": "",
-      "next": "taiko_9",
-      "word": "asu"
-    },
-    "taiko_9": {
-      "speaker": "",
-      "text": "小声の早口に圧倒され、立っていた場所を離れると\n同年代くらいの男の子がそこ——太鼓の前に立った",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片３",
-        "row": 9
-      },
-      "chapter": "寄り道 / ２本のマイバチがあれば",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "ゲームセンター",
-      "partner": "",
-      "next": "taiko_10"
-    },
-    "taiko_10": {
-      "speaker": "太鼓戦士",
-      "text": "楽勝楽勝殺害減速あー早\nは？　は？　\n殺す殺す殺す殺す殺——しゃっ！",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片３",
-        "row": 10
-      },
-      "chapter": "寄り道 / ２本のマイバチがあれば",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "ゲームセンター",
-      "partner": "",
-      "next": "taiko_11"
-    },
-    "taiko_11": {
-      "speaker": "",
-      "text": "ゲームに興じる彼のあんまりな語彙に笑ってしまう。\n世界は君のもの。\n思わずそう言いたくなるような彼のあり方を見ている",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片３",
-        "row": 11
-      },
-      "chapter": "寄り道 / ２本のマイバチがあれば",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "ゲームセンター",
-      "partner": "",
-      "next": "taiko_12"
-    },
-    "taiko_12": {
-      "speaker": "",
-      "text": "2本のマイバチがあれば、\nあるいは\n2本のマイバチに代わる何かが、ぼくにあればと思った",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片３",
-        "row": 12
-      },
-      "chapter": "寄り道 / ２本のマイバチがあれば",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "ゲームセンター",
-      "partner": "",
-      "next": "taiko_13"
-    },
-    "taiko_13": {
-      "speaker": "太鼓戦士",
-      "text": "……ふゅぅーー（満足げに口呼吸）",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片３",
-        "row": 13
-      },
-      "chapter": "寄り道 / ２本のマイバチがあれば",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "ゲームセンター",
-      "partner": "",
-      "next": "taiko_14"
-    },
-    "taiko_14": {
-      "speaker": "",
-      "text": "いやでもマイバチじゃない方がいいな、とも少し思った",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片３",
-        "row": 14
-      },
-      "chapter": "寄り道 / ２本のマイバチがあれば",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "ゲームセンター",
-      "partner": "",
-      "next": "night"
-    },
     "sumika_6": {
       "speaker": "すみか",
       "text": "われわれには頭の中で嫌いな人を不幸にする自由がある",
@@ -5584,142 +5448,6 @@
       "partner": "",
       "next": "night"
     },
-    "tv_6": {
-      "speaker": "",
-      "text": "テレビ番組を見ていると\nひな壇で女性パーソナリティが「出た！　〇〇な男」と\n男のダメさの糾弾だけで番組を持たせる挑戦をしていて",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片６",
-        "row": 6
-      },
-      "chapter": "寄り道 / 楽しくなければテレビじゃないのだ",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自室",
-      "partner": "",
-      "next": "tv_7"
-    },
-    "tv_7": {
-      "speaker": "",
-      "text": "チャンネルを変えると\n男性芸人が「や〜、今は女性が元気な時代ですけど」と\nもう終わった時代への郷愁を酒とともにぼくに流し込む",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片６",
-        "row": 7
-      },
-      "chapter": "寄り道 / 楽しくなければテレビじゃないのだ",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自室",
-      "partner": "",
-      "next": "tv_8"
-    },
-    "tv_8": {
-      "speaker": "",
-      "text": "ふと。テレビの世界に招かれたとき、\nぼくが案内される場所はどこだろう。\n考えてみて秒でやめる。そもそもどこにも座りたくない",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片６",
-        "row": 8
-      },
-      "chapter": "寄り道 / 楽しくなければテレビじゃないのだ",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自室",
-      "partner": "",
-      "next": "tv_9"
-    },
-    "tv_9": {
-      "speaker": "",
-      "text": "リモコンで電源を切ってソファで横になって虚無。\nこんなにもつまらなかったんだろうか。テレビって",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片６",
-        "row": 9
-      },
-      "chapter": "寄り道 / 楽しくなければテレビじゃないのだ",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自室",
-      "partner": "",
-      "next": "tv_10"
-    },
-    "tv_10": {
-      "speaker": "",
-      "text": "これまでは見る時間があんまりなくて気づかなかった\nだけなのか、それともぼくが変わってしまったせいで\n楽しめなくなってしまったのか",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片６",
-        "row": 10
-      },
-      "chapter": "寄り道 / 楽しくなければテレビじゃないのだ",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自室",
-      "partner": "",
-      "next": "tv_11"
-    },
-    "tv_11": {
-      "speaker": "",
-      "text": "スマートフォンを何となく触って、\nYoutubeで宇宙について解説する動画を見る",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片６",
-        "row": 11
-      },
-      "chapter": "寄り道 / 楽しくなければテレビじゃないのだ",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自室",
-      "partner": "",
-      "next": "tv_12"
-    },
-    "tv_12": {
-      "speaker": "ずんだもん",
-      "text": "（宇宙の破滅についてっぽいことを語っている）のだ！",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片６",
-        "row": 12
-      },
-      "chapter": "寄り道 / 楽しくなければテレビじゃないのだ",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自室",
-      "partner": "",
-      "next": "tv_13",
-      "word": "doom"
-    },
-    "tv_13": {
-      "speaker": "",
-      "text": "性別もさだかではなさそうな機械音声が語る\nぼくの人生に一切関係なく訪れる宇宙の破滅の方が",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片６",
-        "row": 13
-      },
-      "chapter": "寄り道 / 楽しくなければテレビじゃないのだ",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自室",
-      "partner": "",
-      "next": "tv_14"
-    },
-    "tv_14": {
-      "speaker": "",
-      "text": "否応なしに男とか女にぼくを絡め取ろうとする\nテレビの言葉よりずっと安心できるもののように思えた",
-      "source": {
-        "file": "よだかプロト_断片集2.xlsx",
-        "sheet": "断片６",
-        "row": 14
-      },
-      "chapter": "寄り道 / 楽しくなければテレビじゃないのだ",
-      "chapter_index": 0,
-      "kind": "outing",
-      "place": "自室",
-      "partner": "",
-      "next": "night"
-    },
     "cry_6": {
       "speaker": "",
       "text": "母はぼくをよく褒める",
@@ -5911,7 +5639,11 @@
       "title": "奇跡を待つ人",
       "label": "喫茶店に寄る",
       "place": "喫茶店",
-      "unlock": 1
+      "unlock": 1,
+      "pin": [
+        20,
+        34
+      ]
     },
     {
       "id": "hands",
@@ -5919,7 +5651,11 @@
       "title": "手を繋ぐ相手",
       "label": "夕方の街を歩く",
       "place": "街（夕方）",
-      "unlock": 1
+      "unlock": 1,
+      "pin": [
+        500,
+        40
+      ]
     },
     {
       "id": "cover",
@@ -5927,7 +5663,11 @@
       "title": "雨除けカバー",
       "label": "住宅街を歩く",
       "place": "路上",
-      "unlock": 1
+      "unlock": 1,
+      "pin": [
+        262,
+        78
+      ]
     },
     {
       "id": "park",
@@ -5935,7 +5675,11 @@
       "title": "鴨のいる公園",
       "label": "公園で過ごす",
       "place": "自然公園",
-      "unlock": 1
+      "unlock": 1,
+      "pin": [
+        505,
+        90
+      ]
     },
     {
       "id": "parent",
@@ -5943,7 +5687,11 @@
       "title": "友達親子",
       "label": "喫茶店で親子を見る",
       "place": "喫茶店",
-      "unlock": 2
+      "unlock": 2,
+      "pin": [
+        18,
+        138
+      ]
     },
     {
       "id": "chime",
@@ -5951,7 +5699,11 @@
       "title": "季節はずれの風鈴",
       "label": "風鈴の音を追う",
       "place": "路上",
-      "unlock": 2
+      "unlock": 2,
+      "pin": [
+        275,
+        130
+      ]
     },
     {
       "id": "unicorn",
@@ -5959,7 +5711,11 @@
       "title": "傘のユニコーン",
       "label": "雨の帰り道",
       "place": "路上",
-      "unlock": 2
+      "unlock": 2,
+      "pin": [
+        498,
+        142
+      ]
     },
     {
       "id": "bridge",
@@ -5967,7 +5723,11 @@
       "title": "歩道橋の夕焼け",
       "label": "歩道橋に立つ",
       "place": "歩道橋",
-      "unlock": 1
+      "unlock": 1,
+      "pin": [
+        508,
+        196
+      ]
     },
     {
       "id": "dream",
@@ -5975,7 +5735,11 @@
       "title": "透明な人の夢",
       "label": "夢を思い出しながら歩く",
       "place": "路上",
-      "unlock": 3
+      "unlock": 3,
+      "pin": [
+        22,
+        244
+      ]
     },
     {
       "id": "karaoke",
@@ -5983,7 +5747,11 @@
       "title": "カラオケの割引券",
       "label": "路上でティッシュをもらう",
       "place": "路上",
-      "unlock": 3
+      "unlock": 3,
+      "pin": [
+        258,
+        184
+      ]
     },
     {
       "id": "native",
@@ -5991,7 +5759,11 @@
       "title": "ネイティブスピーカー",
       "label": "授業を受ける",
       "place": "教室",
-      "unlock": 2
+      "unlock": 2,
+      "pin": [
+        270,
+        26
+      ]
     },
     {
       "id": "sushi",
@@ -5999,15 +5771,11 @@
       "title": "売ったバッシュで寿司を食う",
       "label": "母と夕飯を食べる",
       "place": "自宅_リビング",
-      "unlock": 1
-    },
-    {
-      "id": "taiko",
-      "start": "taiko_6",
-      "title": "２本のマイバチがあれば",
-      "label": "ゲーセンに寄る",
-      "place": "ゲームセンター",
-      "unlock": 3
+      "unlock": 1,
+      "pin": [
+        25,
+        190
+      ]
     },
     {
       "id": "sumika",
@@ -6015,7 +5783,11 @@
       "title": "自由と権利",
       "label": "すみかと昼ごはん",
       "place": "ファミレス(昼)",
-      "unlock": 2
+      "unlock": 2,
+      "pin": [
+        502,
+        248
+      ]
     },
     {
       "id": "inori",
@@ -6023,15 +5795,11 @@
       "title": "姫様ご用心（tiktokに）",
       "label": "ショート動画を眺める",
       "place": "自室",
-      "unlock": 3
-    },
-    {
-      "id": "tv",
-      "start": "tv_6",
-      "title": "楽しくなければテレビじゃないのだ",
-      "label": "テレビを見る",
-      "place": "自室",
-      "unlock": 1
+      "unlock": 3,
+      "pin": [
+        268,
+        236
+      ]
     },
     {
       "id": "cry",
@@ -6039,7 +5807,11 @@
       "title": "なきごえ",
       "label": "母と話す",
       "place": "リビング",
-      "unlock": 3
+      "unlock": 3,
+      "pin": [
+        30,
+        86
+      ]
     },
     {
       "id": "rest",
@@ -6048,7 +5820,11 @@
       "label": "家で休む",
       "place": "自宅_リビング",
       "unlock": 1,
-      "repeatable": true
+      "repeatable": true,
+      "pin": [
+        280,
+        300
+      ]
     }
   ],
   "words": [
@@ -6452,46 +6228,6 @@
       "speaker": "？？？"
     },
     {
-      "id": "asu",
-      "node": "taiko_8",
-      "word": "あす、あす",
-      "model": "rock",
-      "color": "d9c27a",
-      "effects": {
-        "キラキラ": 4,
-        "ストレス": 3
-      },
-      "memory": "ゲーセンで太鼓の前を譲ったら、\n「あす、あす」って早口で言われました。\nありがとう、の略らしくて。",
-      "interpretations": [
-        {
-          "label": "嬉しかった",
-          "reply": "変な言い方だけど、ちゃんとお礼だったんですよね。\n世界は君のもの、って思えるくらい楽しそうで。",
-          "effects": {
-            "キラキラ": 6,
-            "ストレス": -4
-          }
-        },
-        {
-          "label": "自分らしくないと思った",
-          "reply": "あんなふうに夢中になれる場所が、今の僕にはなくて。\n羨ましいというより、置いていかれた気がしました。",
-          "effects": {
-            "ストレス": 5,
-            "自認": 4
-          }
-        },
-        {
-          "label": "まだ、わからない",
-          "reply": "マイバチじゃない何かが僕にもあればって思ったけど、\nそれが何かは、まだわかりません。",
-          "effects": {
-            "勇気": 4,
-            "自認": 3
-          }
-        }
-      ],
-      "quote": "すいませんどいてもらっていいですか（超早口）\nあす、あす（ありがとうの略語）。……っ（舌打ち）",
-      "speaker": "太鼓戦士"
-    },
-    {
       "id": "company",
       "node": "inori_11",
       "word": "付き合ってあげる",
@@ -6530,46 +6266,6 @@
       ],
       "quote": "なるほどね……なら、いいけど。\nスマホ借りるね。\n仕方ないから、バカになるの付き合ってあげる",
       "speaker": "いのり"
-    },
-    {
-      "id": "doom",
-      "node": "tv_12",
-      "word": "宇宙の破滅",
-      "model": "rock",
-      "color": "9fd0b8",
-      "effects": {
-        "ストレス": -6,
-        "自認": 3
-      },
-      "memory": "テレビを消して、動画で「宇宙の破滅」の話を聞きました。\n性別のわからない機械の声が、なぜか一番安心できて。",
-      "interpretations": [
-        {
-          "label": "嬉しかった",
-          "reply": "男とか女とか関係なく、いつか全部終わるんだって。\nそれが妙に気楽で、嬉しかったです。",
-          "effects": {
-            "ストレス": -8,
-            "自認": 3
-          }
-        },
-        {
-          "label": "自分らしくないと思った",
-          "reply": "安心するのが機械の声だけって、それも変ですよね。\n人と話すのを、避けているだけかもしれない。",
-          "effects": {
-            "ストレス": 4,
-            "自認": 4
-          }
-        },
-        {
-          "label": "まだ、わからない",
-          "reply": "何に安心したのか、まだうまく説明できません。\nでも、あの声はまた聞くと思います。",
-          "effects": {
-            "自認": 3,
-            "勇気": 3
-          }
-        }
-      ],
-      "quote": "（宇宙の破滅についてっぽいことを語っている）のだ！",
-      "speaker": "ずんだもん"
     }
   ]
 }

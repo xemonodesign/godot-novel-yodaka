@@ -8,7 +8,8 @@ const SLEEP_EFFECTS = {"ストレス": -4}
 const OUTING_EFFECTS = {"ストレス": 5}
 const CHAPTER_EFFECTS = {"ストレス": 6}
 const SAVE_PATH = "user://yodaka_v1.json"
-const COUNSEL_STEPS = ["opening_doctor", "opening_yodaka", "recall", "grown_reply",
+const KEEP_CRYSTALS = 4  # words with fewer crystals are forgotten before the closing counseling
+const COUNSEL_STEPS = ["forget", "opening_doctor", "opening_yodaka", "recall", "grown_reply",
     "question", "choice", "reply", "response", "closing", "farewell"]
 var save_path: String = SAVE_PATH
 var data: Dictionary = {}
@@ -16,6 +17,8 @@ var current: String = ""
 var collected: Array = []
 var gains: Dictionary = {}
 var answers: Array = []
+var crystals: Dictionary = {}
+var forgotten: Array = []
 var stats: Array = INITIAL.duplicate()
 var history: Array = []
 var read_count: int = 0
@@ -42,6 +45,8 @@ func reset() -> void:
     collected.clear()
     gains.clear()
     answers.clear()
+    crystals.clear()
+    forgotten.clear()
     stats = INITIAL.duplicate()
     history.clear()
     read_count = 0
@@ -70,13 +75,17 @@ func event_by_id(id: String) -> Dictionary:
     return {}
 
 func answer_for(id: String) -> Dictionary:
-    for answer in answers:
-        if answer.word == id:
-            return answer
+    # The latest interpretation wins; a word can be looked at on many nights.
+    for i in range(answers.size() - 1, -1, -1):
+        if answers[i].word == id:
+            return answers[i]
     return {}
 
 func is_grown(id: String) -> bool:
     return not answer_for(id).is_empty()
+
+func crystal_count(id: String) -> int:
+    return int(crystals.get(id, 0))
 
 func preview(effects: Dictionary) -> Array:
     var delta: Array = []
@@ -148,6 +157,7 @@ func choose(index: int) -> bool:
 func _enter_night(kind: String) -> void:
     night_step = "pick"
     night_word = ""
+    pending_word = ""  # any collection blackout was acknowledged before the day ended
     if kind == "main":
         round_index += 1
         outings_done = 0
@@ -186,22 +196,36 @@ func select_event(id: String) -> bool:
     return true
 
 func grow_candidates() -> Array:
-    return collected.filter(func(id): return not is_grown(id))
+    return collected.duplicate()
 
-func preview_interpretation(id: String, index: int) -> Array:
+func interpretation_effects(id: String, index: int) -> Dictionary:
+    # The first night moves the stats fully; later nights on the same word move them half as much.
     var word := word_by_id(id)
     if word.is_empty() or index not in [0, 1, 2]:
+        return {}
+    var effects: Dictionary = word.interpretations[index].effects
+    if crystal_count(id) == 0:
+        return effects
+    var scaled := {}
+    for stat in effects:
+        var value: int = int(effects[stat])
+        scaled[stat] = signi(value) * maxi(1, absi(value) / 2)
+    return scaled
+
+func preview_interpretation(id: String, index: int) -> Array:
+    if word_by_id(id).is_empty() or index not in [0, 1, 2]:
         return []
-    return preview(word.interpretations[index].effects)
+    return preview(interpretation_effects(id, index))
 
 func grow(id: String, index: int) -> Array:
-    if current != "night" or night_step != "pick" or is_grown(id) or not collected.has(id):
+    if current != "night" or night_step != "pick" or not collected.has(id):
         return []
     var delta := preview_interpretation(id, index)
     if delta.is_empty():
         return []
-    apply(word_by_id(id).interpretations[index].effects)
+    apply(interpretation_effects(id, index))
     answers.append({"word": id, "choice": index, "delta": delta, "stage": "night"})
+    crystals[id] = crystal_count(id) + 1
     night_word = id
     night_step = "reply"
     save_game()
@@ -224,7 +248,9 @@ func sleep() -> Array:
             last_delta = delta
         "counseling":
             current = "counseling"
-            counsel_step = "opening_doctor"
+            forgotten = collected.filter(func(id): return crystal_count(id) < KEEP_CRYSTALS)
+            collected = collected.filter(func(id): return crystal_count(id) >= KEEP_CRYSTALS)
+            counsel_step = "forget" if not forgotten.is_empty() else "opening_doctor"
             reviewed = 0
         _:
             current = "map"
@@ -255,6 +281,8 @@ func advance_counseling() -> bool:
     if current != "counseling":
         return false
     match counsel_step:
+        "forget":
+            counsel_step = "opening_doctor"
         "opening_doctor":
             counsel_step = "opening_yodaka"
         "opening_yodaka":
@@ -284,7 +312,8 @@ func save_game() -> bool:
         last_error = "この環境では保存できません"
         return false
     file.store_string(JSON.stringify({"version": 4, "current": current,
-        "collected": collected, "gains": gains, "answers": answers, "stats": stats,
+        "collected": collected, "gains": gains, "answers": answers, "crystals": crystals,
+        "forgotten": forgotten, "stats": stats,
         "history": history, "read_count": read_count, "speed": speed,
         "scene_key": scene_key, "pending_word": pending_word,
         "counsel_step": counsel_step, "reviewed": reviewed,
@@ -328,21 +357,33 @@ func load_game() -> bool:
         return false
     if not saved.get("gains", {}) is Dictionary or not saved.get("visited", []) is Array:
         return false
+    if not saved.get("crystals", {}) is Dictionary or not saved.get("forgotten", []) is Array:
+        return false
     var seen: Array = []
     for id in saved.collected:
         if not id is String or word_by_id(id).is_empty() or seen.has(id):
             return false
         seen.append(id)
+    var known: Array = seen.duplicate()
+    for id in saved.forgotten:
+        if not id is String or word_by_id(id).is_empty() or known.has(id):
+            return false
+        known.append(id)
     for id in saved.gains:
-        if not seen.has(id) or not _valid_delta(saved.gains[id]):
+        if not known.has(id) or not _valid_delta(saved.gains[id]):
+            return false
+    for id in saved.crystals:
+        if not known.has(id) or not _is_int(saved.crystals[id], 0, 999):
             return false
     var answered: Array = []
     for answer in saved.answers:
-        if not answer is Dictionary or not seen.has(answer.get("word")) or answered.has(answer.get("word")):
+        if not answer is Dictionary or not known.has(answer.get("word")):
             return false
         if not _is_int(answer.get("choice", -1), 0, 2) or not _valid_delta(answer.get("delta")):
             return false
         if answer.get("stage", "") not in ["night", "counseling"]:
+            return false
+        if answer.stage == "counseling" and answered.has(answer.word):
             return false
         answered.append(answer.word)
         answer.choice = int(answer.choice)
@@ -354,6 +395,8 @@ func load_game() -> bool:
     if step not in COUNSEL_STEPS or not _is_int(saved.get("reviewed", 0), 0, seen.size()):
         return false
     if step in ["reply", "response", "grown_reply"] and (int(saved.reviewed) >= seen.size() or not answered.has(seen[int(saved.reviewed)])):
+        return false
+    if step == "forget" and saved.forgotten.is_empty():
         return false
     if step in ["recall", "question", "choice"] and int(saved.reviewed) >= seen.size():
         return false
@@ -367,8 +410,10 @@ func load_game() -> bool:
     var night = saved.get("night_word", "")
     if not night is String or (night != "" and not answered.has(night)) or (saved.get("night_step", "pick") == "reply" and night == ""):
         return false
+    if saved.get("night_step", "pick") == "reply" and int(saved.crystals.get(night, 0)) < 1:
+        return false
     var pending = saved.get("pending_word", "")
-    if not pending is String or (pending != "" and not seen.has(pending)):
+    if not pending is String or (pending != "" and not known.has(pending)):
         return false
     if not saved.get("scene_key", "") is String:
         return false
@@ -378,6 +423,10 @@ func load_game() -> bool:
     for id in saved.gains:
         gains[id] = saved.gains[id].map(func(value): return int(value))
     answers = saved.answers
+    crystals = {}
+    for id in saved.crystals:
+        crystals[id] = int(saved.crystals[id])
+    forgotten = saved.forgotten
     stats = saved.stats.map(func(value): return int(value))
     history = saved.history
     read_count = int(saved.get("read_count", 0))
