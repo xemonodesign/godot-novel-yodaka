@@ -3,6 +3,7 @@ extends Control
 const State = preload("res://src/story_state.gd")
 const Specimen = preload("res://src/specimen.gd")
 const WordEffect = preload("res://src/word_effect.gd")
+const MindMap = preload("res://src/mind_map.gd")
 const INK = Color("252c2a")
 const MUTED = Color("778078")
 const PAPER = Color("fcfbf6")
@@ -942,31 +943,42 @@ func _show_karte(on_close: Callable) -> void:
     var notes := "ストレス：出かけると+%d、本編で+%d。%d以上で外出できず、休むと下がる。\n勇気：本編の選択肢に必要。　自認：自分の捉え方への納得度。　キラキラ：人前での輝き。\n\n夜に見つめた言葉には結晶がつき、%d 個ごとにボーナス。一度も見つめなかった言葉は総括の前に忘れてしまう。" % [int(State.OUTING_EFFECTS["ストレス"]), int(State.CHAPTER_EFFECTS["ストレス"]), State.STRESS_LIMIT, State.BONUS_EVERY]
     var note := _label(card, notes, Rect2(40, 340, 385, 150), 13, MUTED)
     note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-    # The garden: every word Yodaka keeps, with the crystals its nights have grown.
-    _panel(card, Rect2(440, 72, 375, 440), Color("101816"), Color("2c393f"), 6)
-    _label(card, "ことばの箱庭", Rect2(456, 80, 200, 26), 15, PAPER)
+    # The mental map: darkness that each kept word lights up, wider with every crystal.
+    _label(card, "ことばの地図", Rect2(456, 74, 200, 26), 15, MUTED)
     var total := 0
     for id in state.collected:
         total += state.crystal_count(id)
-    _label(card, "%d 語　·　結晶 %d" % [state.collected.size(), total], Rect2(620, 82, 180, 24), 12, Color("a2b49f")).horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-    _panel(card, Rect2(452, 470, 351, 30), Color("1a2a24"), Color.TRANSPARENT, 12)
-    for i in range(mini(state.collected.size(), 12)):
+    _label(card, "%d 語　·　結晶 %d" % [state.collected.size(), total], Rect2(620, 76, 180, 24), 12, MUTED).horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+    var map = MindMap.new()
+    map.position = Vector2(440, 100)
+    map.size = Vector2(375, 412)
+    card.add_child(map)
+    var count: int = state.collected.size()
+    for i in range(count):
         var word: Dictionary = state.word_by_id(state.collected[i])
-        var count: int = state.crystal_count(word.id)
-        var x: float = 452 + (i % 4) * 88
-        var y: float = 110 + (i / 4) * 118
+        map.lit.append({"pos": map.node_position(i, count), "color": Color(word.color), "crystals": state.crystal_count(word.id)})
+    for i in range(state.forgotten.size()):
+        var word: Dictionary = state.word_by_id(state.forgotten[i])
+        map.embers.append({"pos": map.node_position(count + i, count + state.forgotten.size()) * 0.5 + map.size * 0.25, "color": Color(word.color)})
+    map.unknown = maxi(0, state.data.words.size() - count - state.forgotten.size())
+    for i in range(count):
+        var word: Dictionary = state.word_by_id(state.collected[i])
+        var crystals: int = state.crystal_count(word.id)
+        var spot: Vector2 = map.position + map.node_position(i, count)
         var specimen = Specimen.new()
-        specimen.position = Vector2(x + 3, y)
-        specimen.size = Vector2(80, 76)
+        specimen.position = spot - Vector2(30, 38)
+        specimen.size = Vector2(60, 56)
         card.add_child(specimen)
-        specimen.setup(word.model, Color(word.color), count)
-        var label := _label(card, word.word, Rect2(x, y + 78, 86, 30), 10, PAPER)
+        specimen.setup(word.model, Color(word.color), crystals)
+        var label := _label(card, word.word, Rect2(spot.x - 55, spot.y + 18, 110, 30), 10, PAPER)
         label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
         label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-        if count > 0:
-            _label(card, "★%d" % count, Rect2(x + 46, y, 40, 16), 11, Color("f3d79e") if count >= State.BONUS_EVERY else Color("c9b985")).horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-    if state.collected.is_empty():
-        _label(card, "まだ言葉がない。", Rect2(456, 250, 340, 30), 14, Color("8d9c8d")).horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+        if crystals > 0:
+            _label(card, "★%d" % crystals, Rect2(spot.x + 14, spot.y - 40, 40, 16), 11, Color("f3d79e") if crystals >= State.BONUS_EVERY else Color("c9b985"))
+    var footer: String = "まだ暗い場所 %d" % map.unknown if count > 0 else "まだ何も照らされていない。"
+    if not state.forgotten.is_empty():
+        footer += "　·　消えた光 %d" % state.forgotten.size()
+    _label(card, footer, Rect2(452, 486, 351, 22), 11, Color("8d9c8d")).horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     if on_close.is_valid():
         for child in card.get_children():
             if child is Button:

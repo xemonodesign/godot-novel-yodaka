@@ -89,12 +89,12 @@ def test_every_round_chapter_and_outing_ends_in_the_night():
     assert len(chapter_paths["main4"]) == 2
     for visited, words in chapter_paths["main2"]:
         assert ("main2_33" in visited) != ("main2_40" in visited)
-        assert words == {"new_self", "not_wasted"}
+        assert words == {"new_self"}
     for visited, _ in chapter_paths["main3"]:
         assert ("main3_26" in visited) != ("main3_29" in visited)
     for visited, words in chapter_paths["main4"]:
         assert ("main4_33" in visited) != ("main4_38" in visited)
-        assert words == {"not_fault", "sparkle", "friends"}
+        assert words == {"friends"}
     gate = data["nodes"]["main4_31"]["choices"][1]["requires"]
     assert gate == {"stat": "勇気", "min": COURAGE_GATE}
     outing_words = {}
@@ -110,12 +110,14 @@ def test_every_round_chapter_and_outing_ends_in_the_night():
         )
     assert len(outing_words) == 16
     assert {k: v for k, v in outing_words.items() if v} == {
-        "sushi": {"praise"},
         "cafe": {"miracle"},
         "sumika": {"happiness"},
-        "cry": {"cute"},
         "inori": {"company"},
     }
+    for event in data["map_events"]:
+        last = data["nodes"][walk(data, event["start"], {"night"})[0][0][-2]]
+        for value in last.get("effects", {}).values():
+            assert abs(value) == 1 or event["id"] == "rest"
     for event in data["map_events"]:
         assert len(event["pin"]) == 2
         assert 0 <= event["pin"][0] <= 510 and 0 <= event["pin"][1] <= 310
@@ -141,17 +143,11 @@ def test_every_round_chapter_and_outing_ends_in_the_night():
 
 def test_markers_are_original_dialogue_with_bounded_effects():
     data = compile_scenario()
-    assert data["stats"] == STATS and len(data["initial"]) == 4
+    assert data["stats"] == STATS and data["initial"] == [70, 5, 5, 5]
     for word in data["words"]:
         node = data["nodes"][word["node"]]
         assert word["word"] in node["text"]
-        assert word["speaker"] in [
-            "りあ",
-            "あしか",
-            "すみか",
-            "？？？",
-            "いのり",
-        ]
+        assert word["speaker"] in ["あしか", "すみか", "？？？", "いのり"]
         assert word["word"] in word["memory"]
         assert 1 <= len(word["effects"]) <= 2 and set(word["effects"]) <= set(STATS)
         assert len(word["interpretations"]) == 3

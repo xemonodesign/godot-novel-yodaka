@@ -124,10 +124,10 @@ func run() -> void:
             check(state.choose(choice), "Available choice advances")
         check(chapters.size() == 4 and chapters[0] == "tiktokの女王" and chapters[3] == "溺れる海のあしか", "Four main chapters in order")
         check(outings == 12, "Twelve outings across the rounds")
-        check(state.collected.size() + state.forgotten.size() >= 6 and state.collected.size() + state.forgotten.size() <= state.data.words.size(), "Words collected across outings and chapters: %d" % state.collected.size())
+        check(state.collected.size() + state.forgotten.size() >= 3 and state.collected.size() + state.forgotten.size() <= state.data.words.size(), "Words collected across outings and chapters: %d" % state.collected.size())
         print("Strategy %d: %d kept, %d forgotten, %d rests, stats %s" % [selection, state.collected.size(), state.forgotten.size(), outings - state.visited.size(), state.stats])
         check(state.answers.size() == grown and grown >= 10, "A growth on every night that had a word")
-        check(state.collected.size() + state.forgotten.size() >= 6, "Kept plus forgotten covers every received word")
+        check(state.collected.size() + state.forgotten.size() >= 3, "Kept plus forgotten covers every received word")
         for id in state.collected:
             check(state.gains.has(id) and state.gains[id].size() == 4, "Collection effect recorded")
         check(state.interpret(0).is_empty(), "Cannot answer after the end")
@@ -139,11 +139,11 @@ func run() -> void:
         check(restored.crystals == state.crystals and restored.forgotten == state.forgotten, "Crystals and forgotten words persisted")
     # Immediate effects: words, tutorial choices, and resting.
     state.reset()
-    state.current = "sushi_10"
+    state.current = "cafe_7"
     var before_word: Array = state.stats.duplicate()
     check(state.finish_line(), "Marked line collects a word")
-    check(state.stats[0] == before_word[0] - 6 and state.stats[2] == before_word[2] + 5, "Receiving a word changes stats at once")
-    check(state.gains["praise"] == [-6, 0, 5, 0], "Collection delta recorded")
+    check(state.stats[1] == before_word[1] + 5 and state.stats[2] == before_word[2] + 2, "Receiving a word changes stats at once")
+    check(state.gains["miracle"] == [0, 5, 2, 0], "Collection delta recorded")
     state.current = "counsel1_10"
     state.finish_line()
     var before_choice: Array = state.stats.duplicate()
@@ -153,7 +153,7 @@ func run() -> void:
     state.current = "cover_15"
     var before_cover: Array = state.stats.duplicate()
     state.finish_line()
-    check(state.stats[1] == before_cover[1] + 4 and state.stats[2] == before_cover[2] + 2, "Wordless fragment gives its insight at the end")
+    check(state.stats[1] == before_cover[1] + 1 and state.stats[2] == before_cover[2] + 1, "Wordless fragment gives a one-point insight at the end")
     state.current = "rest_2"
     var before_rest: int = state.stats[0]
     state.finish_line()
@@ -161,10 +161,10 @@ func run() -> void:
     check(state.choose(0) and state.current == "night" and state.outings_done == 1, "Rest counts as an outing")
     # Courage gate and stress lock.
     state.current = "main4_31"
-    state.stats[1] = 59
-    check(not state.choose(1) and state.current == "main4_31", "Courage 59 cannot unlock choice")
-    state.stats[1] = 60
-    check(state.choose(1) and state.current == "main4_38", "Courage 60 unlocks choice")
+    state.stats[1] = 14
+    check(not state.choose(1) and state.current == "main4_31", "Courage 14 cannot unlock choice")
+    state.stats[1] = 15
+    check(state.choose(1) and state.current == "main4_38", "Courage 15 unlocks choice")
     state.reset()
     state.current = "map"
     state.stats[0] = 80
@@ -243,29 +243,32 @@ func run() -> void:
     scene._advance()
     check(scene.state.current == "counsel1_47", "Advance continues after karte")
     # Word collection with immediate effect.
-    scene.state.current = "sushi_10"
+    scene.state.current = "sushi_8"
+    scene._show_story()
+    await dismiss(scene)
+    check(scene.portraits.has("りあ"), "Mother portrait displayed")
+    scene.state.current = "cafe_7"
     scene._show_story()
     await dismiss(scene)
     scene._advance()
-    check(scene.portraits.has("りあ"), "Mother portrait displayed")
     check(scene.state.collected.size() == 1, "UI collects completed marked word")
     check(scene.overlay_kind == "word", "Collection creates blackout effect")
     var delta_shown := false
     for child in scene.overlay.get_children():
-        if child is Label and "ストレス -6" in child.text:
+        if child is Label and "勇気 +5" in child.text:
             delta_shown = true
     check(delta_shown, "Collection blackout shows the stat change")
     scene.auto_mode = true
     scene._process(20)
     scene._advance()
     scene._close_overlay()
-    check(scene.overlay_kind == "word" and scene.state.current == "sushi_10", "Collection requires a click even on AUTO")
+    check(scene.overlay_kind == "word" and scene.state.current == "cafe_7", "Collection requires a click even on AUTO")
     var restored_pending = State.new()
     restored_pending.save_path = scene.state.save_path
-    check(restored_pending.load_game() and restored_pending.pending_word == "praise", "Unacknowledged effect persists")
+    check(restored_pending.load_game() and restored_pending.pending_word == "miracle", "Unacknowledged effect persists")
     await dismiss(scene)
     check(scene.state.pending_word == "", "Click acknowledges collection")
-    scene._show_word(scene.state.word_by_id("praise"))
+    scene._show_word(scene.state.word_by_id("miracle"))
     scene._close_overlay()
     scene.state.current = "main1_28"
     scene._show_story()
@@ -306,7 +309,7 @@ func run() -> void:
     scene.state.current = "park_15"
     scene.state.choose(0)
     check(scene.state.current == "night" and scene.state.after_night == "map", "First outing leads to the night, then back to the map")
-    scene.state.collected = ["queen", "praise"]
+    scene.state.collected = ["queen", "miracle"]
     scene._show_story()
     check(scene.mode == "night", "Night renders")
     check(scene.overlay_kind == "night", "Night opens with the darkening intro")
@@ -317,9 +320,9 @@ func run() -> void:
     scene._pick_night_word("queen")
     check(scene.preview_labels.size() == 3 and "勇気 +1" in scene.preview_labels[0], "Night growth previews effects")
     scene._grow("queen", 0)
-    check(scene.state.is_grown("queen") and scene.state.stats[1] == 36, "UI growth applies interpretation")
-    scene._grow("praise", 0)
-    check(not scene.state.is_grown("praise"), "Only one word grows per night")
+    check(scene.state.is_grown("queen") and scene.state.stats[1] == 6, "UI growth applies interpretation")
+    scene._grow("miracle", 0)
+    check(not scene.state.is_grown("miracle"), "Only one word grows per night")
     check(scene.state.crystal_count("queen") == 1, "Night growth leaves a crystal")
     scene._sleep()
     check(scene.mode == "map" and scene.state.outings_done == 1, "Sleeping returns to the map")
@@ -347,13 +350,13 @@ func run() -> void:
         scene._advance()
         check(scene.state.counsel_step == step, "Counseling order: " + step)
     scene._finish_line()
-    check(scene.preview_labels.size() == 3 and "ストレス -8" in scene.preview_labels[0], "Named effects visible before answering")
-    var before_reply: Array = scene.state.preview(scene.state.word_by_id("praise").interpretations[0].effects)
+    check(scene.preview_labels.size() == 3 and "勇気 +6" in scene.preview_labels[0], "Named effects visible before answering")
+    var before_reply: Array = scene.state.preview(scene.state.word_by_id("miracle").interpretations[0].effects)
     scene._interpret(0)
     scene._interpret(0)
     check(scene.state.answers.size() == 2, "Double click answers once")
     check(scene.state.answers[1].delta == before_reply, "UI preview equals applied delta")
-    check(scene.current_dialogue.speaker == "よだか" and "嬉しかった" in scene.body.text, "Choice becomes Yodaka's spoken answer")
+    check(scene.current_dialogue.speaker == "よだか" and "願って" in scene.body.text, "Choice becomes Yodaka's spoken answer")
     var restored_reply = State.new()
     restored_reply.save_path = scene.state.save_path
     check(restored_reply.load_game() and restored_reply.counsel_step == "reply", "Resume preserves chosen spoken reply")
@@ -378,14 +381,14 @@ func run() -> void:
     scene.state.current = "night"
     scene.state.after_night = "counseling"
     scene.state.round_index = 4
-    scene.state.collected = ["queen", "praise", "miracle"]
-    scene.state.crystals = {"queen": 4, "praise": 1}
-    scene.state.answers = [{"word": "queen", "choice": 0, "delta": [0, 1, 0, 1], "stage": "night"}, {"word": "praise", "choice": 2, "delta": [0, 1, 1, 0], "stage": "night"}]
+    scene.state.collected = ["queen", "miracle", "happiness"]
+    scene.state.crystals = {"queen": 4, "miracle": 1}
+    scene.state.answers = [{"word": "queen", "choice": 0, "delta": [0, 1, 0, 1], "stage": "night"}, {"word": "miracle", "choice": 2, "delta": [0, 1, 1, 0], "stage": "night"}]
     scene.night_intro_seen = true
     scene._show_story()
     scene._sleep()
     check(scene.state.current == "counseling" and scene.state.counsel_step == "forget", "Words short of crystals are forgotten before counseling")
-    check(scene.state.collected == ["queen", "praise"] and scene.state.forgotten == ["miracle"], "Only words looked at remain")
+    check(scene.state.collected == ["queen", "miracle"] and scene.state.forgotten == ["happiness"], "Only words looked at remain")
     scene.state.current = "night"
     scene.state.after_night = "map"
     scene.state.night_step = "pick"
@@ -404,7 +407,7 @@ func run() -> void:
     check(scene.state.counsel_step == "opening_doctor", "Forgetting leads into the counseling")
     var restored_forget = State.new()
     restored_forget.save_path = scene.state.save_path
-    check(restored_forget.load_game() and restored_forget.forgotten == ["miracle"] and restored_forget.crystals.get("queen") == 5, "Forgotten words and crystals persist")
+    check(restored_forget.load_game() and restored_forget.forgotten == ["happiness"] and restored_forget.crystals.get("queen") == 5, "Forgotten words and crystals persist")
     scene._show_karte(Callable())
     check(is_instance_valid(scene.overlay), "Karte opens from the outline panel callback")
     scene._close_overlay()
@@ -413,7 +416,7 @@ func run() -> void:
     await dismiss(scene)
     check(scene.portraits.has("すみか"), "Sumika portrait displayed")
     scene.state.current = "main4_31"
-    scene.state.stats[1] = 59
+    scene.state.stats[1] = 14
     scene._show_story()
     await dismiss(scene)
     scene._finish_line()
