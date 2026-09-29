@@ -2,7 +2,7 @@ class_name StoryState
 extends RefCounted
 
 const STAT_NAMES = ["ストレス", "勇気", "自認", "キラキラ"]
-const INITIAL = [70, 5, 5, 5]
+const INITIAL = [60, 5, 5, 5]
 const STRESS_LIMIT = 80
 const SLEEP_EFFECTS = {"ストレス": -4}
 const OUTING_EFFECTS = {"ストレス": 5}

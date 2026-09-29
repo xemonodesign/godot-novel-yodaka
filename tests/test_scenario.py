@@ -143,7 +143,7 @@ def test_every_round_chapter_and_outing_ends_in_the_night():
 
 def test_markers_are_original_dialogue_with_bounded_effects():
     data = compile_scenario()
-    assert data["stats"] == STATS and data["initial"] == [70, 5, 5, 5]
+    assert data["stats"] == STATS and data["initial"] == [60, 5, 5, 5]
     for word in data["words"]:
         node = data["nodes"][word["node"]]
         assert word["word"] in node["text"]

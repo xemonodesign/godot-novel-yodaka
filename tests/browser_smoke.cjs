@@ -209,7 +209,7 @@ function availableEvent(save) {
       }
       throw new Error('Seeded save was not restored: ' + replacement.current);
     };
-    const common = { ...initial, version: 4, stats: [70, 5, 5, 5], collected: [], gains: {}, answers: [],
+    const common = { ...initial, version: 4, stats: [60, 5, 5, 5], collected: [], gains: {}, answers: [],
       history: [], pending_word: '', visited: [], round_index: 0, outings_done: 0, after_night: 'map', crystals: {}, forgotten: [],
       night_step: 'pick', night_word: '', reviewed: 0, counsel_step: 'opening_doctor' };
     await seed({ ...common, current: 'cafe_7', collected: ['miracle'], gains: { miracle: [0, 5, 2, 0] },
@@ -228,7 +228,7 @@ function availableEvent(save) {
     await click([433, 451], 900);
     const tutorial = await settled(record => record.current === 'counsel1_12');
     assert.equal(tutorial.current, 'counsel1_12');
-    assert.deepEqual(tutorial.stats, [70, 5, 9, 5]);
+    assert.deepEqual(tutorial.stats, [60, 5, 9, 5]);
 
     await seed({ ...common, current: 'map', stats: [80, 5, 5, 5] });
     await shot('map-stress');
@@ -239,12 +239,12 @@ function availableEvent(save) {
 
     const gate = scenario.nodes.main4_31;
     const gateScene = `4|${gate.chapter}|${gate.place}`;
-    await seed({ ...common, current: 'main4_31', stats: [70, 14, 5, 5], scene_key: gateScene, round_index: 3 });
+    await seed({ ...common, current: 'main4_31', stats: [60, 14, 5, 5], scene_key: gateScene, round_index: 3 });
     await page.waitForTimeout(1400);
     await shot('courage-locked');
     await click([791, 450], 800);
     assert.equal((await settled(record => record.current !== 'main4_31', 1500)).current, 'main4_31');
-    await seed({ ...common, current: 'main4_31', stats: [70, 15, 5, 5], scene_key: gateScene, round_index: 3 });
+    await seed({ ...common, current: 'main4_31', stats: [60, 15, 5, 5], scene_key: gateScene, round_index: 3 });
     await page.waitForTimeout(1400);
     await click([791, 450], 2400);
     assert.equal((await settled(record => record.current === 'main4_38')).current, 'main4_38');
@@ -258,7 +258,7 @@ function availableEvent(save) {
     const answered = await settled(record => record.counsel_step === 'reply');
     assert.equal(answered.counsel_step, 'reply');
     assert.deepEqual(answered.answers[1].delta, [-5, 6, 0, 0]);
-    assert.deepEqual(answered.stats, [65, 11, 5, 5]);
+    assert.deepEqual(answered.stats, [55, 11, 5, 5]);
     await shot('yodaka-reply');
 
     await page.setViewportSize({ width: 844, height: 390 });

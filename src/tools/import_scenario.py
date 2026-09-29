@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[2]
 CACHE = ROOT / "src/data/source_rows.json"
 NS = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
 STATS = ["ストレス", "勇気", "自認", "キラキラ"]
-INITIAL = [70, 5, 5, 5]
+INITIAL = [60, 5, 5, 5]
 COURAGE_GATE = 15
 BOOKS = {
     "main": "メイン",
