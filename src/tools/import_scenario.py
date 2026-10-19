@@ -1,7 +1,8 @@
 """Compile the original XLSX text and explicit branch/word annotations for Godot.
 
-The game loop is: opening counseling (tutorial) -> rounds of MAP outings that
-collect words -> a main chapter per round -> a closing counseling.
+The game loop is: opening counseling (tutorial, loosens one trauma) -> rounds of
+MAP outings that collect words -> a main chapter per round -> counseling sessions
+after some chapters, where EXP, words and talk loosen the traumas filling the slots.
 Workbooks stay out of the repository; the rows of the sheets the game uses are
 cached in ``src/data/source_rows.json`` so the compiler and tests run without them.
 """
@@ -15,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[2]
 CACHE = ROOT / "src/data/source_rows.json"
 NS = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
 STATS = ["ストレス", "勇気", "自認", "キラキラ"]
-INITIAL = [60, 35, 35, 35]
+INITIAL = [20, 35, 35, 35]
 COURAGE_GATE = 60
 BOOKS = {
     "main": "メイン",
@@ -23,13 +24,27 @@ BOOKS = {
     "fragments2": "断片集2",
     "counseling": "カウンセリング",
 }
-# Rounds: how many outings before each main chapter is unlocked.
+# Rounds: how many outings before each main chapter is unlocked, and whether a
+# counseling session follows the chapter (the opening session is session 0).
 ROUNDS = [
-    {"outings": 2, "chapter": "main1"},
-    {"outings": 2, "chapter": "main2"},
-    {"outings": 1, "chapter": "main3"},
-    {"outings": 1, "chapter": "main4"},
+    {"outings": 2, "chapter": "main1", "counseling": True},
+    {"outings": 2, "chapter": "main2", "counseling": False},
+    {"outings": 1, "chapter": "main3", "counseling": True},
+    {"outings": 1, "chapter": "main4", "counseling": True},
 ]
+# Trauma economy: every line read earns EXP; talking about a trauma in counseling
+# divides its outrageous base cost (the very first one becomes FIRST_COST); facing
+# it softens its hardness by SOFTEN_BASE plus word bonuses; crossing below
+# SURFACE_THRESHOLD without a calming word lets a deeper trauma surface.
+RULES = {
+    "slot_count": 8,
+    "exp_per_tap": 1,
+    "first_cost": 20,
+    "talk_divisor": 200,
+    "soften_base": 30,
+    "surface_threshold": 50,
+    "max_cards": 2,
+}
 # Tutorial choices: the counselor's questions move the parameters right away.
 TUTORIAL_EFFECTS = {
     10: [{"自認": 4}, {"キラキラ": 4, "ストレス": 3}, {"ストレス": 4, "自認": 2}],
@@ -212,7 +227,7 @@ def compile_scenario():
             prompt = row.get("D", "")
         i += 1
     for tail in tails:
-        nodes[tail]["next"] = "map"
+        nodes[tail]["next"] = "counseling"  # session 0: the first trauma is loosened
 
     # --- Main chapters, one per round.
     chapters = []
@@ -242,7 +257,7 @@ def compile_scenario():
                 kind="main",
                 place=place,
                 partner=partner,
-                next="night",
+                next="sleep",
             )
             if chapter_ids:
                 nodes[chapter_ids[-1]]["next"] = node_id
@@ -312,7 +327,7 @@ def compile_scenario():
                 kind="outing",
                 place=place,
                 partner=partner,
-                next=event_ids[i + 1] if i + 1 < len(rows) else "night",
+                next=event_ids[i + 1] if i + 1 < len(rows) else "sleep",
             )
         map_events.append(
             {
@@ -333,7 +348,7 @@ def compile_scenario():
             "kind": "outing",
             "place": "自宅_リビング",
             "partner": "",
-            "next": f"rest_{i + 1}" if i + 1 < len(REST_LINES) else "night",
+            "next": f"rest_{i + 1}" if i + 1 < len(REST_LINES) else "sleep",
         }
     nodes["rest_2"]["effects"] = {"ストレス": -15}
     map_events.append(
@@ -355,22 +370,30 @@ def compile_scenario():
         marker["quote"] = node["text"]
         marker["speaker"] = node["speaker"]
         node["word"] = marker["id"]
+    traumas = json.loads((ROOT / "src/data/traumas.json").read_text())
+    ids = {t["id"] for t in traumas}
+    for trauma in traumas:
+        assert trauma["deeper"] in ids | {""}, trauma["id"]
+        assert len([t for t in traumas if not t.get("deep")]) == RULES["slot_count"]
     result = {
         "start": start,
         "stats": STATS,
         "initial": INITIAL,
+        "rules": RULES,
         "nodes": nodes,
         "chapters": chapters,
         "rounds": ROUNDS,
         "map_events": map_events,
         "words": markers,
+        "traumas": traumas,
     }
     (ROOT / "src/data/scenario.json").write_text(
         json.dumps(result, ensure_ascii=False, indent=2)
     )
     CACHE.write_text(json.dumps(used, ensure_ascii=False, indent=1))
     print(
-        f"Compiled {len(nodes)} nodes, {len(markers)} words; cached {len(used)} books."
+        f"Compiled {len(nodes)} nodes, {len(markers)} words, {len(traumas)} traumas; "
+        f"cached {len(used)} books."
     )
     return result
 

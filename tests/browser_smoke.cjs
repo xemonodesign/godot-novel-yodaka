@@ -6,7 +6,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const scenario = require('../src/data/scenario.json');
-const output = process.env.YODAKA_SCREENSHOTS || '/tmp/yodaka-v4-browser';
+const output = process.env.YODAKA_SCREENSHOTS || '/tmp/yodaka-v5-browser';
 fs.mkdirSync(output, { recursive: true });
 
 async function saveRecord(page, replacement) {
@@ -45,20 +45,36 @@ async function saveRecord(page, replacement) {
 
 // Screen coordinates of the 1280x800 stage (see src/main.gd).
 const NEXT = [1095, 557];
-const OVERLAY = [640, 400];
+const OVERLAY = [640, 640];
 const KARTE_CLOSE = [953, 638];
-const SLEEP = [1044, 543];
-const FIRST_WORD = [136, 289];
-const FIRST_GROWTH = [952, 373];
-const COUNSEL_CHOICE = [434, 463];
+const KEEP = [771, 478];
+const RELEASE = [1049, 478];
+const TALK = [948, 294];
+const FACE = [948, 460];
+const GROW = [948, 411];
+const END_SESSION = [1074, 541];
 const MAP_SLOTS = [[253, 211], [623, 211], [253, 336], [623, 336], [253, 461], [623, 461]];
+const slotPoint = index => [294 + index * 116 + 54, 704];
+
+function effectiveStress(save) {
+  let offset = 0;
+  for (const entry of save.slots) {
+    if (!entry.startsWith('t:')) continue;
+    const trauma = scenario.traumas.find(t => t.id === entry.slice(2));
+    const scale = save.trauma_state[trauma.id].hardness / 100;
+    for (const debuff of trauma.debuffs) {
+      if (debuff.kind === 'offset' && debuff.stat === 'ストレス') offset += Math.round(debuff.value * scale);
+    }
+  }
+  return Math.min(100, Math.max(0, save.stats[0] + offset));
+}
 
 function availableEvent(save) {
   const week = save.round_index + 1;
   for (let i = 0; i < scenario.map_events.length; i++) {
     const event = scenario.map_events[i];
     if (event.repeatable) continue;
-    if (event.unlock > week || save.visited.includes(event.id) || save.stats[0] >= 80) continue;
+    if (event.unlock > week || save.visited.includes(event.id) || effectiveStress(save) >= 80) continue;
     return i;
   }
   return scenario.map_events.findIndex(event => event.repeatable);
@@ -97,9 +113,11 @@ function availableEvent(save) {
     await page.waitForTimeout(800);
     await shot('counseling-card');
     const initial = await saveRecord(page);
-    assert.equal(initial.version, 4);
+    assert.equal(initial.version, 5);
     assert.equal(initial.current, 'counsel0_6');
     assert.equal(initial.scene_key, '');
+    assert.equal(initial.slots.filter(entry => entry.startsWith('t:')).length, 8, 'Every slot starts as a trauma');
+    assert.equal(initial.exp, 0);
     await page.keyboard.press('Space');
     await page.keyboard.press('Escape');
     await page.waitForTimeout(800);
@@ -107,11 +125,27 @@ function availableEvent(save) {
     await click(OVERLAY, 2800);
     await shot('minato');
 
-    // Drive the whole loop from the real save state: counseling, outings, nights, chapters.
-    const seen = { map: 0, night: 0, chapter: new Set(), grown: 0, karte: 0 };
+    // Drive the whole loop from the real save state: counseling sessions, outings, chapters.
+    const seen = { map: 0, chapter: new Set(), sessions: new Set(), talks: 0, faced: 0, grown: 0, offers: 0, kept: 0, karte: 0 };
     let save = initial;
-    for (let i = 0; i < 900 && save.current !== 'result'; i++) {
+    let previous = '';
+    for (let i = 0; i < 1200 && save.current !== 'result'; i++) {
       save = await saveRecord(page);
+      if (save.pending_word) {
+        if (save.pending_step === 'offer') {
+          seen.offers++;
+          const free = save.slots.includes('');
+          if (seen.offers === 1) await shot('word-offer');
+          await click(free ? KEEP : RELEASE, 900);
+          const decided = await settled(record => record.pending_step === 'kept' || record.pending_step === 'released');
+          assert.ok(['kept', 'released'].includes(decided.pending_step), 'Offer decided');
+          if (decided.pending_step === 'kept') seen.kept++;
+          if (seen.offers === 1) await shot('word-decided');
+        }
+        await click(OVERLAY, 900);
+        await settled(record => !record.pending_word, 3000);
+        continue;
+      }
       if (save.current === 'map') {
         seen.map++;
         if (seen.map === 1) await shot('map');
@@ -119,58 +153,107 @@ function availableEvent(save) {
         await click(OVERLAY, 900);
         continue;
       }
-      if (save.current === 'night') {
-        seen.night++;
-        const candidates = save.collected.filter(id => !save.answers.some(a => a.word === id));
-        if (save.night_step === 'pick' && candidates.length > 0) {
-          await click(FIRST_WORD, 400);
-          if (seen.night === 1) await shot('night');
-          await click(FIRST_GROWTH, 900);
-          const grown = await settled(record => record.night_step === 'reply');
-          assert.equal(grown.night_step, 'reply');
-          assert.equal(grown.answers.length, save.answers.length + 1);
-          seen.grown++;
-          if (seen.grown === 1) await shot('night-grown');
+      if (save.current === 'counseling') {
+        seen.sessions.add(save.counsel_session);
+        if (save.counsel_step === 'session') {
+          const key = `${save.counsel_session}|${save.exp}|${save.talked}|${save.slots.join()}|${JSON.stringify(save.trauma_state)}|${JSON.stringify(save.levels)}`;
+          if (key === previous) {
+            // Nothing changed since the last action: there is nothing affordable left.
+            await click(END_SESSION, 900);
+            await settled(record => record.counsel_step !== 'session', 3000);
+            previous = '';
+            continue;
+          }
+          previous = key;
+          if (seen.sessions.size === 1 && seen.talks === 0) await shot('session');
+          const sealed = save.slots.findIndex(entry => entry.startsWith('t:') && !save.trauma_state[entry.slice(2)].loosened);
+          if (!save.talked && sealed >= 0) {
+            await click(slotPoint(sealed), 500);
+            await click(TALK, 900);
+            const talking = await settled(record => record.counsel_step === 'talk');
+            assert.equal(talking.counsel_step, 'talk', 'Talk starts');
+            seen.talks++;
+            if (seen.talks === 1) await shot('talk');
+            continue;
+          }
+          const loosened = save.slots.findIndex(entry => entry.startsWith('t:') && save.trauma_state[entry.slice(2)].loosened
+            && save.trauma_state[entry.slice(2)].cost <= save.exp);
+          if (loosened >= 0) {
+            const id = save.slots[loosened].slice(2);
+            await click(slotPoint(loosened), 500);
+            if (seen.faced === 0) await shot('session-face');
+            await click(FACE, 900);
+            const faced = await settled(record => record.exp < save.exp);
+            assert.ok(faced.exp < save.exp, 'Facing spends EXP');
+            assert.ok(!faced.slots.includes('t:' + id) || faced.trauma_state[id].hardness < save.trauma_state[id].hardness, 'Facing softens or removes the trauma');
+            seen.faced++;
+            await click(OVERLAY, 900);  // dismisses a resolution or surfacing card, otherwise harmless
+            continue;
+          }
+          const growable = save.slots.findIndex(entry => {
+            if (!entry.startsWith('w:')) return false;
+            const word = scenario.words.find(w => w.id === entry.slice(2));
+            const level = save.levels[word.id];
+            return level < word.levels.length && word.levels[level].cost <= save.exp;
+          });
+          if (growable >= 0) {
+            const id = save.slots[growable].slice(2);
+            await click(slotPoint(growable), 500);
+            await click(GROW, 900);
+            const grown = await settled(record => record.levels[id] > save.levels[id]);
+            assert.equal(grown.levels[id], save.levels[id] + 1, 'Growing raises the level');
+            seen.grown++;
+            if (seen.grown === 1) await shot('session-grown');
+            continue;
+          }
+          await click(END_SESSION, 900);
+          await settled(record => record.counsel_step !== 'session', 3000);
+          previous = '';
+          continue;
         }
-        await click(SLEEP, 900);
-        await click(OVERLAY, 900);
-        continue;
-      }
-      const node = scenario.nodes[save.current];
-      if (node && node.kind === 'main') seen.chapter.add(node.chapter);
-      const choices = save.current === 'counseling' ? (save.counsel_step === 'choice' ? 1 : 0)
-        : (node && node.choices ? node.choices.length : 0);
-      await click(NEXT, 500);
-      await click(OVERLAY, 500);  // dismisses a blackout, otherwise advances the finished line
-      if (save.current === 'counseling' && save.counsel_step === 'choice') {
-        await click(COUNSEL_CHOICE, 500);
-      } else if (choices > 1) {
-        const width = 614 / choices;
-        await click([337 + width / 2, 451], 500);
-      }
-      const after = await saveRecord(page);
-      if ((node && node.karte) || (save.current === 'counseling' && save.counsel_step === 'closing')) {
-        if (after.current === save.current && after.counsel_step === save.counsel_step) {
+        await click(NEXT, 500);
+        await click(OVERLAY, 500);
+        const after = await saveRecord(page);
+        if (save.counsel_step === 'closing' && save.counsel_session > 0 && after.counsel_step === 'closing') {
           seen.karte++;
           await shot(seen.karte === 1 ? 'karte' : 'karte-final');
           await click(KARTE_CLOSE, 400);
           await click(NEXT, 400);
         }
+        continue;
       }
-      if (i % 40 === 39) console.log('Playthrough', i + 1, after.current, after.counsel_step, after.round_index, after.stats);
+      const node = scenario.nodes[save.current];
+      if (node && node.kind === 'main') seen.chapter.add(node.chapter);
+      const choices = node && node.choices ? node.choices.length : 0;
+      await click(NEXT, 500);
+      await click(OVERLAY, 500);  // dismisses a blackout, otherwise advances the finished line
+      if (choices > 1) {
+        const width = 614 / choices;
+        await click([337 + width / 2, 451], 500);
+      }
+      const after = await saveRecord(page);
+      if (node && node.karte && after.current === save.current) {
+        seen.karte++;
+        await shot(seen.karte === 1 ? 'karte' : 'karte-final');
+        await click(KARTE_CLOSE, 400);
+        await click(NEXT, 400);
+      }
+      if (i % 40 === 39) console.log('Playthrough', i + 1, after.current, after.counsel_step, after.round_index, after.exp, after.stats);
     }
     save = await settled(record => record.current === 'result');
     assert.equal(save.current, 'result');
     assert.equal(save.round_index, 4);
     assert.equal(seen.chapter.size, 4, 'All four chapters played');
     assert.equal(seen.map, 6, 'Six outings');
-    assert.equal(seen.night, 10, 'A night after every outing and chapter');
-    assert.ok(save.collected.length >= 8, 'Words collected');
-    assert.equal(save.answers.length, save.collected.length, 'Every word interpreted');
-    assert.ok(seen.karte >= 2, 'Karte shown in the tutorial and the closing');
-    for (const answer of save.answers) {
-      assert.ok(answer.delta.filter(value => value !== 0).length <= 2);
-    }
+    assert.deepEqual([...seen.sessions].sort(), [0, 1, 2, 3], 'Four counseling sessions');
+    assert.equal(seen.talks, 4, 'One trauma talked about per session');
+    assert.ok(seen.faced >= 4, 'Traumas were faced');
+    assert.ok(save.collected.length >= 8, 'Words heard');
+    assert.equal(save.collected.length, seen.offers, 'Every heard word was offered');
+    assert.ok(save.resolved.length + save.surfaced.length >= 1, 'The first trauma dissolved or revealed its depth');
+    assert.ok(seen.karte >= 3, 'Karte shown in the tutorial and in later sessions');
+    assert.ok(save.exp >= 0 && save.exp_total >= 250, 'EXP accumulated over the run');
+    assert.equal(save.slots.length, 8);
     for (const id of save.collected) assert.equal(save.gains[id].length, 4);
     await shot('result');
     await page.reload();
@@ -193,16 +276,20 @@ function availableEvent(save) {
       }
       throw new Error('Seeded save was not restored: ' + replacement.current);
     };
-    const common = { ...initial, version: 4, stats: [60, 35, 35, 35], collected: [], gains: {}, answers: [],
-      history: [], pending_word: '', visited: [], round_index: 0, outings_done: 0, after_night: 'map',
-      night_step: 'pick', night_word: '', reviewed: 0, counsel_step: 'opening_doctor' };
-    await seed({ ...common, current: 'sushi_10', collected: ['praise'], gains: { praise: [-6, 0, 5, 0] },
-      scene_key: '0|寄り道 / 売ったバッシュで寿司を食う|自宅_リビング', pending_word: 'praise' });
+    const common = { ...initial, version: 5, stats: [20, 35, 35, 35], collected: [], gains: {}, history: [],
+      pending_word: '', pending_step: '', visited: [], round_index: 0, outings_done: 0, counsel_step: 'opening_doctor',
+      counsel_session: 0, talked: false, session_lines: [], levels: {}, exp: 0, exp_total: 0, released: [], resolved: [], surfaced: [] };
+    await seed({ ...common, current: 'sushi_10', collected: ['praise'], gains: { praise: [-3, 0, 3, 0] },
+      scene_key: '0|寄り道 / 売ったバッシュで寿司を食う|自宅_リビング', pending_word: 'praise', pending_step: 'offer' });
     await shot('received-word');
     await page.keyboard.press('Space');
     await page.keyboard.press('Escape');
-    await page.waitForTimeout(800);
-    assert.equal((await saveRecord(page)).pending_word, 'praise');
+    await click(OVERLAY, 800);
+    assert.equal((await saveRecord(page)).pending_step, 'offer', 'The offer needs a decision');
+    await click(RELEASE, 700);
+    const released = await settled(record => record.pending_step === 'released');
+    assert.equal(released.pending_step, 'released');
+    assert.equal(released.exp, 30, 'Releasing the first word pays its value');
     await click(OVERLAY, 700);
     assert.equal((await settled(record => record.pending_word === '')).pending_word, '');
 
@@ -212,46 +299,45 @@ function availableEvent(save) {
     await click([433, 451], 900);
     const tutorial = await settled(record => record.current === 'counsel1_12');
     assert.equal(tutorial.current, 'counsel1_12');
-    assert.deepEqual(tutorial.stats, [60, 35, 39, 35]);
+    assert.deepEqual(tutorial.stats, [20, 35, 37, 35], 'Halved self gain from the classroom air');
 
-    await seed({ ...common, current: 'map', stats: [80, 35, 35, 35] });
+    await seed({ ...common, current: 'map', stats: [50, 35, 35, 35] });
     await shot('map-stress');
     await click(MAP_SLOTS[1], 600);
-    assert.equal((await settled(record => record.current !== 'map', 1500)).current, 'map', 'High stress blocks outings');
+    assert.equal((await settled(record => record.current !== 'map', 1500)).current, 'map', 'Effective stress 80 blocks outings');
     await click(MAP_SLOTS[5], 900);
     assert.equal((await settled(record => record.current === 'rest_0')).current, 'rest_0');
 
     const gate = scenario.nodes.main4_31;
     const gateScene = `4|${gate.chapter}|${gate.place}`;
-    await seed({ ...common, current: 'main4_31', stats: [60, 59, 35, 35], scene_key: gateScene, round_index: 3 });
+    await seed({ ...common, current: 'main4_31', stats: [20, 60, 35, 35], scene_key: gateScene, round_index: 3 });
     await page.waitForTimeout(1400);
     await shot('courage-locked');
     await click([791, 450], 800);
-    assert.equal((await settled(record => record.current !== 'main4_31', 1500)).current, 'main4_31');
-    await seed({ ...common, current: 'main4_31', stats: [60, 60, 35, 35], scene_key: gateScene, round_index: 3 });
+    assert.equal((await settled(record => record.current !== 'main4_31', 1500)).current, 'main4_31', 'Capped courage keeps the choice locked');
+    const softened = { ...initial.trauma_state, bash: { hardness: 40, cost: 20, loosened: true } };
+    await seed({ ...common, current: 'main4_31', stats: [20, 60, 35, 35], scene_key: gateScene, round_index: 3, trauma_state: softened });
     await page.waitForTimeout(1400);
     await click([791, 450], 2400);
-    assert.equal((await settled(record => record.current === 'main4_38')).current, 'main4_38');
+    assert.equal((await settled(record => record.current === 'main4_38')).current, 'main4_38', 'Softened shoes unlock the choice');
 
-    await seed({ ...common, current: 'counseling', collected: ['queen', 'praise'], gains: { queen: [3, 0, 0, 6], praise: [-6, 0, 5, 0] },
-      answers: [{ word: 'queen', choice: 0, delta: [0, 6, 0, 6], stage: 'night' }], reviewed: 1, counsel_step: 'choice',
-      scene_key: '0|総括のカウンセリング|診察室', round_index: 4, after_night: 'counseling' });
-    await page.waitForTimeout(600);
-    await shot('choice-preview');
-    await click(COUNSEL_CHOICE, 2800);
-    const answered = await settled(record => record.counsel_step === 'reply');
-    assert.equal(answered.counsel_step, 'reply');
-    assert.deepEqual(answered.answers[1].delta, [-8, 0, 6, 0]);
-    assert.deepEqual(answered.stats, [52, 35, 41, 35]);
-    await shot('yodaka-reply');
+    await seed({ ...common, current: 'counseling', counsel_step: 'session', counsel_session: 1, round_index: 1, exp: 60, exp_total: 60,
+      talked: true, scene_key: '0|第2回のカウンセリング|診察室', trauma_state: { ...initial.trauma_state, bash: { hardness: 100, cost: 20, loosened: true } } });
+    await click(slotPoint(0), 600);
+    await shot('session-preview');
+    await click(FACE, 1200);
+    const faced = await settled(record => record.exp === 40);
+    assert.equal(faced.exp, 40);
+    assert.equal(faced.trauma_state.bash.hardness, 70, 'Facing softens by thirty');
+    await shot('session-faced');
 
     await page.setViewportSize({ width: 844, height: 390 });
     await page.waitForTimeout(500);
     await shot('mobile');
-    fs.writeFileSync(path.join(output, 'verification.json'), JSON.stringify({ errors, seen: { ...seen, chapter: [...seen.chapter] },
-      fullRun: save, answered }, null, 2));
+    fs.writeFileSync(path.join(output, 'verification.json'), JSON.stringify({ errors, seen: { ...seen, chapter: [...seen.chapter], sessions: [...seen.sessions] },
+      fullRun: save, faced }, null, 2));
     assert.deepEqual(errors, [], 'No runtime errors');
-    console.log(`PASS: full loop (${seen.map} outings, ${seen.night} nights, ${seen.grown} grown words, ${save.collected.length} words), tutorial effects, stress lock, courage gate, counseling reply`);
+    console.log(`PASS: full loop (${seen.map} outings, ${seen.sessions.size} sessions, ${seen.talks} talks, ${seen.faced} facings, ${seen.grown} grown, ${save.collected.length} words, ${save.resolved.length} resolved, ${save.surfaced.length} surfaced, EXP ${save.exp_total}), word offer, tutorial effects, stress lock, courage gate, session facing`);
     await page.close();
   } catch (error) {
     for (const page of browser.contexts().flatMap(context => context.pages())) {

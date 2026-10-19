@@ -10,6 +10,7 @@ from import_scenario import (
     CACHE,
     COURAGE_GATE,
     ROOT,
+    RULES,
     STATS,
     compile_scenario,
     load_sources,
@@ -36,10 +37,10 @@ def walk(data, start, stop):
     return paths
 
 
-def test_opening_counseling_branches_and_reaches_the_map():
+def test_opening_counseling_branches_into_the_first_session():
     data = compile_scenario()
     assert data["start"] == "counsel0_6"
-    paths = walk(data, data["start"], {"map"})
+    paths = walk(data, data["start"], {"counseling"})
     assert len(paths) == 27  # three tutorial questions, three answers each
     for visited, words in paths:
         assert words == set()
@@ -64,9 +65,12 @@ def test_opening_counseling_branches_and_reaches_the_map():
         for key, node in data["nodes"].items()
         if key.startswith("counsel")
     )
+    # The opening session must be affordable: every tutorial path earns enough
+    # EXP for one facing of the first loosened trauma.
+    assert min(len(visited) - 1 for visited, _ in paths) >= RULES["first_cost"]
 
 
-def test_every_round_chapter_and_outing_ends_in_the_night():
+def test_every_round_chapter_and_outing_ends_in_sleep():
     data = compile_scenario()
     assert [r["chapter"] for r in data["rounds"]] == [
         "main1",
@@ -75,13 +79,16 @@ def test_every_round_chapter_and_outing_ends_in_the_night():
         "main4",
     ]
     assert sum(r["outings"] for r in data["rounds"]) == 6
+    # Opening session plus three sessions after flagged chapters: four in all.
+    assert [r["counseling"] for r in data["rounds"]] == [True, False, True, True]
+    assert data["rounds"][-1]["counseling"] is True
     chapter_paths = {}
     for chapter in data["chapters"]:
-        paths = walk(data, chapter["start"], {"night"})
+        paths = walk(data, chapter["start"], {"sleep"})
         chapter_paths[chapter["id"]] = paths
         for visited, _ in paths:
             assert all(
-                data["nodes"][n]["kind"] == "main" for n in visited if n != "night"
+                data["nodes"][n]["kind"] == "main" for n in visited if n != "sleep"
             )
     assert len(chapter_paths["main1"]) == 1
     assert len(chapter_paths["main2"]) == 3
@@ -99,14 +106,14 @@ def test_every_round_chapter_and_outing_ends_in_the_night():
     assert gate == {"stat": "勇気", "min": COURAGE_GATE}
     outing_words = {}
     for event in data["map_events"]:
-        paths = walk(data, event["start"], {"night"})
+        paths = walk(data, event["start"], {"sleep"})
         assert len(paths) == 1
         outing_words[event["id"]] = paths[0][1]
         assert all(
             data["nodes"][n]["kind"] == "outing"
             and data["nodes"][n]["place"] == event["place"]
             for n in paths[0][0]
-            if n != "night"
+            if n != "sleep"
         )
     assert outing_words == {
         "sushi": {"praise"},
@@ -126,29 +133,97 @@ def test_every_round_chapter_and_outing_ends_in_the_night():
         for visited, _ in paths:
             reachable |= set(visited)
     for event in data["map_events"]:
-        reachable |= set(walk(data, event["start"], {"night"})[0][0])
+        reachable |= set(walk(data, event["start"], {"sleep"})[0][0])
     reachable |= {
-        n for visited, _ in walk(data, data["start"], {"map"}) for n in visited
+        n for visited, _ in walk(data, data["start"], {"counseling"}) for n in visited
     }
-    assert set(data["nodes"]) == reachable - {"night", "map"}
+    assert set(data["nodes"]) == reachable - {"sleep", "counseling"}
 
 
-def test_markers_are_original_dialogue_with_bounded_effects():
+def test_words_are_original_dialogue_with_three_levels():
     data = compile_scenario()
     assert data["stats"] == STATS and len(data["initial"]) == 4
+    assert data["rules"] == RULES
     for word in data["words"]:
         node = data["nodes"][word["node"]]
         assert word["word"] in node["text"]
         assert word["speaker"] in ["りあ", "あしか", "すみか", "？？？"]
         assert word["word"] in word["memory"]
         assert 1 <= len(word["effects"]) <= 2 and set(word["effects"]) <= set(STATS)
-        assert len(word["interpretations"]) == 3
-        for interpretation in word["interpretations"]:
-            assert 1 <= len(interpretation["effects"]) <= 2
-            assert set(interpretation["effects"]) <= set(STATS)
-            assert interpretation["reply"]
+        assert word["value"] > 0
+        assert len(word["levels"]) == 3
+        costs = [level["cost"] for level in word["levels"]]
+        assert costs[0] == 0 and costs == sorted(costs) and costs[1] > 0
+        for level in word["levels"]:
+            assert level["insight"]
+            assert level["passive"] and level["counsel"]
+            for passive in level["passive"]:
+                assert passive["kind"] in ["stat", "gain", "exp", "release"]
+                if passive["kind"] in ["stat", "gain"]:
+                    assert passive["stat"] in STATS
+            for effect in level["counsel"]:
+                assert effect["kind"] in ["cost", "soften", "calm"]
+                if effect["kind"] == "cost":
+                    assert 0 < effect["value"] < 1
         assert word["model"] in ["flower", "rock"]
         assert len(word["color"]) == 6
+    # The weak first word grows into a strong one.
+    praise = next(w for w in data["words"] if w["id"] == "praise")
+    assert praise["levels"][0]["passive"] == [
+        {"kind": "stat", "stat": "勇気", "value": 1}
+    ]
+    assert praise["levels"][2]["passive"] == [{"kind": "exp", "value": 10}]
+
+
+def test_traumas_fill_the_slots_and_hide_deeper_ones():
+    data = compile_scenario()
+    traumas = {t["id"]: t for t in data["traumas"]}
+    initial = [t for t in data["traumas"] if not t.get("deep")]
+    deep = [t for t in data["traumas"] if t.get("deep")]
+    assert len(initial) == RULES["slot_count"] == 8
+    assert {t["id"] for t in deep} == {"nowhere", "nameless"}
+    assert {t["deeper"] for t in initial if t["deeper"]} == {"nowhere", "nameless"}
+    for trauma in data["traumas"]:
+        assert trauma["name"] and trauma["story"] and len(trauma["color"]) == 6
+        assert trauma["base_cost"] >= 50000
+        assert trauma["base_cost"] // RULES["talk_divisor"] >= 250
+        assert len(trauma["talk"]) == 5
+        assert [line[0] for line in trauma["talk"]] == [
+            "みなと",
+            "よだか",
+            "みなと",
+            "よだか",
+            "みなと",
+        ]
+        assert set(trauma["soften"]) == {"first", "mid", "resolved"}
+        assert all(len(pair) == 2 for pair in trauma["soften"].values())
+        for debuff in trauma["debuffs"]:
+            assert debuff["kind"] in ["offset", "cap", "gain", "exp", "recovery"]
+            if debuff["kind"] in ["offset", "cap", "gain"]:
+                assert debuff["stat"] in STATS
+            if debuff["kind"] in ["gain", "exp", "recovery"]:
+                assert 0 < debuff["value"] < 1
+        if trauma["deeper"]:
+            assert traumas[trauma["deeper"]].get("deep") is True
+            assert "surface" in traumas[trauma["deeper"]]
+            assert "この奥に" in trauma["story"]
+    assert {d["kind"] for t in initial for d in t["debuffs"]} == {
+        "offset",
+        "cap",
+        "gain",
+        "exp",
+        "recovery",
+    }
+    # The deeper traumas hit harder than the ones hiding them.
+    assert (
+        traumas["nowhere"]["debuffs"][0]["value"]
+        > traumas["blank"]["debuffs"][0]["value"]
+    )
+    assert (
+        traumas["nameless"]["debuffs"][0]["value"]
+        < traumas["mirror"]["debuffs"][0]["value"]
+    )
+    assert RULES["first_cost"] < 50 and RULES["soften_base"] * 4 >= 100
 
 
 def test_sources_come_from_workbooks_or_the_committed_cache():
