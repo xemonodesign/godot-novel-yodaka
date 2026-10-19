@@ -111,4 +111,4 @@ git -C /tmp/yodaka-pages push origin gh-pages
 
 詳細は [構成](docs/architecture.md) と [素材・生成記録](docs/assets.md) を参照。
 
-ブラウザ検証: Playwrightをインストールした環境で `node tests/browser_smoke.cjs`。`YODAKA_URL` で対象URL、`YODAKA_CHROMIUM` でChromiumの実行ファイルを指定でき、専用の一時ブラウザ内で通しプレイ（4回のセッション・言葉の留める／手放す・向き合う・育てる）・チュートリアルの効果・ストレスによる外出制限・勇気の分岐・セッションの向き合いを検証します。スクリーンショットの再生成は `xvfb-run godot --path . --resolution 1280x800 --script tests/screenshots.gd`。
+ブラウザ検証: Playwrightをインストールした環境で `node tests/browser_smoke.cjs`。`YODAKA_URL` で対象URL、`YODAKA_CHROMIUM` でChromiumの実行ファイルを指定でき、専用の一時ブラウザ内で通しプレイ（4回のセッション・言葉の留める／手放す・向き合う・育てる、約25分）・チュートリアルの効果・ストレスによる外出制限・勇気の分岐・セッションの向き合いを検証します。`YODAKA_QUICK=1` で通しプレイを飛ばし、個別の検証だけを数分で実行できます。スクリーンショットの再生成は `xvfb-run godot --path . --resolution 1280x800 --script tests/screenshots.gd`。

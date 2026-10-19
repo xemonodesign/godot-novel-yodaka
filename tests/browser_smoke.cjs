@@ -1,6 +1,7 @@
 // Optional integration test: install Playwright and run against `make serve`.
 // YODAKA_URL may point at Pages. Uses an isolated browser profile and its own saves.
 // YODAKA_CHROMIUM points at a Chromium binary; otherwise the "chrome" channel is used.
+// YODAKA_QUICK=1 skips the full playthrough (about 25 minutes) and runs only the seeded checks.
 const { chromium } = require('playwright');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -129,7 +130,8 @@ function availableEvent(save) {
     const seen = { map: 0, chapter: new Set(), sessions: new Set(), talks: 0, faced: 0, grown: 0, offers: 0, kept: 0, karte: 0 };
     let save = initial;
     let previous = '';
-    for (let i = 0; i < 1200 && save.current !== 'result'; i++) {
+    const quick = Boolean(process.env.YODAKA_QUICK);
+    for (let i = 0; !quick && i < 1200 && save.current !== 'result'; i++) {
       save = await saveRecord(page);
       if (save.pending_word) {
         if (save.pending_step === 'offer') {
@@ -240,6 +242,7 @@ function availableEvent(save) {
       }
       if (i % 40 === 39) console.log('Playthrough', i + 1, after.current, after.counsel_step, after.round_index, after.exp, after.stats);
     }
+    if (!quick) {
     save = await settled(record => record.current === 'result');
     assert.equal(save.current, 'result');
     assert.equal(save.round_index, 4);
@@ -262,6 +265,7 @@ function availableEvent(save) {
     await page.waitForTimeout(800);
     await shot('resumed');
     assert.equal((await saveRecord(page)).current, 'result');
+    }
 
     // Reuse the real save structure to inspect exact visual states in an isolated profile.
     const seed = async replacement => {
@@ -337,6 +341,7 @@ function availableEvent(save) {
     fs.writeFileSync(path.join(output, 'verification.json'), JSON.stringify({ errors, seen: { ...seen, chapter: [...seen.chapter], sessions: [...seen.sessions] },
       fullRun: save, faced }, null, 2));
     assert.deepEqual(errors, [], 'No runtime errors');
+    if (quick) { console.log('PASS (quick): word offer, tutorial effects, stress lock, courage gate, session facing'); await page.close(); return; }
     console.log(`PASS: full loop (${seen.map} outings, ${seen.sessions.size} sessions, ${seen.talks} talks, ${seen.faced} facings, ${seen.grown} grown, ${save.collected.length} words, ${save.resolved.length} resolved, ${save.surfaced.length} surfaced, EXP ${save.exp_total}), word offer, tutorial effects, stress lock, courage gate, session facing`);
     await page.close();
   } catch (error) {
