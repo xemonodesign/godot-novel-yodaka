@@ -336,17 +336,19 @@ function talkable(save) {
     assert.deepEqual(talked.used, ['miracle']);
     assert.equal(talked.counsel_step, 'talk_recall');
     await shot('talk-recall');
-    for (let step = 0; step < 3; step++) { await click(NEXT, 400); await click(NEXT, 700); }
-    const back = await settled(record => record.counsel_step === 'board');
+    // Each click completes a line or advances it; poll rather than count, so no click lands on the board.
+    const advanceUntil = async step => {
+      for (let i = 0; i < 12 && (await saveRecord(page)).counsel_step !== step; i++) await click(NEXT, 700);
+      return settled(record => record.counsel_step === step);
+    };
+    const back = await advanceUntil('board');
     assert.equal(back.counsel_step, 'board');
     await click(boardCard(2), 500);  // 「女王」
     await shot('board-word');
     await click(GROW, 900);
     const growing = await settled(record => record.counsel_step === 'grow_question');
     assert.equal(growing.levels.queen, 2);
-    await click(NEXT, 400);
-    await click(NEXT, 700);
-    await settled(record => record.counsel_step === 'grow_choice');
+    await advanceUntil('grow_choice');
     await click(NEXT, 600);
     await shot('choice-preview');
     await click(COUNSEL_CHOICE, 2800);
