@@ -1,7 +1,9 @@
 """Compile the original XLSX text and explicit branch/word annotations for Godot.
 
-The game loop is: opening counseling (tutorial) -> rounds of MAP outings that
-collect words -> a main chapter per round -> a closing counseling.
+The game loop is: opening counseling (tutorial, then the first session that
+loosens one trauma) -> rounds of MAP outings that collect words -> a main
+chapter per round -> counseling sessions after some rounds -> a closing session.
+Every tap on a line earns EXP; counseling spends it on traumas and words.
 Workbooks stay out of the repository; the rows of the sheets the game uses are
 cached in ``src/data/source_rows.json`` so the compiler and tests run without them.
 """
@@ -23,13 +25,27 @@ BOOKS = {
     "fragments2": "断片集2",
     "counseling": "カウンセリング",
 }
-# Rounds: how many outings before each main chapter is unlocked.
+# Rounds: how many outings before each main chapter is unlocked, and whether a
+# counseling session follows the chapter. The last round always leads into the
+# closing session, so four sessions in all: opening, two in between, closing.
 ROUNDS = [
-    {"outings": 3, "chapter": "main1"},
-    {"outings": 3, "chapter": "main2"},
-    {"outings": 3, "chapter": "main3"},
-    {"outings": 3, "chapter": "main4"},
+    {"outings": 3, "chapter": "main1", "counseling": True},
+    {"outings": 3, "chapter": "main2", "counseling": False},
+    {"outings": 3, "chapter": "main3", "counseling": True},
+    {"outings": 3, "chapter": "main4", "counseling": True},
 ]
+SLOTS = 8  # the word shelf; every slot starts filled by a trauma
+DEBUFF_KINDS = [
+    "half",
+    "cap",
+    "plus",
+    "rest_half",
+    "forget_half",
+    "gain_half",
+    "sleep_half",
+]
+HOLD_KINDS = STATS + ["exp_mult", "forget_mult"]
+RELEASE_KINDS = ["weaken", "cost_mult"]
 # Every fragment is a MAP destination:
 # (id, book, sheet, title or None for the sheet's own, label, place, partner,
 #  week unlocked, effect of the closing line for fragments without a word,
@@ -398,7 +414,7 @@ def compile_scenario():
             prompt = row.get("D", "")
         i += 1
     for tail in tails:
-        nodes[tail]["next"] = "map"
+        nodes[tail]["next"] = "counseling"  # the first session: loosen one trauma
 
     # --- Main chapters, one per round.
     chapters = []
@@ -522,6 +538,24 @@ def compile_scenario():
         marker["quote"] = node["text"]
         marker["speaker"] = node["speaker"]
         node["word"] = marker["id"]
+        assert len(marker["levels"]) == 3 and marker["levels"][0]["cost"] == 0
+        for index, level in enumerate(marker["levels"]):
+            assert set(level["hold"]) <= set(HOLD_KINDS), marker["id"]
+            assert set(level["release"]) <= set(RELEASE_KINDS), marker["id"]
+            assert (index == 2) == ("insight" in level), marker["id"]
+            if index:
+                assert level["cost"] > marker["levels"][index - 1]["cost"]
+    traumas = json.loads((ROOT / "src/data/traumas.json").read_text())
+    ids = {t["id"] for t in traumas}
+    assert len(ids) == len(traumas)
+    for trauma in traumas:
+        assert trauma["debuff"]["kind"] in DEBUFF_KINDS, trauma["id"]
+        assert trauma["strength"] > 0 and trauma["cost"] > 0
+        assert trauma.get("deeper", trauma["id"]) in ids
+        for key in ["quote", "recall", "doctor", "loosen", "resolve"]:
+            assert trauma[key], (trauma["id"], key)
+        assert ("emerge" in trauma) == trauma.get("hidden", False)
+    assert sum(1 for t in traumas if not t.get("hidden")) == SLOTS
     result = {
         "start": start,
         "stats": STATS,
@@ -531,13 +565,16 @@ def compile_scenario():
         "rounds": ROUNDS,
         "map_events": map_events,
         "words": markers,
+        "traumas": traumas,
+        "slots": SLOTS,
     }
     (ROOT / "src/data/scenario.json").write_text(
         json.dumps(result, ensure_ascii=False, indent=2)
     )
     CACHE.write_text(json.dumps(used, ensure_ascii=False, indent=1))
     print(
-        f"Compiled {len(nodes)} nodes, {len(markers)} words; cached {len(used)} books."
+        f"Compiled {len(nodes)} nodes, {len(markers)} words, {len(traumas)} traumas; "
+        f"cached {len(used)} books."
     )
     return result
 

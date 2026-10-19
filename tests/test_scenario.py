@@ -1,4 +1,4 @@
-"""Verify the compiled loop: counseling -> outings -> chapters -> counseling."""
+"""Verify the compiled loop: counseling -> outings -> chapters -> sessions -> closing."""
 
 import json
 import sys
@@ -9,7 +9,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src/tools"))
 from import_scenario import (
     CACHE,
     COURAGE_GATE,
+    DEBUFF_KINDS,
+    HOLD_KINDS,
+    RELEASE_KINDS,
     ROOT,
+    SLOTS,
     STATS,
     compile_scenario,
     load_sources,
@@ -36,10 +40,10 @@ def walk(data, start, stop):
     return paths
 
 
-def test_opening_counseling_branches_and_reaches_the_map():
+def test_opening_counseling_branches_and_reaches_the_first_session():
     data = compile_scenario()
     assert data["start"] == "counsel0_6"
-    paths = walk(data, data["start"], {"map"})
+    paths = walk(data, data["start"], {"counseling"})
     assert len(paths) == 27  # three tutorial questions, three answers each
     for visited, words in paths:
         assert words == set()
@@ -75,6 +79,8 @@ def test_every_round_chapter_and_outing_ends_in_the_night():
         "main4",
     ]
     assert sum(r["outings"] for r in data["rounds"]) == 12
+    # Opening session, two sessions between chapters, closing session: four.
+    assert [r["counseling"] for r in data["rounds"]] == [True, False, True, True]
     chapter_paths = {}
     for chapter in data["chapters"]:
         paths = walk(data, chapter["start"], {"night"})
@@ -136,9 +142,9 @@ def test_every_round_chapter_and_outing_ends_in_the_night():
     for event in data["map_events"]:
         reachable |= set(walk(data, event["start"], {"night"})[0][0])
     reachable |= {
-        n for visited, _ in walk(data, data["start"], {"map"}) for n in visited
+        n for visited, _ in walk(data, data["start"], {"counseling"}) for n in visited
     }
-    assert set(data["nodes"]) == reachable - {"night", "map"}
+    assert set(data["nodes"]) == reachable - {"night", "counseling"}
 
 
 def test_markers_are_original_dialogue_with_bounded_effects():
@@ -157,6 +163,53 @@ def test_markers_are_original_dialogue_with_bounded_effects():
             assert interpretation["reply"]
         assert word["model"] in ["flower", "rock"]
         assert len(word["color"]) == 6
+        # Cards: a tag that can resonate with a trauma, a farewell value, three levels.
+        assert word["tag"] in {t["tag"] for t in data["traumas"]}
+        assert word["forget"] >= 1
+        costs = [level["cost"] for level in word["levels"]]
+        assert costs[0] == 0 and costs == sorted(costs) and len(set(costs)) == 3
+        for level in word["levels"]:
+            assert level["hold"] and set(level["hold"]) <= set(HOLD_KINDS)
+            assert level["release"] and set(level["release"]) <= set(RELEASE_KINDS)
+            for key, value in level["release"].items():
+                assert (0 < value < 1) if key == "cost_mult" else value > 0
+        assert word["levels"][2]["insight"]
+    assert {
+        w["id"]
+        for w in data["words"]
+        if w["levels"][2]["hold"].get("exp_mult", 1) >= 10
+    }
+
+
+def test_traumas_fill_the_shelf_and_hide_what_emerges():
+    data = compile_scenario()
+    assert data["slots"] == SLOTS
+    shown = [t for t in data["traumas"] if not t.get("hidden")]
+    hidden = [t for t in data["traumas"] if t.get("hidden")]
+    assert len(shown) == SLOTS and len(hidden) == 2
+    ids = {t["id"] for t in data["traumas"]}
+    for trauma in data["traumas"]:
+        assert trauma["debuff"]["kind"] in DEBUFF_KINDS
+        if trauma["debuff"]["kind"] in ["half", "cap", "plus"]:
+            assert trauma["debuff"]["stat"] in STATS
+        assert trauma["strength"] >= 100 and trauma["cost"] >= 1000
+        assert trauma["tag"] in {"居場所", "身体", "恋", "家族", "過去"}
+        for key in ["quote", "recall", "doctor", "loosen", "resolve"]:
+            assert all(len(line) <= 26 for line in trauma[key].split("\n")), key
+        assert len(trauma["doctor"].split("\n")) <= 2  # room for the words brought in
+    for trauma in hidden:
+        parent = next(t for t in shown if t.get("deeper") == trauma["id"])
+        assert trauma["id"] in ids and trauma["emerge"]
+        assert trauma["strength"] > parent["strength"]
+        assert trauma["cost"] > parent["cost"]
+    assert sum(1 for t in shown if "deeper" in t) == 2
+    # Every parameter is hit by some trauma, and the courage cap guards chapter four.
+    assert {t["debuff"].get("stat") for t in shown} >= set(STATS)
+    gate = data["nodes"]["main4_31"]["choices"][1]["requires"]
+    cap = next(t for t in shown if t["debuff"]["kind"] == "cap")
+    assert (
+        cap["debuff"]["stat"] == gate["stat"] and cap["debuff"]["value"] < gate["min"]
+    )
 
 
 def test_sources_come_from_workbooks_or_the_committed_cache():

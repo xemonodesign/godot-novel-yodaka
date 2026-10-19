@@ -34,6 +34,17 @@ func setup(kind: String, tint: Color, crystals: int = 0) -> void:
     if kind == "rock":
         _rock(pivot, tint, Vector3.ZERO, Vector3(0.85, 1.05, 0.75))
         _rock(pivot, tint.darkened(0.3), Vector3(0.45, -0.62, 0.2), Vector3(0.45, 0.35, 0.45))
+    elif kind == "thorn":
+        # A trauma: a dark knot with spikes, the more of them the stronger it still is.
+        _rock(pivot, tint.darkened(0.35), Vector3.ZERO, Vector3(0.6, 0.55, 0.6))
+        for i in range(mini(3 + crystals, 9)):
+            var angle := i * 2.3 + 0.4
+            var tilt := -0.9 + (i % 3) * 0.9
+            var spike := _rock(pivot, tint.lightened(0.1 + (i % 2) * 0.15), Vector3(cos(angle) * 0.55, tilt * 0.45, sin(angle) * 0.55), Vector3(0.12, 0.62, 0.12))
+            spike.rotation.z = cos(angle) * 1.1
+            spike.rotation.x = -sin(angle) * 1.1 + tilt * 0.3
+        pivot.rotation.x = 0.16
+        return
     else:
         var stem := CylinderMesh.new()
         stem.top_radius = 0.032
