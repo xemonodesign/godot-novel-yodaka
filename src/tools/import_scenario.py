@@ -15,8 +15,8 @@ ROOT = Path(__file__).resolve().parents[2]
 CACHE = ROOT / "src/data/source_rows.json"
 NS = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
 STATS = ["ストレス", "勇気", "自認", "キラキラ"]
-INITIAL = [60, 35, 35, 35]
-COURAGE_GATE = 60
+INITIAL = [60, 5, 5, 5]
+COURAGE_GATE = 15
 BOOKS = {
     "main": "メイン",
     "fragments1": "断片集1",
@@ -25,10 +25,196 @@ BOOKS = {
 }
 # Rounds: how many outings before each main chapter is unlocked.
 ROUNDS = [
-    {"outings": 2, "chapter": "main1"},
-    {"outings": 2, "chapter": "main2"},
-    {"outings": 1, "chapter": "main3"},
-    {"outings": 1, "chapter": "main4"},
+    {"outings": 3, "chapter": "main1"},
+    {"outings": 3, "chapter": "main2"},
+    {"outings": 3, "chapter": "main3"},
+    {"outings": 3, "chapter": "main4"},
+]
+# Every fragment is a MAP destination:
+# (id, book, sheet, title or None for the sheet's own, label, place, partner,
+#  week unlocked, effect of the closing line for fragments without a word,
+#  pin position on the 730x409 map image).
+EVENTS = [
+    (
+        "cafe",
+        "fragments1",
+        "断片１",
+        "奇跡を待つ人",
+        "喫茶店に寄る",
+        "喫茶店",
+        "",
+        1,
+        {},
+        (20, 34),
+    ),
+    (
+        "hands",
+        "fragments1",
+        "断片２",
+        "手を繋ぐ相手",
+        "夕方の街を歩く",
+        "街（夕方）",
+        "",
+        1,
+        {"自認": 1, "ストレス": 1},
+        (500, 40),
+    ),
+    (
+        "cover",
+        "fragments1",
+        "断片３",
+        "雨除けカバー",
+        "住宅街を歩く",
+        "路上",
+        "",
+        1,
+        {"勇気": 1, "自認": 1},
+        (262, 78),
+    ),
+    (
+        "park",
+        "fragments1",
+        "断片４",
+        "鴨のいる公園",
+        "公園で過ごす",
+        "自然公園",
+        "",
+        1,
+        {"ストレス": -1},
+        (505, 90),
+    ),
+    (
+        "parent",
+        "fragments1",
+        "断片５",
+        "友達親子",
+        "喫茶店で親子を見る",
+        "喫茶店",
+        "",
+        2,
+        {"ストレス": 1, "自認": 1},
+        (18, 138),
+    ),
+    (
+        "chime",
+        "fragments1",
+        "断片６",
+        "季節はずれの風鈴",
+        "風鈴の音を追う",
+        "路上",
+        "",
+        2,
+        {"ストレス": -1},
+        (275, 130),
+    ),
+    (
+        "unicorn",
+        "fragments1",
+        "断片７",
+        "傘のユニコーン",
+        "雨の帰り道",
+        "路上",
+        "",
+        2,
+        {"キラキラ": 1, "ストレス": -1},
+        (498, 142),
+    ),
+    (
+        "bridge",
+        "fragments1",
+        "断片８",
+        "歩道橋の夕焼け",
+        "歩道橋に立つ",
+        "歩道橋",
+        "",
+        1,
+        {"ストレス": 1, "自認": 1},
+        (508, 196),
+    ),
+    (
+        "dream",
+        "fragments1",
+        "断片９",
+        "透明な人の夢",
+        "夢を思い出しながら歩く",
+        "路上",
+        "",
+        3,
+        {"自認": 1, "ストレス": -1},
+        (22, 244),
+    ),
+    (
+        "karaoke",
+        "fragments1",
+        "断片１０",
+        "カラオケの割引券",
+        "路上でティッシュをもらう",
+        "路上",
+        "",
+        3,
+        {"ストレス": 1, "自認": 1},
+        (258, 184),
+    ),
+    (
+        "native",
+        "fragments2",
+        "断片１",
+        None,
+        "授業を受ける",
+        "教室",
+        "",
+        2,
+        {"ストレス": 1, "自認": 1},
+        (270, 26),
+    ),
+    (
+        "sushi",
+        "fragments2",
+        "断片２",
+        None,
+        "母と夕飯を食べる",
+        "自宅_リビング",
+        "りあ",
+        1,
+        {"ストレス": -1, "自認": 1},
+        (25, 190),
+    ),
+    (
+        "sumika",
+        "fragments2",
+        "断片４",
+        None,
+        "すみかと昼ごはん",
+        "ファミレス(昼)",
+        "すみか",
+        2,
+        {},
+        (502, 248),
+    ),
+    (
+        "inori",
+        "fragments2",
+        "断片５",
+        None,
+        "ショート動画を眺める",
+        "自室",
+        "",
+        3,
+        {},
+        (268, 236),
+    ),
+    (
+        "cry",
+        "fragments2",
+        "断片７",
+        None,
+        "母と話す",
+        "リビング",
+        "りあ",
+        3,
+        {"自認": 1, "ストレス": 1},
+        (30, 86),
+    ),
 ]
 # Tutorial choices: the counselor's questions move the parameters right away.
 TUTORIAL_EFFECTS = {
@@ -273,33 +459,10 @@ def compile_scenario():
     nodes["main4_31"]["choices"][1]["requires"] = {"stat": "勇気", "min": COURAGE_GATE}
 
     # --- MAP outings: every fragment is a place to go; each ends in the night.
-    events = [
-        (
-            "sushi",
-            "fragments2",
-            "断片２",
-            "母と夕飯を食べる",
-            "自宅_リビング",
-            "りあ",
-            1,
-        ),
-        ("park", "fragments1", "断片４", "公園で過ごす", "自然公園", "", 1),
-        ("cafe", "fragments1", "断片１", "喫茶店に寄る", "喫茶店", "", 1),
-        (
-            "sumika",
-            "fragments2",
-            "断片４",
-            "すみかと昼ごはん",
-            "ファミレス(昼)",
-            "すみか",
-            2,
-        ),
-        ("cry", "fragments2", "断片７", "母と話す", "リビング", "りあ", 2),
-    ]
     map_events = []
-    for key, book, name, label, place, partner, unlock in events:
+    for key, book, name, title, label, place, partner, unlock, effects, pin in EVENTS:
         source = sheet(book, name)
-        title = sheet_title(source)
+        title = title or sheet_title(source)
         rows = dialogue_rows(source)
         event_ids = [f"{key}_{r['row']}" for r in rows]
         for i, row in enumerate(rows):
@@ -314,6 +477,8 @@ def compile_scenario():
                 partner=partner,
                 next=event_ids[i + 1] if i + 1 < len(rows) else "night",
             )
+        if effects:
+            nodes[event_ids[-1]]["effects"] = effects
         map_events.append(
             {
                 "id": key,
@@ -322,6 +487,7 @@ def compile_scenario():
                 "label": label,
                 "place": place,
                 "unlock": unlock,
+                "pin": list(pin),
             }
         )
     for i, (speaker, text) in enumerate(REST_LINES):
@@ -345,6 +511,7 @@ def compile_scenario():
             "place": "自宅_リビング",
             "unlock": 1,
             "repeatable": True,
+            "pin": [280, 300],
         }
     )
 
