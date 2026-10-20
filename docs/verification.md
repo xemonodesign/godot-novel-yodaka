@@ -10,7 +10,7 @@
 - 本文領域：台本全文・トラウマの会話（回想・受け止め・向き合い・返し）・気づき・返答がすべて収まることを検証。
 - Xvfb上のGodotで16画面を描画して確認（タイトル・上枠だけの暗転・最初のセッション・謎のプレビュー・開いた結晶・鑑定済みのプレビュー・MAP・受け取り・謎のカード・カルテ・向き合うプレビューと会話・言葉のプレビューと強化・結果）。
 - Chromium（Playwright、`build/web` をローカル配信）の通しプレイは、作業環境の再起動で2回中断（1回目は盤面・受け取り・MAPを通過し本編1章まで）。再実行の結果は下に追記。
-- GitHub Pages [公開処理39350230112](https://github.com/xemonodesign/godot-novel-yodaka/actions/runs/39350230112)（gh-pages 5b1700e、この検証と同じコードのビルド）。公開URLはこの作業環境から到達できないため、配信物の一致は未確認。
+- GitHub Pages [公開処理39350230112](https://github.com/xemonodesign/godot-novel-yodaka/actions/runs/39350230112) 成功（gh-pages 5b1700e、この検証と同じコードのビルド）。公開URLはこの作業環境から到達できないため、配信物の一致は未確認。
 
 ![タイトル](screenshots/title.png)
 
