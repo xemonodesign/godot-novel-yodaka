@@ -200,7 +200,9 @@ function availableEvent(save, effectiveStress) {
       if (node && node.kind === 'main') seen.chapter.add(node.chapter);
       const choices = node && node.choices ? node.choices.length : 0;
       await click(NEXT, 500);
-      await click(OVERLAY, 500);  // dismisses a blackout, otherwise advances the finished line
+      const mid = await saveRecord(page);
+      // Dismiss a blackout or advance the finished line, but never click into a map that already followed.
+      if (mid.current !== 'map' && !(mid.current === 'counseling' && mid.counsel_step === 'board')) await click(OVERLAY, 500);
       if (choices > 1) {
         const width = 614 / choices;
         await click([337 + width / 2, 451], 500);
