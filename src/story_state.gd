@@ -4,8 +4,7 @@ extends RefCounted
 const STAT_NAMES = ["ストレス", "勇気", "自認", "キラキラ"]
 const INITIAL = [60, 5, 5, 5]
 const STRESS_LIMIT = 80
-const OUTING_EFFECTS = {"ストレス": 5}
-const CHAPTER_EFFECTS = {"ストレス": 6}
+# Going out and starting a chapter are free; the lines that hurt carry stress effects instead.
 const SAVE_PATH = "user://yodaka_v1.json"
 const SLOTS = 8  # the word shelf; six slots start taken by traumas, two are free
 const EXP_PER_TAP = 1  # every line read for the first time earns this, times held multipliers
@@ -429,7 +428,6 @@ func _end_day(kind: String) -> void:
             for chapter in data.chapters:
                 if chapter.id == current_round().chapter:
                     current = chapter.start
-            apply(CHAPTER_EFFECTS)
 
 func current_round() -> Dictionary:
     if round_index < data.rounds.size():
@@ -455,7 +453,6 @@ func select_event(id: String) -> bool:
     var event := event_by_id(id)
     if not event.get("repeatable", false):
         visited.append(id)
-        apply(OUTING_EFFECTS)  # going out costs social energy; resting does not
     current = event.start
     save_game()
     return true

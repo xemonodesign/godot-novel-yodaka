@@ -14,6 +14,7 @@ from import_scenario import (
     ROOT,
     SLOTS,
     STATS,
+    STRESS_EVENTS,
     TRAUMAS,
     compile_scenario,
     load_sources,
@@ -124,6 +125,14 @@ def test_every_round_chapter_and_outing_ends_in_the_night():
         last = data["nodes"][walk(data, event["start"], {"night"})[0][0][-2]]
         for value in last.get("effects", {}).values():
             assert abs(value) == 1 or event["id"] == "rest"
+    # Going out is free; the lines that hurt carry the stress, never a closing line.
+    for node_id, stress in STRESS_EVENTS.items():
+        node = data["nodes"][node_id]
+        assert node["effects"] == {"ストレス": stress} and 2 <= stress <= 6
+        assert node["next"] != "night" and node["kind"] in ["outing", "main"]
+    hurt = {n.split("_")[0] for n in STRESS_EVENTS}
+    assert {"main1", "main2", "main3", "main4"} <= hurt
+    assert len(hurt & {e["id"] for e in data["map_events"]}) >= 6
     for event in data["map_events"]:
         assert len(event["pin"]) == 2
         assert 0 <= event["pin"][0] <= 510 and 0 <= event["pin"][1] <= 310

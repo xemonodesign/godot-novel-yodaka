@@ -239,6 +239,25 @@ TUTORIAL_EFFECTS = {
     ],
 }
 TUTORIAL_PROMPTS = {20: "いちばんのハードルは……"}
+# Going out is free; stress comes from the moments that hurt (node id -> stress).
+STRESS_EVENTS = {
+    "hands_11": 4,  # ぼくは男？ それとも女？
+    "cover_10": 3,  # 声なんかかけたら不審者だよな
+    "parent_8": 3,  # 母の愚痴に付き合わされた喫茶店
+    "bridge_10": 5,  # もう「男」ではないことを思い出す
+    "karaoke_8": 5,  # 本来あるべきはずの喉仏がなかった
+    "native_11": 5,  # 声を出して読むと女の子でしかない
+    "sushi_12": 4,  # バスケの時間が「使用感アリ 値引き」になった
+    "cry_11": 4,  # 女の子がほしいって気持ちもあったの
+    "main1_36": 4,  # 友達も少なそうですし、私みたいに
+    "main2_20": 5,  # TSという理不尽に「奪われた」
+    "main2_54": 5,  # TS症でバスケやめて、留年までしてるのに
+    "main2_55": 3,  # 実は彼女にも振られてる
+    "main3_51": 5,  # 女子更衣室に、僕は入ることができない
+    "main3_53": 3,  # いつもの味だ
+    "main4_40": 6,  # 諦めて、女の子として生きてるんですか？
+    "main4_65": 3,  # お姫様らしくもないし、男らしさも感じられない
+}
 REST_LINES = [
     ("", "今日はどこにも寄らず、まっすぐ家に帰った。"),
     ("", "制服を脱いで、ベッドに倒れ込む。\n天井を見ているうちに、目が閉じていく。"),
@@ -523,6 +542,11 @@ def compile_scenario():
         }
     )
 
+    for node_id, stress in STRESS_EVENTS.items():
+        assert (
+            nodes[node_id]["next"] != "night"
+        ), node_id  # closing lines keep their insight
+        nodes[node_id]["effects"] = {"ストレス": stress}
     markers = json.loads((ROOT / "src/data/word_marks.json").read_text())
     for marker in markers:
         node = nodes[marker["node"]]

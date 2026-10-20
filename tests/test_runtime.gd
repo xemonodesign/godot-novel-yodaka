@@ -175,10 +175,10 @@ func run() -> void:
             var stress: int = state.stats[0]
             check(state.choose(choice), "Available choice advances")
             check(state.current != "night", "There is no night: the day ends into the next place")
+            if not node.has("choices"):
+                check(state.stats[0] == stress, "Moving on costs no stress by itself")
             if was_outing:
                 check(state.current == "map" or state.current.begins_with("main"), "An outing leads to the map or into a chapter")
-                if state.current.begins_with("main"):
-                    check(state.stats[0] == clampi(stress + 6, 0, 100), "A chapter costs stress, nothing recovers overnight")
             if was_main:
                 check(state.current in ["map", "counseling"], "A chapter leads to the map or a session")
         check(chapters.size() == 4 and chapters[0] == "tiktokの女王" and chapters[3] == "溺れる海のあしか", "Four main chapters in order")
@@ -225,6 +225,12 @@ func run() -> void:
     var before_cover: Array = state.stats.duplicate()
     state.finish_line()
     check(state.stats[1] == before_cover[1] + 1 and state.stats[2] == before_cover[2] + 1, "Wordless fragment gives a one-point insight at the end")
+    state.current = "bridge_10"
+    var before_hurt: int = state.stats[0]
+    state.finish_line()
+    check(state.stats[0] == before_hurt + 5 and state.last_delta == [5, 0, 0, 0], "A line that hurts raises stress")
+    state.finish_line()
+    check(state.stats[0] == before_hurt + 5, "Only once per line")
     state.current = "rest_2"
     var before_rest: int = state.stats[0]
     state.finish_line()
@@ -330,6 +336,10 @@ func run() -> void:
     check(state.stress_locked() and not state.event_available("park") and state.event_available("rest"), "Stress seventy-six reads as eighty under the mystery: only rest")
     check(not state.select_event("park"), "Locked outing rejected")
     state.stats[0] = 75
+    var before_out: int = state.stats[0]
+    check(state.select_event("park") and state.stats[0] == before_out, "Going out costs nothing")
+    state.current = "map"
+    state.visited.clear()
     check(state.event_available("park") and not state.event_available("sumika") and not state.event_available("cry"), "Week one pool excludes later events")
     state.round_index = 1
     check(state.event_available("sumika") and not state.event_available("cry"), "Week two unlocks new places")
@@ -605,7 +615,7 @@ func run_ui() -> void:
     scene._select_map_event("sumika")
     check(scene.state.current == "map", "Locked place ignored")
     scene._select_map_event("park")
-    check(scene.state.current == "park_6" and scene.state.stats[0] == 65, "MAP opens selected event and going out costs stress")
+    check(scene.state.current == "park_6" and scene.state.stats[0] == 60, "MAP opens selected event; going out is free")
     await dismiss(scene)
     scene.state.current = "park_15"
     scene._finish_line()

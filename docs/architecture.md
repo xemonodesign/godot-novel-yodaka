@@ -21,12 +21,12 @@
 `current` は台本ノードのIDか、`map` / `counseling` / `result` のいずれか。
 
 - ノードの `kind` は `counsel`（冒頭のカウンセリング）、`outing`（寄り道）、`main`（本編）。末尾の `next` はチュートリアルが `counseling`（最初のセッション）、寄り道と本編が `night`。`night` は状態としては存在せず、`choose()` が `_end_day()` でその場で次の行き先（`map`、章の先頭、`counseling`）に置き換えます。夜の回復はありません。
-- `rounds` は `[{outings, chapter, counseling}]`。寄り道を `outings` 回終えると `chapter` が始まり（`CHAPTER_EFFECTS`）、章を終えると `counseling` が真なら（最終章なら必ず）セッションへ、そうでなければ次の週の `map` へ。`session` はセッションの通し番号（1〜4）。
+- `rounds` は `[{outings, chapter, counseling}]`。寄り道を `outings` 回終えると `chapter` が始まり、章を終えると `counseling` が真なら（最終章なら必ず）セッションへ、そうでなければ次の週の `map` へ。`session` はセッションの通し番号（1〜4）。
 - 言葉は読み終えた行で収集し、`word.effects`（`gain_half` のデバフ中は半分）をその場で適用して `gains[id]` に記録、`pending_word` に置きます。UIは「心に留める」`keep_pending()`（空き枠へ）、「手放す」`release_pending()`（`forget_value()` のEXP）、「入れ替える」`swap_pending(slot)` のどれかを選ぶまで進めません。
 - 1タップ（初めて読む行、カウンセリングの動的な行も `read_dynamic()` で同様）ごとに `exp_per_tap()`（`EXP_PER_TAP` × 持っている言葉の `exp_mult` の積）が `exp` `exp_total` に入ります。
 - 心の棚 `slots` は8要素で、`{kind: "trauma"|"word", id}` か空。`traumas[id]` は `{state: "mystery"|"appraised"|"accepted"}`。`effective_stats()` が素の `stats` に、持っている言葉の `hold`（ステータス加算）とトラウマのデバフ（`plus` は加算、`half` は割合の減算、`cap` は上限。謎のあいだは `debuff.mystery`、鑑定済みは `debuff.value` の量。`rest_half` / `forget_half` / `gain_half` は棚にある限り有効）を反映した値を返し、メーター表示・ストレス制限・選択肢の `requires` に使います。
 - カウンセリングは `counsel_step` で進みます。`opening_doctor → opening_yodaka → board`。`board` は会話画面のまま棚を操作する状態で、`appraise(id)`（謎を開く：`appraise` のEXPを払い `appraised` に。1セッション1回 `talked`）→ `talk_recall → talk_doctor → board`、`face(id)`（鑑定済みに `face_cost()` ＝ `cost` × 持っている言葉の `cost_mult` の積（同じ `tag` なら `RESONANCE`=2 回）を払い `accepted`、枠を空ける）→ `face_line → face_response → board`、`grow(id)`（次の `levels[].cost` を払って Lv を上げる。Lv2 は `grow_question → grow_choice → interpret() → grow_reply → grow_response → board`、Lv3 は `grow_insight → grow_response → board`）。`finish_session()` → `closing`（総括ならカルテ）→ `farewell` → `map`（総括なら `result`）。開く・向き合う・強化はいずれも `board` でだけ可能です。
-- 出かけると `OUTING_EFFECTS`（ストレス+5）、章が始まると `CHAPTER_EFFECTS`（+6）。休息は `rest_2` の `effects`（-15、`rest_half` で半分）。
+- 出かけることと章の開始にストレスはかからない。代わりに `STRESS_EVENTS`（`import_scenario.py`）で指定した嫌な瞬間の行に `effects: {"ストレス": n}` が付き、読み終えた時に上がる（最後の行には付けず、気づきの±1と分ける）。休息は `rest_2` の `effects`（-15、`rest_half` で半分）。
 - `preview()` が0〜100の上限・下限を反映した差分を返し、予告と適用の両方で使用します。
 
 初期値は `[60, 5, 5, 5]`（ストレス・勇気・自認・キラキラ）。表示上は最初から `[64, 5, 5, 4]`。CHAPTER 4の「お姫様じゃなくてもいい」は反映後の勇気15以上で選択可能で、`can_choose()` がUIの無効化に加えて状態遷移自体も防ぎます。

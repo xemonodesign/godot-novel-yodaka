@@ -1200,7 +1200,10 @@
       "kind": "main",
       "place": "教室",
       "partner": "あしか",
-      "next": "main1_37"
+      "next": "main1_37",
+      "effects": {
+        "ストレス": 4
+      }
     },
     "main1_37": {
       "speaker": "あしか",
@@ -1605,7 +1608,10 @@
       "kind": "main",
       "place": "ファミレス",
       "partner": "あしか",
-      "next": "main2_21"
+      "next": "main2_21",
+      "effects": {
+        "ストレス": 5
+      }
     },
     "main2_21": {
       "speaker": "",
@@ -2091,7 +2097,10 @@
       "kind": "main",
       "place": "ファミレス",
       "partner": "あしか",
-      "next": "main2_55"
+      "next": "main2_55",
+      "effects": {
+        "ストレス": 5
+      }
     },
     "main2_55": {
       "speaker": "よだか",
@@ -2106,7 +2115,10 @@
       "kind": "main",
       "place": "ファミレス",
       "partner": "あしか",
-      "next": "main2_56"
+      "next": "main2_56",
+      "effects": {
+        "ストレス": 3
+      }
     },
     "main2_56": {
       "speaker": "あしか",
@@ -2821,7 +2833,10 @@
       "kind": "main",
       "place": "廊下",
       "partner": "あしか",
-      "next": "main3_52"
+      "next": "main3_52",
+      "effects": {
+        "ストレス": 5
+      }
     },
     "main3_52": {
       "speaker": "",
@@ -2851,7 +2866,10 @@
       "kind": "main",
       "place": "廊下",
       "partner": "あしか",
-      "next": "main3_54"
+      "next": "main3_54",
+      "effects": {
+        "ストレス": 3
+      }
     },
     "main3_54": {
       "speaker": "",
@@ -3390,7 +3408,10 @@
       "kind": "main",
       "place": "ファミレス",
       "partner": "あしか",
-      "next": "main4_41"
+      "next": "main4_41",
+      "effects": {
+        "ストレス": 6
+      }
     },
     "main4_41": {
       "speaker": "",
@@ -3751,7 +3772,10 @@
       "kind": "main",
       "place": "ファミレス",
       "partner": "あしか",
-      "next": "main4_66"
+      "next": "main4_66",
+      "effects": {
+        "ストレス": 3
+      }
     },
     "main4_66": {
       "speaker": "",
@@ -4022,7 +4046,10 @@
       "kind": "outing",
       "place": "街（夕方）",
       "partner": "",
-      "next": "hands_12"
+      "next": "hands_12",
+      "effects": {
+        "ストレス": 4
+      }
     },
     "hands_12": {
       "speaker": "",
@@ -4131,7 +4158,10 @@
       "kind": "outing",
       "place": "路上",
       "partner": "",
-      "next": "cover_11"
+      "next": "cover_11",
+      "effects": {
+        "ストレス": 3
+      }
     },
     "cover_11": {
       "speaker": "",
@@ -4408,7 +4438,10 @@
       "kind": "outing",
       "place": "喫茶店",
       "partner": "",
-      "next": "parent_9"
+      "next": "parent_9",
+      "effects": {
+        "ストレス": 3
+      }
     },
     "parent_9": {
       "speaker": "",
@@ -4764,7 +4797,10 @@
       "kind": "outing",
       "place": "歩道橋",
       "partner": "",
-      "next": "bridge_11"
+      "next": "bridge_11",
+      "effects": {
+        "ストレス": 5
+      }
     },
     "bridge_11": {
       "speaker": "",
@@ -4907,7 +4943,10 @@
       "kind": "outing",
       "place": "路上",
       "partner": "",
-      "next": "karaoke_9"
+      "next": "karaoke_9",
+      "effects": {
+        "ストレス": 5
+      }
     },
     "karaoke_9": {
       "speaker": "",
@@ -5061,7 +5100,10 @@
       "kind": "outing",
       "place": "教室",
       "partner": "",
-      "next": "native_12"
+      "next": "native_12",
+      "effects": {
+        "ストレス": 5
+      }
     },
     "native_12": {
       "speaker": "",
@@ -5185,7 +5227,10 @@
       "kind": "outing",
       "place": "自宅_リビング",
       "partner": "りあ",
-      "next": "sushi_13"
+      "next": "sushi_13",
+      "effects": {
+        "ストレス": 4
+      }
     },
     "sushi_13": {
       "speaker": "",
@@ -5536,7 +5581,10 @@
       "kind": "outing",
       "place": "リビング",
       "partner": "りあ",
-      "next": "cry_12"
+      "next": "cry_12",
+      "effects": {
+        "ストレス": 4
+      }
     },
     "cry_12": {
       "speaker": "",

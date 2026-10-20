@@ -502,7 +502,7 @@ func _show_map() -> void:
     _panel(content, Rect2(830, 148, 374, 409), DARK)
     _label(content, "今日は、どこへ行こう。", Rect2(853, 173, 330, 43), 23, PAPER)
     _label(content, "自由行動　あと %d 回" % remaining, Rect2(853, 232, 330, 40), 26, MINT)
-    var note_text := "出かけるとストレス +%d。" % int(State.OUTING_EFFECTS["ストレス"])
+    var note_text := "出かけるのは自由。\n嫌なことがあると、ストレスが上がる。"
     if state.stress_locked():
         note_text = "ストレスが %d。\n疲れていて、今日は出かけられない。\n家で休もう。" % state.effective(0)
     _wrapped(content, note_text, Rect2(854, 292, 320, 200), 16, Color("c8d5c5"))
