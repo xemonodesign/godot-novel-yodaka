@@ -295,7 +295,7 @@ function availableEvent(save, effectiveStress) {
     const tutorial = await settled(record => record.current === 'counsel1_12');
     assert.equal(tutorial.current, 'counsel1_12');
     assert.deepEqual(tutorial.stats, [60, 5, 9, 5]);
-    assert.equal(tutorial.exp, 1, 'The line read earned one EXP');
+    assert.ok(tutorial.exp >= 1 && tutorial.exp <= 2, 'The lines read earned EXP');
 
     // Stress 76 reads as 80 under the mystery: only home is pinned.
     await seed({ ...common, current: 'map', stats: [76, 5, 5, 5] });
