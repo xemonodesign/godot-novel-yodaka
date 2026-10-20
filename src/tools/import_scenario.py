@@ -34,18 +34,10 @@ ROUNDS = [
     {"outings": 3, "chapter": "main3", "counseling": True},
     {"outings": 3, "chapter": "main4", "counseling": True},
 ]
-SLOTS = 8  # the word shelf; every slot starts filled by a trauma
-DEBUFF_KINDS = [
-    "half",
-    "cap",
-    "plus",
-    "rest_half",
-    "forget_half",
-    "gain_half",
-    "sleep_half",
-]
-HOLD_KINDS = STATS + ["exp_mult", "forget_mult"]
-RELEASE_KINDS = ["weaken", "cost_mult"]
+SLOTS = 8  # the word shelf; six slots start filled by traumas, two are free
+TRAUMAS = 6
+DEBUFF_KINDS = ["half", "cap", "plus", "rest_half", "forget_half", "gain_half"]
+HOLD_KINDS = STATS + ["exp_mult", "forget_mult", "cost_mult"]
 # Every fragment is a MAP destination:
 # (id, book, sheet, title or None for the sheet's own, label, place, partner,
 #  week unlocked, effect of the closing line for fragments without a word,
@@ -540,8 +532,8 @@ def compile_scenario():
         node["word"] = marker["id"]
         assert len(marker["levels"]) == 3 and marker["levels"][0]["cost"] == 0
         for index, level in enumerate(marker["levels"]):
-            assert set(level["hold"]) <= set(HOLD_KINDS), marker["id"]
-            assert set(level["release"]) <= set(RELEASE_KINDS), marker["id"]
+            assert level["hold"] and set(level["hold"]) <= set(HOLD_KINDS), marker["id"]
+            assert 0 < level["hold"].get("cost_mult", 0.5) < 1, marker["id"]
             assert (index == 2) == ("insight" in level), marker["id"]
             if index:
                 assert level["cost"] > marker["levels"][index - 1]["cost"]
@@ -549,13 +541,15 @@ def compile_scenario():
     ids = {t["id"] for t in traumas}
     assert len(ids) == len(traumas)
     for trauma in traumas:
-        assert trauma["debuff"]["kind"] in DEBUFF_KINDS, trauma["id"]
-        assert trauma["strength"] > 0 and trauma["cost"] > 0
-        assert trauma.get("deeper", trauma["id"]) in ids
-        for key in ["quote", "recall", "doctor", "loosen", "resolve"]:
+        debuff = trauma["debuff"]
+        assert debuff["kind"] in DEBUFF_KINDS, trauma["id"]
+        if debuff["kind"] in ["half", "cap", "plus"]:
+            # Opening a trauma shows what it is, and bites harder than the mystery did.
+            assert debuff["stat"] in STATS and "mystery" in debuff and "value" in debuff
+        assert 0 < trauma["appraise"] < trauma["cost"]
+        for key in ["quote", "recall", "doctor", "resolve", "response"]:
             assert trauma[key], (trauma["id"], key)
-        assert ("emerge" in trauma) == trauma.get("hidden", False)
-    assert sum(1 for t in traumas if not t.get("hidden")) == SLOTS
+    assert len(ids) == TRAUMAS < SLOTS
     result = {
         "start": start,
         "stats": STATS,

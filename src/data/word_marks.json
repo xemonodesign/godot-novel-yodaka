@@ -42,29 +42,22 @@
       {
         "cost": 0,
         "hold": {
-          "キラキラ": 5
-        },
-        "release": {
+          "キラキラ": 5,
           "cost_mult": 0.5
         }
       },
       {
         "cost": 80,
         "hold": {
-          "キラキラ": 10
-        },
-        "release": {
-          "cost_mult": 0.5,
-          "weaken": 10
+          "キラキラ": 10,
+          "cost_mult": 0.4
         }
       },
       {
         "cost": 250,
         "hold": {
           "キラキラ": 10,
-          "exp_mult": 3
-        },
-        "release": {
+          "exp_mult": 3,
           "cost_mult": 0.25
         },
         "insight": "女王になりたかったわけじゃない。\nでも由梨さんは、僕を「一緒に何かをする相手」\nとして見ていた。扱いに困る人じゃなく。"
@@ -115,27 +108,20 @@
         "cost": 0,
         "hold": {
           "exp_mult": 2
-        },
-        "release": {
-          "weaken": 30
         }
       },
       {
         "cost": 100,
         "hold": {
-          "exp_mult": 3
-        },
-        "release": {
-          "weaken": 50
+          "exp_mult": 3,
+          "cost_mult": 0.7
         }
       },
       {
         "cost": 300,
         "hold": {
-          "exp_mult": 5
-        },
-        "release": {
-          "weaken": 80
+          "exp_mult": 5,
+          "cost_mult": 0.5
         },
         "insight": "新しくならなきゃ、じゃなくて。\n今までの僕を捨てずに、次の僕を足していけばいい。\n由梨さんの「早急に」は、たぶん、それでも間に合う。"
       }
@@ -185,29 +171,21 @@
         "cost": 0,
         "hold": {
           "forget_mult": 20
-        },
-        "release": {
-          "cost_mult": 0.1
         }
       },
       {
         "cost": 120,
         "hold": {
-          "forget_mult": 30
-        },
-        "release": {
-          "cost_mult": 0.1,
-          "weaken": 20
+          "forget_mult": 30,
+          "cost_mult": 0.5
         }
       },
       {
         "cost": 350,
         "hold": {
           "forget_mult": 50,
-          "自認": 10
-        },
-        "release": {
-          "cost_mult": 0.05
+          "自認": 10,
+          "cost_mult": 0.1
         },
         "insight": "頭の中の自分を幸せにする権利。\n先輩の言う通り、誰にも取り上げられない。\n「普通にしてよ」の人も、頭の中では滅ぼしていい。"
       }
@@ -257,29 +235,22 @@
         "cost": 0,
         "hold": {
           "ストレス": -10
-        },
-        "release": {
-          "weaken": 40
         }
       },
       {
         "cost": 150,
         "hold": {
           "ストレス": -15,
-          "勇気": 5
-        },
-        "release": {
-          "weaken": 60
+          "勇気": 5,
+          "cost_mult": 0.5
         }
       },
       {
         "cost": 350,
         "hold": {
           "ストレス": -20,
-          "勇気": 10
-        },
-        "release": {
-          "weaken": 100
+          "勇気": 10,
+          "cost_mult": 0.2
         },
         "insight": "「親しい友達」限定。\n辛気臭い顔のふたりが、誰かの親しい友達として\n並んでいる。扱い方なんて決めなくても、隣に座れる。"
       }
@@ -329,26 +300,19 @@
         "cost": 0,
         "hold": {
           "勇気": 1
-        },
-        "release": {
-          "weaken": 5
         }
       },
       {
         "cost": 60,
         "hold": {
-          "勇気": 5
-        },
-        "release": {
-          "weaken": 20
+          "勇気": 5,
+          "cost_mult": 0.5
         }
       },
       {
         "cost": 200,
         "hold": {
-          "exp_mult": 10
-        },
-        "release": {
+          "exp_mult": 10,
           "cost_mult": 0.1
         },
         "insight": "奇跡が来るのを待つんじゃなくて。\n「来てほしい」と思えること自体が、もう願いなんだ。\n何を願うか決めるたび、僕は少しずつ僕になる。"
@@ -398,31 +362,23 @@
       {
         "cost": 0,
         "hold": {
-          "勇気": 5
-        },
-        "release": {
+          "勇気": 5,
           "cost_mult": 0.5
         }
       },
       {
         "cost": 120,
         "hold": {
-          "勇気": 8
-        },
-        "release": {
-          "cost_mult": 0.4,
-          "weaken": 20
+          "勇気": 8,
+          "cost_mult": 0.4
         }
       },
       {
         "cost": 300,
         "hold": {
           "勇気": 10,
-          "exp_mult": 2
-        },
-        "release": {
-          "cost_mult": 0.2,
-          "weaken": 40
+          "exp_mult": 2,
+          "cost_mult": 0.2
         },
         "insight": "めんどくさい言い方で、一緒にいてくれた。\n今の僕にも誰かがそう言ってくれるかは、わからない。\nでもあの時の僕は確かに、付き合ってもらえる僕だった。"
       }

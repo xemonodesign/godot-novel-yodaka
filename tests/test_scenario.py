@@ -11,10 +11,10 @@ from import_scenario import (
     COURAGE_GATE,
     DEBUFF_KINDS,
     HOLD_KINDS,
-    RELEASE_KINDS,
     ROOT,
     SLOTS,
     STATS,
+    TRAUMAS,
     compile_scenario,
     load_sources,
     read_workbook,
@@ -170,10 +170,9 @@ def test_markers_are_original_dialogue_with_bounded_effects():
         assert costs[0] == 0 and costs == sorted(costs) and len(set(costs)) == 3
         for level in word["levels"]:
             assert level["hold"] and set(level["hold"]) <= set(HOLD_KINDS)
-            assert level["release"] and set(level["release"]) <= set(RELEASE_KINDS)
-            for key, value in level["release"].items():
-                assert (0 < value < 1) if key == "cost_mult" else value > 0
+            assert 0 < level["hold"].get("cost_mult", 0.5) < 1
         assert word["levels"][2]["insight"]
+        assert "cost_mult" in word["levels"][2]["hold"]
     assert {
         w["id"]
         for w in data["words"]
@@ -181,35 +180,35 @@ def test_markers_are_original_dialogue_with_bounded_effects():
     }
 
 
-def test_traumas_fill_the_shelf_and_hide_what_emerges():
+def test_traumas_take_six_slots_and_leave_two_free():
     data = compile_scenario()
-    assert data["slots"] == SLOTS
-    shown = [t for t in data["traumas"] if not t.get("hidden")]
-    hidden = [t for t in data["traumas"] if t.get("hidden")]
-    assert len(shown) == SLOTS and len(hidden) == 2
-    ids = {t["id"] for t in data["traumas"]}
+    assert data["slots"] == SLOTS and len(data["traumas"]) == TRAUMAS == SLOTS - 2
     for trauma in data["traumas"]:
-        assert trauma["debuff"]["kind"] in DEBUFF_KINDS
-        if trauma["debuff"]["kind"] in ["half", "cap", "plus"]:
-            assert trauma["debuff"]["stat"] in STATS
-        assert trauma["strength"] >= 100 and trauma["cost"] >= 1000
+        debuff = trauma["debuff"]
+        assert debuff["kind"] in DEBUFF_KINDS
+        if debuff["kind"] in ["half", "cap", "plus"]:
+            assert debuff["stat"] in STATS
+            # Opening a mystery makes its effect worse, never better.
+            if debuff["kind"] == "cap":
+                assert debuff["value"] < debuff["mystery"]
+            else:
+                assert debuff["value"] > debuff["mystery"]
+        assert 0 < trauma["appraise"] <= 60
+        assert trauma["cost"] >= 1000
         assert trauma["tag"] in {"居場所", "身体", "恋", "家族", "過去"}
-        for key in ["quote", "recall", "doctor", "loosen", "resolve"]:
+        for key in ["quote", "recall", "doctor", "resolve", "response"]:
             assert all(len(line) <= 26 for line in trauma[key].split("\n")), key
-        assert len(trauma["doctor"].split("\n")) <= 2  # room for the words brought in
-    for trauma in hidden:
-        parent = next(t for t in shown if t.get("deeper") == trauma["id"])
-        assert trauma["id"] in ids and trauma["emerge"]
-        assert trauma["strength"] > parent["strength"]
-        assert trauma["cost"] > parent["cost"]
-    assert sum(1 for t in shown if "deeper" in t) == 2
-    # Every parameter is hit by some trauma, and the courage cap guards chapter four.
-    assert {t["debuff"].get("stat") for t in shown} >= set(STATS)
+            assert len(trauma[key].split("\n")) <= 3
+    # The courage cap guards chapter four until that trauma is accepted.
     gate = data["nodes"]["main4_31"]["choices"][1]["requires"]
-    cap = next(t for t in shown if t["debuff"]["kind"] == "cap")
+    cap = next(t for t in data["traumas"] if t["debuff"]["kind"] == "cap")
+    assert cap["debuff"]["stat"] == gate["stat"]
     assert (
-        cap["debuff"]["stat"] == gate["stat"] and cap["debuff"]["value"] < gate["min"]
+        cap["debuff"]["mystery"] < gate["min"] and cap["debuff"]["value"] < gate["min"]
     )
+    # Every word's tag resonates with at least one trauma, so discounts can double.
+    tags = {t["tag"] for t in data["traumas"]}
+    assert all(w["tag"] in tags for w in data["words"])
 
 
 def test_sources_come_from_workbooks_or_the_committed_cache():

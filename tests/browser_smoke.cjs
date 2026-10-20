@@ -6,7 +6,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const scenario = require('../src/data/scenario.json');
-const output = process.env.YODAKA_SCREENSHOTS || '/tmp/yodaka-v5-browser';
+const output = process.env.YODAKA_SCREENSHOTS || '/tmp/yodaka-v6-browser';
 fs.mkdirSync(output, { recursive: true });
 
 async function saveRecord(page, replacement) {
@@ -44,22 +44,36 @@ async function saveRecord(page, replacement) {
 }
 
 // Screen coordinates of the 1280x800 stage (see src/main.gd).
-const NEXT = [1095, 557];
+const NEXT = [1095, 557];           // also "今日は、ここまで" on the counseling board
 const OVERLAY = [640, 400];
 const KARTE_CLOSE = [953, 638];
-const SLEEP = [1044, 543];
 const KEEP = [930, 286];            // "心に留める" on the receive overlay (with a free slot)
-const RELEASE_FREE = [930, 346];    // "手放して EXP" when a slot is free
 const RELEASE_FULL = [930, 490];    // "手放して EXP" when the shelf is full
-const TALK = [1048, 490];           // "みなとに話す"
-const FACE = [216, 505];            // "向き合う" on the board
-const GROW = [798, 490];            // "掘り下げる" on the board
-const FIRST_CARD = [725, 342];      // first word offered to bring along
-const FINISH = [1067, 559];         // "今日は、ここまで"
 const COUNSEL_CHOICE = [434, 463];
-const boardCard = index => [76 + index * 141 + 66, 216];
+const shelfPoint = index => [294 + index * 116 + 54, 704];
 const pinPoint = event => [76 + event.pin[0] + 20, 148 + event.pin[1] + 15];
 const traumaDef = id => scenario.traumas.find(t => t.id === id);
+const wordDef = id => scenario.words.find(w => w.id === id);
+
+function faceCost(save, id) {
+  const def = traumaDef(id);
+  let mult = 1;
+  for (const slot of save.slots) {
+    if (slot.kind !== 'word') continue;
+    const level = wordDef(slot.id).levels[(save.levels[slot.id] || 1) - 1];
+    const cut = level.hold.cost_mult || 1;
+    mult *= wordDef(slot.id).tag === def.tag ? cut * cut : cut;
+  }
+  return Math.max(1, Math.ceil(def.cost * mult - 0.000001));
+}
+
+function stressPlus(save) {
+  return save.slots.filter(slot => slot.kind === 'trauma').reduce((sum, slot) => {
+    const debuff = traumaDef(slot.id).debuff;
+    if (debuff.kind !== 'plus') return sum;
+    return sum + (save.traumas[slot.id].state === 'appraised' ? debuff.value : debuff.mystery);
+  }, 0);
+}
 
 function availableEvent(save, effectiveStress) {
   const week = save.round_index + 1;
@@ -70,12 +84,6 @@ function availableEvent(save, effectiveStress) {
     return i;
   }
   return scenario.map_events.findIndex(event => event.repeatable);
-}
-
-function talkable(save) {
-  // The slot index of the first trauma Yodaka may talk about this session.
-  return save.slots.findIndex(slot => slot.kind === 'trauma' && !save.traumas[slot.id].resolved
-    && (save.session > 1 || !traumaDef(slot.id).deeper));
 }
 
 (async () => {
@@ -104,27 +112,33 @@ function talkable(save) {
       await page.locator('#loading').waitFor({ state: 'detached', timeout: 90000 });
       await page.waitForTimeout(700);
     };
+    // Each click completes a line or advances it; poll rather than count clicks.
+    const advanceUntil = async step => {
+      for (let i = 0; i < 12 && (await saveRecord(page)).counsel_step !== step; i++) await click(NEXT, 700);
+      return settled(record => record.counsel_step === step);
+    };
     await page.goto(process.env.YODAKA_URL || 'http://127.0.0.1:8060/');
     await ready();
     await shot('title');
-    await page.mouse.click(210, 500);
+    await page.mouse.click(210, 450);
     await page.waitForTimeout(800);
     await shot('counseling-card');
     const initial = await saveRecord(page);
-    assert.equal(initial.version, 5);
+    assert.equal(initial.version, 6);
     assert.equal(initial.current, 'counsel0_6');
     assert.equal(initial.scene_key, '');
-    assert.equal(initial.slots.filter(slot => slot.kind === 'trauma').length, 8, 'Shelf starts full of traumas');
+    assert.equal(initial.slots.filter(slot => slot.kind === 'trauma').length, 6, 'Six mysteries on the shelf');
+    assert.equal(initial.slots.filter(slot => !slot.kind).length, 2, 'Two free slots');
     assert.equal(initial.exp, 0);
     await page.keyboard.press('Space');
     await page.keyboard.press('Escape');
     await page.waitForTimeout(800);
     assert.equal((await saveRecord(page)).scene_key, '', 'Blackout requires a click');
-    await click(OVERLAY, 2800);
+    await click(OVERLAY, 1200);
     await shot('minato');
 
-    // Drive the whole loop from the real save state: counseling, outings, nights, chapters, sessions.
-    const seen = { map: 0, night: 0, chapter: new Set(), sessions: [], talks: 0, faced: 0, kept: 0, released: 0, karte: 0, cards: 0 };
+    // Drive the whole loop from the real save state: counseling, outings, chapters, sessions.
+    const seen = { map: 0, chapter: new Set(), sessions: [], opened: 0, faced: 0, grown: 0, kept: 0, released: 0, karte: 0 };
     let save = initial;
     let signature = '';
     let stalled = 0;
@@ -151,52 +165,34 @@ function talkable(save) {
       if (save.current === 'map') {
         seen.map++;
         if (seen.map === 1) await shot('map');
-        const stressPlus = save.slots.filter(slot => slot.kind === 'trauma').reduce((sum, slot) => {
-          const def = traumaDef(slot.id);
-          return sum + (def.debuff.kind === 'plus' ? Math.ceil(def.debuff.value * save.traumas[slot.id].strength / def.strength) : 0);
-        }, 0);
-        await click(pinPoint(scenario.map_events[availableEvent(save, save.stats[0] + stressPlus)]), 900);
+        await click(pinPoint(scenario.map_events[availableEvent(save, save.stats[0] + stressPlus(save))]), 900);
         await settled(record => record.current !== 'map');
         await click(OVERLAY, 900);
         continue;
       }
-      if (save.current === 'night') {
-        seen.night++;
-        await page.waitForTimeout(3400);  // the darkening intro
-        await click(OVERLAY, 600);
-        if (seen.night === 1) await shot('night');
-        await click(SLEEP, 900);  // the map, a chapter card or a session follows; the next pass handles it
-        await settled(record => record.current !== 'night');
-        continue;
-      }
       if (save.current === 'counseling' && save.counsel_step === 'board') {
         if (!seen.sessions.includes(save.session)) seen.sessions.push(save.session);
-        if (!save.talked) {
-          const index = talkable(save);
-          assert.ok(index >= 0, 'Something to talk about');
-          await click(boardCard(index), 500);
-          if (save.slots.some(slot => slot.kind === 'word')) {
-            await click(FIRST_CARD, 400);  // bring the first held word along
-            seen.cards++;
-          }
-          if (seen.talks === 0) await shot('board');
-          await click(TALK, 900);
-          const talked = await settled(record => record.talked);
-          assert.ok(talked.talked, 'Talked about ' + save.slots[index].id);
-          seen.talks++;
+        await page.waitForTimeout(400);
+        const mystery = save.slots.findIndex(slot => slot.kind === 'trauma' && save.traumas[slot.id].state === 'mystery'
+          && traumaDef(slot.id).appraise <= save.exp);
+        if (!save.talked && mystery >= 0) {
+          if (seen.opened === 0) await shot('board');
+          await click(shelfPoint(mystery), 900);
+          const opened = await settled(record => record.traumas[save.slots[mystery].id].state === 'appraised');
+          assert.equal(opened.traumas[save.slots[mystery].id].state, 'appraised', 'Opened ' + save.slots[mystery].id);
+          seen.opened++;
           continue;
         }
-        const affordable = save.slots.findIndex(slot => slot.kind === 'trauma' && save.traumas[slot.id].unraveled
-          && Math.ceil(save.traumas[slot.id].cost * save.traumas[slot.id].strength / traumaDef(slot.id).strength) <= save.exp);
+        const affordable = save.slots.findIndex(slot => slot.kind === 'trauma' && save.traumas[slot.id].state === 'appraised'
+          && faceCost(save, slot.id) <= save.exp);
         if (affordable >= 0) {
-          await click(boardCard(affordable), 500);
-          await click(FACE, 900);
-          const faced = await settled(record => record.traumas[save.slots[affordable].id].resolved);
-          assert.ok(faced.traumas[save.slots[affordable].id].resolved, 'Faced ' + save.slots[affordable].id);
+          await click(shelfPoint(affordable), 900);
+          const faced = await settled(record => record.traumas[save.slots[affordable].id].state === 'accepted');
+          assert.equal(faced.traumas[save.slots[affordable].id].state, 'accepted', 'Faced ' + save.slots[affordable].id);
           seen.faced++;
           continue;
         }
-        await click(FINISH, 900);
+        await click(NEXT, 900);  // the board's button ends the session
         await settled(record => record.counsel_step !== 'board');
         continue;
       }
@@ -227,22 +223,20 @@ function talkable(save) {
     assert.deepEqual(seen.sessions, [1, 2, 3, 4], 'Sessions in order');
     assert.equal(seen.chapter.size, 4, 'All four chapters played');
     assert.equal(seen.map, 12, 'Twelve outings');
-    assert.equal(seen.night, 16, 'A night after every outing and chapter');
-    assert.equal(seen.talks, 4, 'One trauma talked about per session');
-    assert.ok(seen.faced >= 1, 'At least the first trauma faced');
+    assert.ok(seen.opened >= 1 && seen.opened <= 4, 'Mysteries opened, one per session at most');
     assert.ok(save.collected.length >= 3, 'Words received');
     assert.equal(seen.kept + seen.released, save.collected.length, 'Every word was decided');
     assert.ok(save.exp_total >= save.read_count, 'EXP for every tap');
     for (const id of Object.keys(save.traumas)) {
-      assert.equal(save.traumas[id].resolved, !save.slots.some(slot => slot.id === id), 'Unresolved traumas stay on the shelf');
+      assert.equal(save.traumas[id].state === 'accepted', !save.slots.some(slot => slot.id === id), 'Unaccepted traumas stay on the shelf');
     }
-    for (const id of [...save.forgotten, ...save.used]) assert.ok(!save.slots.some(slot => slot.id === id), 'Words let go left the shelf');
+    for (const id of save.forgotten) assert.ok(!save.slots.some(slot => slot.id === id), 'Words let go left the shelf');
     assert.ok(seen.karte >= 2, 'Karte shown in the tutorial and the closing');
     for (const id of save.collected) assert.equal(save.gains[id].length, 4);
     await shot('result');
     await page.reload();
     await ready();
-    await page.mouse.click(475, 500);
+    await page.mouse.click(475, 450);
     await page.waitForTimeout(800);
     await shot('resumed');
     assert.equal((await saveRecord(page)).current, 'result');
@@ -254,25 +248,24 @@ function talkable(save) {
         await saveRecord(page, replacement);
         await page.reload();
         await ready();
-        await page.mouse.click(475, 500);
+        await page.mouse.click(475, 450);
         const loaded = await settled(record => record.current === replacement.current, 3000);
         if (loaded.current === replacement.current) return;
       }
       throw new Error('Seeded save was not restored: ' + replacement.current);
     };
-    const common = { ...initial, version: 5, stats: [60, 5, 5, 5], collected: [], gains: {}, answers: [], history: [],
-      pending_word: '', visited: [], round_index: 0, outings_done: 0, after_night: 'map', forgotten: [], used: [],
-      exp: 0, exp_total: 0, exp_day: 0, levels: {}, session: 0, counsel_step: 'opening_doctor', talked: false,
-      focus: '', cards: [], grow_word: '', talk_result: {} };
-    const freed = (base, ids) => {
-      // A copy of a save with the given traumas faced, their slots empty.
+    const common = { ...initial, version: 6, stats: [60, 5, 5, 5], collected: [], gains: {}, answers: [], history: [],
+      pending_word: '', visited: [], round_index: 0, outings_done: 0, forgotten: [],
+      exp: 0, exp_total: 0, levels: {}, session: 0, counsel_step: 'opening_doctor', talked: false, focus: '', grow_word: '' };
+    const withStates = (base, states) => {
+      // A copy of a save with traumas in the given states; accepted ones leave their slots.
       const traumas = JSON.parse(JSON.stringify(base.traumas));
-      const slots = base.slots.map(slot => ids.includes(slot.id) ? {} : slot);
-      for (const id of ids) traumas[id] = { ...traumas[id], resolved: true, strength: 0, unraveled: true };
+      for (const [id, state] of Object.entries(states)) traumas[id] = { state };
+      const slots = base.slots.map(slot => (slot.kind === 'trauma' && traumas[slot.id].state === 'accepted') ? {} : slot);
       return { ...base, traumas, slots };
     };
     // A received word must be kept or let go; the dark does not dismiss it.
-    await seed({ ...freed(common, ['coworker']), current: 'cafe_7', collected: ['miracle'], gains: { miracle: [0, 5, 2, 0] },
+    await seed({ ...common, current: 'cafe_7', collected: ['miracle'], gains: { miracle: [0, 3, 1, 0] },
       scene_key: '0|寄り道 / 奇跡を待つ人|喫茶店', pending_word: 'miracle' });
     await shot('received-word');
     await page.keyboard.press('Space');
@@ -283,12 +276,13 @@ function talkable(save) {
     const kept = await settled(record => record.pending_word === '');
     assert.equal(kept.pending_word, '');
     assert.ok(kept.slots.some(slot => slot.kind === 'word' && slot.id === 'miracle'), 'Kept word on the shelf');
-    await seed({ ...common, current: 'sumika_10', collected: ['happiness'], gains: { happiness: [2, 0, 6, 0] },
-      scene_key: '0|寄り道 / 自由と権利|ファミレス(昼)', pending_word: 'happiness' });
+    const full = { ...common, slots: common.slots.map((slot, i) => i >= 6 ? { kind: 'word', id: ['queen', 'company'][i - 6] } : slot),
+      collected: ['queen', 'company', 'happiness'], gains: { queen: [3, 0, 0, 6], company: [-5, 0, 0, 4], happiness: [2, 0, 6, 0] } };
+    await seed({ ...full, current: 'sumika_10', scene_key: '0|寄り道 / 自由と権利|ファミレス(昼)', pending_word: 'happiness' });
     await shot('received-full');
     await click(RELEASE_FULL, 700);
     const released = await settled(record => record.pending_word === '');
-    assert.equal(released.exp, 15, 'Letting go pays half under the discount trauma');
+    assert.equal(released.exp, 15, 'Letting go pays half under the discount mystery');
     assert.deepEqual(released.forgotten, ['happiness']);
 
     await seed({ ...common, current: 'counsel1_10', scene_key: '0|はじめてのカウンセリング|診察室' });
@@ -300,8 +294,8 @@ function talkable(save) {
     assert.deepEqual(tutorial.stats, [60, 5, 9, 5]);
     assert.equal(tutorial.exp, 1, 'The line read earned one EXP');
 
-    // Stress 72 reads as 80 under the trauma: only home is pinned.
-    await seed({ ...common, current: 'map', stats: [72, 5, 5, 5] });
+    // Stress 76 reads as 80 under the mystery: only home is pinned.
+    await seed({ ...common, current: 'map', stats: [76, 5, 5, 5] });
     await shot('map-stress');
     await click(pinPoint(scenario.map_events[1]), 600);
     assert.equal((await settled(record => record.current !== 'map', 1500)).current, 'map', 'High stress hides outings');
@@ -316,36 +310,27 @@ function talkable(save) {
     await shot('courage-locked');
     await click([791, 450], 800);
     assert.equal((await settled(record => record.current !== 'main4_31', 1500)).current, 'main4_31');
-    await seed({ ...freed(common, ['no_longer']), current: 'main4_31', stats: [60, 15, 5, 5], scene_key: gateScene, round_index: 3 });
+    await seed({ ...withStates(common, { no_longer: 'accepted' }), current: 'main4_31', stats: [60, 15, 5, 5], scene_key: gateScene, round_index: 3 });
     await page.waitForTimeout(1400);
     await click([791, 450], 2400);
     assert.equal((await settled(record => record.current === 'main4_38')).current, 'main4_38');
 
-    // A session board: bring a word along, then grow another.
-    const board = freed(common, ['handle', 'normal']);
-    board.slots[0] = { kind: 'word', id: 'miracle' };
-    board.slots[2] = { kind: 'word', id: 'queen' };
-    await seed({ ...board, current: 'counseling', collected: ['miracle', 'queen'], gains: { miracle: [0, 5, 2, 0], queen: [3, 0, 0, 6] },
-      session: 2, counsel_step: 'board', exp: 300, round_index: 1, scene_key: '0|2回目のカウンセリング|診察室' });
-    await click(boardCard(1), 500);  // もう男じゃないんだし
-    await click(FIRST_CARD, 400);    // 「奇跡」 resonates with the body
-    await shot('board-talk');
-    await click(TALK, 900);
-    const talked = await settled(record => record.talked);
-    assert.equal(talked.traumas.no_longer.strength, 70, 'Talk plus a resonant word: minus thirty');
-    assert.deepEqual(talked.used, ['miracle']);
-    assert.equal(talked.counsel_step, 'talk_recall');
-    await shot('talk-recall');
-    // Each click completes a line or advances it; poll rather than count, so no click lands on the board.
-    const advanceUntil = async step => {
-      for (let i = 0; i < 12 && (await saveRecord(page)).counsel_step !== step; i++) await click(NEXT, 700);
-      return settled(record => record.counsel_step === step);
-    };
+    // A session board: face an opened trauma with the price cut by held words, then grow one.
+    const board = withStates(full, { coworker: 'appraised' });
+    await seed({ ...board, current: 'counseling', session: 2, counsel_step: 'board', exp: 300, round_index: 1,
+      scene_key: '0|2回目のカウンセリング|診察室' });
+    await page.mouse.move(...shelfPoint(5));
+    await page.waitForTimeout(500);
+    await shot('peek-face');
+    await click(shelfPoint(5), 900);  // バイト仲間じゃん？ for 1500 × 0.25 (queen, same kind) × 0.5 (company)
+    const faced = await settled(record => record.traumas.coworker.state === 'accepted');
+    assert.equal(faced.traumas.coworker.state, 'accepted');
+    assert.equal(faced.exp, 300 - 188, 'Price paid as previewed');
+    assert.equal(faced.counsel_step, 'face_line');
+    await shot('face-line');
     const back = await advanceUntil('board');
     assert.equal(back.counsel_step, 'board');
-    await click(boardCard(2), 500);  // 「女王」
-    await shot('board-word');
-    await click(GROW, 900);
+    await click(shelfPoint(6), 900);  // 「女王」
     const growing = await settled(record => record.counsel_step === 'grow_question');
     assert.equal(growing.levels.queen, 2);
     await advanceUntil('grow_choice');
@@ -363,7 +348,7 @@ function talkable(save) {
     fs.writeFileSync(path.join(output, 'verification.json'), JSON.stringify({ errors, seen: { ...seen, chapter: [...seen.chapter] },
       fullRun: save, answered }, null, 2));
     assert.deepEqual(errors, [], 'No runtime errors');
-    console.log(`PASS: full loop (${seen.map} outings, ${seen.night} nights, ${seen.sessions.length} sessions, ${seen.talks} talks, ${seen.faced} faced, ${seen.kept} kept, ${seen.released} let go, EXP ${save.exp}/${save.exp_total}), receive overlay, tutorial effects, stress through trauma, courage cap, board talk and growth`);
+    console.log(`PASS: full loop (${seen.map} outings, ${seen.sessions.length} sessions, ${seen.opened} opened, ${seen.faced} faced, ${seen.kept} kept, ${seen.released} let go, EXP ${save.exp}/${save.exp_total}), receive overlay, tutorial effects, stress through a mystery, courage cap, facing and growth on the board`);
     await page.close();
   } catch (error) {
     for (const page of browser.contexts().flatMap(context => context.pages())) {

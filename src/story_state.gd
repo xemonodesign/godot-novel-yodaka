@@ -4,29 +4,24 @@ extends RefCounted
 const STAT_NAMES = ["ストレス", "勇気", "自認", "キラキラ"]
 const INITIAL = [60, 5, 5, 5]
 const STRESS_LIMIT = 80
-const SLEEP_EFFECTS = {"ストレス": -4}
 const OUTING_EFFECTS = {"ストレス": 5}
 const CHAPTER_EFFECTS = {"ストレス": 6}
 const SAVE_PATH = "user://yodaka_v1.json"
-const SLOTS = 8  # the word shelf; every slot starts filled by a trauma
+const SLOTS = 8  # the word shelf; six slots start taken by traumas, two are free
 const EXP_PER_TAP = 1  # every line read for the first time earns this, times held multipliers
-const FIRST_FACE_COST = 30  # the first trauma ever loosened costs only this much to face
-const TALK_WEAKEN = 20  # talking about a trauma in counseling weakens it by this much on its own
-const RESONANCE = 2  # a word whose tag matches the trauma counts this many times
-const DEEPER_AT = 30  # weakened this far, a trauma with something behind it lets it out
-const MAX_CARDS = 2  # words brought into one conversation
+const RESONANCE = 2  # a word whose tag matches the trauma counts its discount this many times
 const MAX_LEVEL = 3
 const SESSIONS = 4  # opening, two in between, closing
+const TRAUMA_STATES = ["mystery", "appraised", "accepted"]
 const COUNSEL_STEPS = ["opening_doctor", "opening_yodaka", "board", "talk_recall", "talk_doctor",
-    "talk_effect", "talk_emerge", "face_line", "grow_question", "grow_choice", "grow_reply",
-    "grow_response", "grow_insight", "closing", "farewell"]
+    "face_line", "face_response", "grow_question", "grow_choice", "grow_reply", "grow_response",
+    "grow_insight", "closing", "farewell"]
 var save_path: String = SAVE_PATH
 var data: Dictionary = {}
 var current: String = ""
 var collected: Array = []  # every word received, in order
 var slots: Array = []  # SLOTS entries: {} or {"kind": "trauma" | "word", "id": ...}
-var forgotten: Array = []  # words let go or forgotten for EXP
-var used: Array = []  # words spent in counseling to loosen a trauma
+var forgotten: Array = []  # words let go for EXP
 var gains: Dictionary = {}
 var answers: Array = []
 var stats: Array = INITIAL.duplicate()
@@ -39,20 +34,16 @@ var scene_key: String = ""
 var pending_word: String = ""
 var exp: int = 0
 var exp_total: int = 0
-var exp_day: int = 0
-var traumas: Dictionary = {}  # id -> {strength, cost, unraveled, resolved}
+var traumas: Dictionary = {}  # id -> {"state": mystery | appraised | accepted}
 var levels: Dictionary = {}  # word id -> level, 1 when absent
 var session: int = 0
 var counsel_step: String = "opening_doctor"
 var talked: bool = false
 var focus: String = ""
-var cards: Array = []
 var grow_word: String = ""
-var talk_result: Dictionary = {}
 var round_index: int = 0
 var outings_done: int = 0
 var visited: Array = []
-var after_night: String = "map"
 
 func _init() -> void:
     data = JSON.parse_string(FileAccess.get_file_as_string("res://src/data/scenario.json"))
@@ -65,15 +56,11 @@ func reset() -> void:
     slots.clear()
     traumas.clear()
     for trauma in data.traumas:
-        if trauma.get("hidden", false):
-            continue
         slots.append({"kind": "trauma", "id": trauma.id})
-        traumas[trauma.id] = {"strength": int(trauma.strength), "cost": int(trauma.cost),
-            "unraveled": false, "resolved": false}
+        traumas[trauma.id] = {"state": "mystery"}
     while slots.size() < SLOTS:
         slots.append({})
     forgotten.clear()
-    used.clear()
     gains.clear()
     answers.clear()
     stats = INITIAL.duplicate()
@@ -84,19 +71,15 @@ func reset() -> void:
     pending_word = ""
     exp = 0
     exp_total = 0
-    exp_day = 0
     levels.clear()
     session = 0
     counsel_step = "opening_doctor"
     talked = false
     focus = ""
-    cards = []
     grow_word = ""
-    talk_result = {}
     round_index = 0
     outings_done = 0
     visited.clear()
-    after_night = "map"
 
 # --- Definitions -----------------------------------------------------------
 
@@ -144,6 +127,9 @@ func free_slot() -> int:
             return i
     return -1
 
+func trauma_state(id: String) -> String:
+    return traumas[id].state if traumas.has(id) else ""
+
 func level_of(id: String) -> int:
     return int(levels.get(id, 1))
 
@@ -178,41 +164,47 @@ func forget_multiplier(exclude: String = "") -> int:
             product *= int(level_data(id).hold.get("forget_mult", 1))
     return product
 
+func resonates(word_id: String, trauma_id: String) -> bool:
+    return word_by_id(word_id).get("tag", "") == trauma_def(trauma_id).get("tag", "-")
+
+func cost_multiplier(trauma_id: String) -> float:
+    # Held words cut the price of facing a trauma; a word of the same kind counts twice.
+    var product := 1.0
+    for id in held_words():
+        var mult: float = float(level_data(id).hold.get("cost_mult", 1.0))
+        for _i in range(RESONANCE if resonates(id, trauma_id) else 1):
+            product *= mult
+    return product
+
 func exp_per_tap() -> int:
     return EXP_PER_TAP * exp_multiplier()
 
 func earn_exp(amount: int) -> int:
     exp += amount
     exp_total += amount
-    exp_day += amount
     return amount
 
-# --- Traumas: debuffs that fade as a trauma weakens ------------------------
-
-func intensity(id: String) -> float:
-    var def := trauma_def(id)
-    if def.is_empty() or not traumas.has(id) or traumas[id].resolved:
-        return 0.0
-    return clampf(float(traumas[id].strength) / float(def.strength), 0.0, 1.0)
-
-func debuff_level(kind: String, stat: String = "") -> float:
-    var level := 0.0
-    for id in held_traumas():
-        var debuff: Dictionary = trauma_def(id).debuff
-        if debuff.kind == kind and (stat == "" or debuff.get("stat", "") == stat):
-            level = maxf(level, intensity(id))
-    return level
+# --- Traumas: three states, each with a debuff ------------------------------
 
 func debuff_active(kind: String) -> bool:
-    # Flag-like debuffs switch off once their trauma is weakened below half.
-    return debuff_level(kind) > 0.5
+    for id in held_traumas():
+        if trauma_def(id).debuff.kind == kind:
+            return true
+    return false
+
+func debuff_amount(id: String) -> float:
+    # A mystery bites by its hidden amount; opened, a trauma shows its full one.
+    var debuff: Dictionary = trauma_def(id).debuff
+    if trauma_state(id) == "appraised":
+        return float(debuff.get("value", 0))
+    return float(debuff.get("mystery", 0))
 
 func trauma_cap(stat: String) -> int:
     var cap := 100
     for id in held_traumas():
         var debuff: Dictionary = trauma_def(id).debuff
         if debuff.kind == "cap" and debuff.stat == stat:
-            cap = mini(cap, int(round(float(debuff.value) + (100.0 - float(debuff.value)) * (1.0 - intensity(id)))))
+            cap = mini(cap, int(debuff_amount(id)))
     return cap
 
 func effective_stats() -> Array:
@@ -220,11 +212,16 @@ func effective_stats() -> Array:
     for i in range(STAT_NAMES.size()):
         var stat: String = STAT_NAMES[i]
         var value: int = int(stats[i]) + hold_stat(stat)
+        var fraction := 0.0
         for id in held_traumas():
             var debuff: Dictionary = trauma_def(id).debuff
-            if debuff.kind == "plus" and debuff.stat == stat:
-                value += int(ceil(float(debuff.value) * intensity(id)))
-        value -= int(floor(float(value) * 0.5 * debuff_level("half", stat)))
+            if debuff.get("stat", "") != stat:
+                continue
+            if debuff.kind == "plus":
+                value += int(debuff_amount(id))
+            elif debuff.kind == "half":
+                fraction = maxf(fraction, debuff_amount(id))
+        value -= int(floor(float(value) * fraction))
         value = mini(value, trauma_cap(stat))
         result.append(clampi(value, 0, 100))
     return result
@@ -234,63 +231,32 @@ func effective(index: int) -> int:
 
 func debuff_text(id: String) -> String:
     var debuff: Dictionary = trauma_def(id).debuff
-    var level := intensity(id)
     match debuff.kind:
         "half":
-            return "%s が %d%% 減る" % [debuff.stat, int(round(50.0 * level))]
+            return "%s が %d%% 減る" % [debuff.stat, int(round(100.0 * debuff_amount(id)))]
         "cap":
-            return "%s の上限 %d" % [debuff.stat, trauma_cap(debuff.stat) if traumas.has(id) else int(debuff.value)]
+            return "%s の上限 %d" % [debuff.stat, int(debuff_amount(id))]
         "plus":
-            return "%s 常時 +%d" % [debuff.stat, int(ceil(float(debuff.value) * level))]
+            return "%s 常時 +%d" % [debuff.stat, int(debuff_amount(id))]
         "rest_half":
-            return "家で休んでも回復が半分" + ("" if level > 0.5 else "（弱まって効果なし）")
+            return "家で休んでも回復が半分"
         "forget_half":
-            return "手放した言葉のEXPが半分" + ("" if level > 0.5 else "（弱まって効果なし）")
+            return "手放した言葉のEXPが半分"
         "gain_half":
-            return "もらった言葉の変化が半分" + ("" if level > 0.5 else "（弱まって効果なし）")
-        "sleep_half":
-            return "眠っても回復が半分" + ("" if level > 0.5 else "（弱まって効果なし）")
+            return "もらった言葉の変化が半分"
     return ""
 
-func faced_count() -> int:
-    # Traumas Yodaka faced and was rid of; one that let something deeper out does not count.
-    var count := 0
-    for id in traumas:
-        var def := trauma_def(id)
-        if traumas[id].resolved and not (def.has("deeper") and traumas.has(def.deeper)):
-            count += 1
-    return count
+func appraise_cost(id: String) -> int:
+    return int(trauma_def(id).get("appraise", 0))
 
 func face_cost(id: String) -> int:
     var def := trauma_def(id)
-    if def.is_empty() or not traumas.has(id):
+    if def.is_empty():
         return 0
-    var state: Dictionary = traumas[id]
-    if int(state.strength) <= 0:
-        return 0
-    return maxi(1, int(ceil(float(state.cost) * float(state.strength) / float(def.strength))))
+    return maxi(1, int(ceil(float(def.cost) * cost_multiplier(id) - 0.000001)))
 
-func can_face(id: String) -> bool:
-    if pending_word != "" or slot_of(id) < 0 or not traumas.has(id):
-        return false
-    if current == "counseling" and counsel_step != "board":
-        return false
-    var state: Dictionary = traumas[id]
-    return state.unraveled and not state.resolved and exp >= face_cost(id)
-
-func face(id: String) -> bool:
-    # Facing a loosened trauma spends EXP and frees its slot for good.
-    if not can_face(id):
-        return false
-    exp -= face_cost(id)
-    traumas[id].resolved = true
-    traumas[id].strength = 0
-    slots[slot_of(id)] = {}
-    focus = id
-    if current == "counseling":
-        counsel_step = "face_line"
-    save_game()
-    return true
+func accepted_count() -> int:
+    return traumas.values().filter(func(t): return t.state == "accepted").size()
 
 # --- Stats ------------------------------------------------------------------
 
@@ -383,7 +349,7 @@ func choose(index: int) -> bool:
     else:
         current = node.next
     if current == "night":
-        _enter_night(node.get("kind", ""))
+        _end_day(node.get("kind", ""))
     elif current == "counseling":
         _enter_counseling()
     save_game()
@@ -438,22 +404,32 @@ func forget_word(id: String) -> int:
     var value := earn_exp(forget_value(id))
     forgotten.append(id)
     slots[slot] = {}
-    cards.erase(id)
     save_game()
     return value
 
-# --- Rounds, nights, map ----------------------------------------------------
+# --- Rounds and the map (days end without a night) --------------------------
 
-func _enter_night(kind: String) -> void:
-    pending_word = ""  # any collection choice was made before the day ended
+func _end_day(kind: String) -> void:
+    # No night, no nightly recovery: the next place follows at once.
+    pending_word = ""
     if kind == "main":
         round_index += 1
         outings_done = 0
         var finished: Dictionary = data.rounds[round_index - 1]
-        after_night = "counseling" if finished.get("counseling", false) or round_index >= data.rounds.size() else "map"
+        if finished.get("counseling", false) or round_index >= data.rounds.size():
+            current = "counseling"
+            _enter_counseling()
+        else:
+            current = "map"
     else:
         outings_done += 1
-        after_night = "map" if outings_done < int(data.rounds[round_index].outings) else "chapter"
+        if outings_done < int(data.rounds[round_index].outings):
+            current = "map"
+        else:
+            for chapter in data.chapters:
+                if chapter.id == current_round().chapter:
+                    current = chapter.start
+            apply(CHAPTER_EFFECTS)
 
 func current_round() -> Dictionary:
     if round_index < data.rounds.size():
@@ -484,31 +460,6 @@ func select_event(id: String) -> bool:
     save_game()
     return true
 
-func sleep_effects() -> Dictionary:
-    return halved(SLEEP_EFFECTS) if debuff_active("sleep_half") else SLEEP_EFFECTS
-
-func sleep() -> Array:
-    if current != "night":
-        return []
-    var delta := apply(sleep_effects())
-    exp_day = 0
-    match after_night:
-        "chapter":
-            for chapter in data.chapters:
-                if chapter.id == current_round().chapter:
-                    current = chapter.start
-            var cost := apply(CHAPTER_EFFECTS)
-            for i in range(STAT_NAMES.size()):
-                delta[i] += cost[i]
-            last_delta = delta
-        "counseling":
-            current = "counseling"
-            _enter_counseling()
-        _:
-            current = "map"
-    save_game()
-    return delta
-
 # --- Counseling sessions ----------------------------------------------------
 
 func _enter_counseling() -> void:
@@ -516,9 +467,7 @@ func _enter_counseling() -> void:
     counsel_step = "opening_doctor"
     talked = false
     focus = ""
-    cards = []
     grow_word = ""
-    talk_result = {}
 
 func is_closing() -> bool:
     return round_index >= data.rounds.size()
@@ -526,84 +475,33 @@ func is_closing() -> bool:
 func on_board() -> bool:
     return current == "counseling" and counsel_step == "board"
 
-func can_talk(id: String) -> bool:
-    if not on_board() or talked or slot_of(id) < 0 or not traumas.has(id) or traumas[id].resolved:
-        return false
-    # The first session keeps to traumas with nothing waiting behind them.
-    return session > 1 or not trauma_def(id).has("deeper")
+func can_appraise(id: String) -> bool:
+    # Talking about a mystery opens it: one per session, and it costs EXP.
+    return on_board() and not talked and slot_of(id) >= 0 and trauma_state(id) == "mystery" and exp >= appraise_cost(id)
 
-func focus_trauma(id: String) -> bool:
-    if not on_board() or slot_of(id) < 0 or not traumas.has(id):
+func appraise(id: String) -> bool:
+    if not can_appraise(id):
         return false
-    if focus != id:
-        cards = []
-    focus = id
-    return true
-
-func toggle_card(id: String) -> bool:
-    if not on_board() or not held_words().has(id):
-        return false
-    if cards.has(id):
-        cards.erase(id)
-    elif cards.size() < MAX_CARDS:
-        cards.append(id)
-    else:
-        return false
-    return true
-
-func resonates(word_id: String, trauma_id: String) -> bool:
-    return word_by_id(word_id).get("tag", "") == trauma_def(trauma_id).get("tag", "-")
-
-func talk_preview(id: String, chosen: Array) -> Dictionary:
-    var def := trauma_def(id)
-    if def.is_empty() or not traumas.has(id):
-        return {}
-    var state: Dictionary = traumas[id]
-    var first: bool = not traumas.values().any(func(t): return t.unraveled)
-    var cost: float = float(FIRST_FACE_COST if first and not state.unraveled else state.cost)
-    var strength: int = int(state.strength) - TALK_WEAKEN
-    var resonant: Array = []
-    for word_id in chosen:
-        var release: Dictionary = level_data(word_id).release
-        var times: int = RESONANCE if resonates(word_id, id) else 1
-        if resonates(word_id, id):
-            resonant.append(word_id)
-        strength -= int(release.get("weaken", 0)) * times
-        for _i in range(times):
-            cost *= float(release.get("cost_mult", 1.0))
-    strength = maxi(strength, 0)
-    var cost_after: int = maxi(1, int(ceil(cost)))
-    var face: int = 0 if strength == 0 else maxi(1, int(ceil(float(cost_after) * float(strength) / float(def.strength))))
-    var emerges: bool = def.has("deeper") and strength <= DEEPER_AT and not traumas.has(def.deeper)
-    return {"strength": strength, "cost": cost_after, "face": face, "resonant": resonant, "emerges": emerges, "first": first and not state.unraveled}
-
-func talk() -> bool:
-    # Yodaka talks about the focused trauma, bringing the chosen words into it.
-    if focus == "" or not can_talk(focus):
-        return false
-    var def := trauma_def(focus)
-    var state: Dictionary = traumas[focus]
-    var preview := talk_preview(focus, cards)
-    talk_result = {"id": focus, "before": int(state.strength), "after": int(preview.strength),
-        "cost_before": face_cost(focus), "cost_after": int(preview.face), "cards": cards.duplicate(),
-        "resonant": preview.resonant, "emerged": "", "first": preview.first}
-    for word_id in cards:
-        slots[slot_of(word_id)] = {}
-        used.append(word_id)
-    cards = []
-    state.strength = int(preview.strength)
-    state.cost = int(preview.cost)
-    state.unraveled = true
+    exp -= appraise_cost(id)
+    traumas[id].state = "appraised"
     talked = true
-    if preview.emerges:
-        var deeper: Dictionary = trauma_def(def.deeper)
-        state.resolved = true  # what it hid takes its place; the slot stays taken
-        state.strength = 0
-        slots[slot_of(focus)] = {"kind": "trauma", "id": deeper.id}
-        traumas[deeper.id] = {"strength": int(deeper.strength), "cost": int(deeper.cost),
-            "unraveled": true, "resolved": false}
-        talk_result.emerged = deeper.id
+    focus = id
     counsel_step = "talk_recall"
+    save_game()
+    return true
+
+func can_face(id: String) -> bool:
+    return on_board() and slot_of(id) >= 0 and trauma_state(id) == "appraised" and exp >= face_cost(id)
+
+func face(id: String) -> bool:
+    # Facing an opened trauma spends the outrageous EXP and frees its slot for good.
+    if not can_face(id):
+        return false
+    exp -= face_cost(id)
+    traumas[id].state = "accepted"
+    slots[slot_of(id)] = {}
+    focus = id
+    counsel_step = "face_line"
     save_game()
     return true
 
@@ -613,13 +511,12 @@ func can_grow(id: String) -> bool:
     return exp >= next_level_cost(id)
 
 func grow(id: String) -> bool:
-    # Digging into a held word costs EXP; the word says what it meant.
+    # Talking about a held word digs into it for EXP; the word says what it meant.
     if not can_grow(id):
         return false
     exp -= next_level_cost(id)
     levels[id] = level_of(id) + 1
     grow_word = id
-    cards.erase(id)
     counsel_step = "grow_question" if levels[id] == 2 else "grow_insight"
     save_game()
     return true
@@ -652,11 +549,9 @@ func advance_counseling() -> bool:
             counsel_step = "board"
         "talk_recall":
             counsel_step = "talk_doctor"
-        "talk_doctor":
-            counsel_step = "talk_effect"
-        "talk_effect":
-            counsel_step = "talk_emerge" if talk_result.get("emerged", "") != "" else "board"
-        "talk_emerge", "face_line", "grow_response":
+        "face_line":
+            counsel_step = "face_response"
+        "talk_doctor", "face_response", "grow_response":
             counsel_step = "board"
         "grow_question":
             counsel_step = "grow_choice"
@@ -682,17 +577,15 @@ func save_game() -> bool:
     if file == null:
         last_error = "この環境では保存できません"
         return false
-    file.store_string(JSON.stringify({"version": 5, "current": current,
-        "collected": collected, "slots": slots, "forgotten": forgotten, "used": used,
+    file.store_string(JSON.stringify({"version": 6, "current": current,
+        "collected": collected, "slots": slots, "forgotten": forgotten,
         "gains": gains, "answers": answers, "stats": stats,
         "history": history, "read_count": read_count, "speed": speed,
         "scene_key": scene_key, "pending_word": pending_word,
-        "exp": exp, "exp_total": exp_total, "exp_day": exp_day,
+        "exp": exp, "exp_total": exp_total,
         "traumas": traumas, "levels": levels, "session": session,
-        "counsel_step": counsel_step, "talked": talked, "focus": focus, "cards": cards,
-        "grow_word": grow_word, "talk_result": talk_result,
-        "round_index": round_index, "outings_done": outings_done, "visited": visited,
-        "after_night": after_night}))
+        "counsel_step": counsel_step, "talked": talked, "focus": focus, "grow_word": grow_word,
+        "round_index": round_index, "outings_done": outings_done, "visited": visited}))
     last_error = ""
     return true
 
@@ -725,17 +618,17 @@ func load_game() -> bool:
     if parser.parse(FileAccess.get_file_as_string(save_path)) != OK:
         return false
     var saved = parser.data
-    if not saved is Dictionary or saved.get("version", 0) != 5:
+    if not saved is Dictionary or saved.get("version", 0) != 6:
         return false
     var node_id = saved.get("current", "")
-    if not node_id is String or (not node_id in ["map", "night", "counseling", "result"] and not data.nodes.has(node_id)):
+    if not node_id is String or (not node_id in ["map", "counseling", "result"] and not data.nodes.has(node_id)):
         return false
     if not saved.get("stats") is Array or saved.stats.size() != STAT_NAMES.size():
         return false
     for value in saved.stats:
         if not _is_int(value, 0, 100):
             return false
-    if not _valid_ids(saved.get("collected"), word_by_id) or not _valid_ids(saved.get("forgotten"), word_by_id) or not _valid_ids(saved.get("used"), word_by_id):
+    if not _valid_ids(saved.get("collected"), word_by_id) or not _valid_ids(saved.get("forgotten"), word_by_id):
         return false
     if not saved.get("answers") is Array or not saved.get("history") is Array:
         return false
@@ -756,25 +649,24 @@ func load_game() -> bool:
             continue
         if slot.get("kind", "") not in ["trauma", "word"] or not slot.get("id", 0) is String or held.has(slot.id):
             return false
-        if slot.kind == "word" and (not seen.has(slot.id) or saved.forgotten.has(slot.id) or saved.used.has(slot.id)):
+        if slot.kind == "word" and (not seen.has(slot.id) or saved.forgotten.has(slot.id)):
             return false
         if slot.kind == "trauma" and (trauma_def(slot.id).is_empty() or not saved.traumas.has(slot.id)):
             return false
         held.append(slot.id)
-    for id in saved.forgotten + saved.used:
-        if not seen.has(id) or saved.forgotten.count(id) + saved.used.count(id) != 1:
+    for id in saved.forgotten:
+        if not seen.has(id) or saved.forgotten.count(id) != 1:
             return false
     for id in saved.gains:
         if not seen.has(id) or not _valid_delta(saved.gains[id]):
             return false
+    if saved.traumas.size() != data.traumas.size():
+        return false
     for id in saved.traumas:
-        var def := trauma_def(id)
         var state = saved.traumas[id]
-        if def.is_empty() or not state is Dictionary or not _is_int(state.get("strength", -1), 0, int(def.strength)):
+        if trauma_def(id).is_empty() or not state is Dictionary or state.get("state", "") not in TRAUMA_STATES:
             return false
-        if not _is_int(state.get("cost", 0), 1, int(def.cost)) or not state.get("unraveled", 0) is bool or not state.get("resolved", 0) is bool:
-            return false
-        if held.has(id) == state.resolved:
+        if held.has(id) == (state.state == "accepted"):
             return false
     for id in saved.levels:
         if not seen.has(id) or not _is_int(saved.levels[id], 1, MAX_LEVEL):
@@ -797,29 +689,26 @@ func load_game() -> bool:
     var focused = saved.get("focus", "")
     if not focused is String or (focused != "" and trauma_def(focused).is_empty()):
         return false
-    if step in ["talk_recall", "talk_doctor", "talk_effect", "talk_emerge", "face_line"] and focused == "":
+    if step in ["talk_recall", "talk_doctor"] and (focused == "" or saved.traumas[focused].state != "appraised"):
+        return false
+    if step in ["face_line", "face_response"] and (focused == "" or saved.traumas[focused].state != "accepted"):
         return false
     var growing = saved.get("grow_word", "")
     if not growing is String or (growing != "" and not held.has(growing)):
         return false
     if step in ["grow_question", "grow_choice", "grow_reply", "grow_response", "grow_insight"] and growing == "":
         return false
-    if not saved.get("cards", []) is Array or not saved.get("talk_result", {}) is Dictionary or not saved.get("talked", false) is bool:
+    if not saved.get("talked", false) is bool:
         return false
-    for id in saved.cards:
-        if not held.has(id) or word_by_id(id).is_empty():
-            return false
-    if not _is_int(saved.get("exp", 0), 0, 99999999) or not _is_int(saved.get("exp_total", 0), 0, 99999999) or not _is_int(saved.get("exp_day", 0), 0, 99999999):
+    if not _is_int(saved.get("exp", 0), 0, 99999999) or not _is_int(saved.get("exp_total", 0), 0, 99999999):
         return false
     if not _is_int(saved.get("round_index", 0), 0, data.rounds.size()) or not _is_int(saved.get("outings_done", 0), 0, 99):
         return false
     for id in saved.visited:
         if not id is String or event_by_id(id).is_empty():
             return false
-    if saved.get("after_night", "map") not in ["map", "chapter", "counseling"]:
-        return false
     var pending = saved.get("pending_word", "")
-    if not pending is String or (pending != "" and (not seen.has(pending) or held.has(pending) or saved.forgotten.has(pending) or saved.used.has(pending))):
+    if not pending is String or (pending != "" and (not seen.has(pending) or held.has(pending) or saved.forgotten.has(pending))):
         return false
     if not saved.get("scene_key", "") is String:
         return false
@@ -827,7 +716,6 @@ func load_game() -> bool:
     collected = saved.collected
     slots = saved.slots
     forgotten = saved.forgotten
-    used = saved.used
     gains = {}
     for id in saved.gains:
         gains[id] = saved.gains[id].map(func(value): return int(value))
@@ -840,11 +728,9 @@ func load_game() -> bool:
     pending_word = pending
     exp = int(saved.get("exp", 0))
     exp_total = int(saved.get("exp_total", 0))
-    exp_day = int(saved.get("exp_day", 0))
     traumas = {}
     for id in saved.traumas:
-        traumas[id] = {"strength": int(saved.traumas[id].strength), "cost": int(saved.traumas[id].cost),
-            "unraveled": saved.traumas[id].unraveled, "resolved": saved.traumas[id].resolved}
+        traumas[id] = {"state": saved.traumas[id].state}
     levels = {}
     for id in saved.levels:
         levels[id] = int(saved.levels[id])
@@ -852,12 +738,9 @@ func load_game() -> bool:
     counsel_step = step
     talked = saved.get("talked", false)
     focus = focused
-    cards = saved.get("cards", [])
     grow_word = growing
-    talk_result = saved.get("talk_result", {})
     round_index = int(saved.get("round_index", 0))
     outings_done = int(saved.get("outings_done", 0))
     visited = saved.visited
-    after_night = saved.get("after_night", "map")
     last_delta = []
     return true
