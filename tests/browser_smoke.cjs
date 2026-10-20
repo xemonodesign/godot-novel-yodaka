@@ -120,7 +120,7 @@ function availableEvent(save, effectiveStress) {
     await page.goto(process.env.YODAKA_URL || 'http://127.0.0.1:8060/');
     await ready();
     await shot('title');
-    await page.mouse.click(210, 450);
+    await page.mouse.click(216, 498);
     await page.waitForTimeout(800);
     await shot('counseling-card');
     const initial = await saveRecord(page);
@@ -236,7 +236,7 @@ function availableEvent(save, effectiveStress) {
     await shot('result');
     await page.reload();
     await ready();
-    await page.mouse.click(475, 450);
+    await page.mouse.click(470, 498);
     await page.waitForTimeout(800);
     await shot('resumed');
     assert.equal((await saveRecord(page)).current, 'result');
@@ -248,7 +248,7 @@ function availableEvent(save, effectiveStress) {
         await saveRecord(page, replacement);
         await page.reload();
         await ready();
-        await page.mouse.click(475, 450);
+        await page.mouse.click(470, 498);
         const loaded = await settled(record => record.current === replacement.current, 3000);
         if (loaded.current === replacement.current) return;
       }
