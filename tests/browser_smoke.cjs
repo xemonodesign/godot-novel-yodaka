@@ -114,7 +114,13 @@ function availableEvent(save, effectiveStress) {
     };
     // Each click completes a line or advances it; poll rather than count clicks.
     const advanceUntil = async step => {
-      for (let i = 0; i < 12 && (await saveRecord(page)).counsel_step !== step; i++) await click(NEXT, 700);
+      for (let i = 0; i < 12; i++) {
+        const now = await saveRecord(page);
+        if (now.counsel_step === step) break;
+        await click(NEXT, 300);
+        // Wait for the save to reflect the click, or the next click lands on the board's own button.
+        await settled(record => record.counsel_step !== now.counsel_step || record.read_count !== now.read_count, 2500);
+      }
       return settled(record => record.counsel_step === step);
     };
     await page.goto(process.env.YODAKA_URL || 'http://127.0.0.1:8060/');
