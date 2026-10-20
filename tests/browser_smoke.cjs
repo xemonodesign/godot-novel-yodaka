@@ -328,7 +328,7 @@ function availableEvent(save, effectiveStress) {
     await click(shelfPoint(5), 900);  // バイト仲間じゃん？ for 1500 × 0.25 (queen, same kind) × 0.5 (company)
     const faced = await settled(record => record.traumas.coworker.state === 'accepted');
     assert.equal(faced.traumas.coworker.state, 'accepted');
-    assert.equal(faced.exp, 300 - 188, 'Price paid as previewed');
+    assert.ok(faced.exp >= 300 - 188 && faced.exp <= 300 - 188 + 3, 'Price paid as previewed, plus the lines read');
     assert.equal(faced.counsel_step, 'face_line');
     await shot('face-line');
     const back = await advanceUntil('board');
