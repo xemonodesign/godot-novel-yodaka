@@ -45,7 +45,7 @@ async function saveRecord(page, replacement) {
 
 // Screen coordinates of the 1280x800 stage (see src/main.gd).
 const NEXT = [1095, 557];           // also "今日は、ここまで" on the counseling board
-const OVERLAY = [640, 400];
+const OVERLAY = [640, 460];  // inside the frame, on no map pin
 const KARTE_CLOSE = [953, 638];
 const KEEP = [930, 286];            // "心に留める" on the receive overlay (with a free slot)
 const RELEASE_FULL = [930, 490];    // "手放して EXP" when the shelf is full
@@ -200,7 +200,8 @@ function availableEvent(save, effectiveStress) {
       if (node && node.kind === 'main') seen.chapter.add(node.chapter);
       const choices = node && node.choices ? node.choices.length : 0;
       await click(NEXT, 500);
-      const mid = await saveRecord(page);
+      // The save lands a moment after the click; wait for it before deciding whether a map followed.
+      const mid = await settled(record => record.read_count !== save.read_count || record.current !== save.current || record.counsel_step !== save.counsel_step, 2000);
       // Dismiss a blackout or advance the finished line, but never click into a map that already followed.
       if (mid.current !== 'map' && !(mid.current === 'counseling' && mid.counsel_step === 'board')) await click(OVERLAY, 500);
       if (choices > 1) {
